@@ -4,8 +4,8 @@ package tp.pr1;
 
 import java.util.Scanner;
 
-import logica.Partida;
-import control.Controlador;
+import tp.pr1.logica.Partida;
+import tp.pr1.control.Controlador;
 
 public class Main {
 
