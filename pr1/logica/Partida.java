@@ -2,7 +2,7 @@ package tp.pr1.logica;
 
 public class Partida {
 	
-	private static final int height=7;
+	private static final int height=6;
 	private static final int width=7;
 	
 	private static int n=10;
@@ -17,7 +17,7 @@ public class Partida {
 	public Partida(){
 		
                // reset(); //opcion 1
-		this.tablero = new Tablero(height,width);
+		this.tablero = new Tablero(width,height);
 		this.turno=Ficha.BLANCA;
 		this.terminada=false;
 		this.moveStack= new int[n];
@@ -199,13 +199,13 @@ public class Partida {
 	public boolean ejecutaMovimiento(Ficha f, int w){
 		
 		boolean ret=true; //salida
-
 		boolean fullCol=false;
 		
-		if (tablero.getCasilla(w, 0)!=Ficha.VACIA) 
+		if (tablero.getCasilla(w, tablero.getAlto())!=Ficha.VACIA) 
 			fullCol=true;
-		
-		if (isTerminada()|| f!=turno || fullCol) {
+			ret=false;
+			System.err.println("Movimiento Incorrecto");
+		if (isTerminada()|| f!=turno) {
 			//si terminamos partida, el turno no es del jugador o la columna esta completa
 			ret=false;
 			
@@ -213,15 +213,15 @@ public class Partida {
 		}	else {
 			
 			tablero.setCasilla(w , fila(w) , f);
-                        moveStack[lastPos]=w;
+            moveStack[lastPos]=w;
 			advPointer();
-                        if (numJugadas!=10){
-                            numJugadas++;
+            if (numJugadas!=10){
+              numJugadas++;
 			}   
 			if (turno==Ficha.BLANCA)
-                            turno=Ficha.NEGRA;
-                        else if (turno==Ficha.NEGRA)
-                            turno=Ficha.BLANCA;
+               turno=Ficha.NEGRA;
+            else if (turno==Ficha.NEGRA)
+               turno=Ficha.BLANCA;
                 
 			
 		}
