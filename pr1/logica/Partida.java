@@ -200,11 +200,13 @@ public class Partida {
 		
 		boolean ret=true; //salida
 		boolean fullCol=false;
+		int colreal=w-1;
 		
-		if (tablero.getCasilla(w, tablero.getAlto())!=Ficha.VACIA) 
+		if (tablero.getCasilla(colreal, tablero.getAlto())!=Ficha.VACIA) {
 			fullCol=true;
 			ret=false;
 			System.err.println("Movimiento Incorrecto");
+		}
 		if (isTerminada()|| f!=turno) {
 			//si terminamos partida, el turno no es del jugador o la columna esta completa
 			ret=false;
@@ -212,8 +214,8 @@ public class Partida {
 			
 		}	else {
 			
-			tablero.setCasilla(w , fila(w) , f);
-            moveStack[lastPos]=w;
+			tablero.setCasilla(colreal , fila(colreal) , f);
+            moveStack[lastPos]=colreal;
 			advPointer();
             if (numJugadas!=10){
               numJugadas++;

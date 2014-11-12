@@ -35,8 +35,7 @@ public class Tablero {
 
 	public Ficha getCasilla(int w, int h){ 
 		
-			h--;
-			w--;
+			
 		if (h<0 ||w<0 ||h>=alto || w>=ancho){
 			
 			return Ficha.VACIA;
@@ -46,8 +45,7 @@ public class Tablero {
 	}
 	
 	public void setCasilla(int w, int h, Ficha f){
-			h--;
-			w--;
+			
 		if (!(h<0 ||w<0 ||h>=alto || w>=ancho)){
 			
 			this.tablero[w][h] = f;
@@ -101,7 +99,7 @@ public class Tablero {
 		for (int i=0;i<alto;i++){
 			ret+=('|');
 			for (int j=0;j<ancho;j++){
-				ret+=parserFicha(getCasilla(i,j));	
+				ret+=parserFicha(getCasilla(j,i));	
 			}
 			ret+=('|' + System.lineSeparator());
 		}
