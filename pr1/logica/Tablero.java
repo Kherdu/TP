@@ -45,7 +45,11 @@ public class Tablero {
 	
 	public void setCasilla(int w, int h, Ficha f){
 		
-		tablero[w][h] = f;			
+		if (!(h<1 ||w<1 ||h>=alto || w>=ancho)){
+			
+			this.tablero[w][h] = f;
+		}
+					
 		
 	}	
 	
