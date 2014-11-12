@@ -35,7 +35,9 @@ public class Tablero {
 
 	public Ficha getCasilla(int w, int h){ 
 		
-		if (h<1 ||w<1 ||h>=alto || w>=ancho){
+			h--;
+			w--;
+		if (h<0 ||w<0 ||h>=alto || w>=ancho){
 			
 			return Ficha.VACIA;
 		}
@@ -44,8 +46,9 @@ public class Tablero {
 	}
 	
 	public void setCasilla(int w, int h, Ficha f){
-		
-		if (!(h<1 ||w<1 ||h>=alto || w>=ancho)){
+			h--;
+			w--;
+		if (!(h<0 ||w<0 ||h>=alto || w>=ancho)){
 			
 			this.tablero[w][h] = f;
 		}
@@ -61,8 +64,8 @@ public class Tablero {
 	
 	private void iniciaTablero(Ficha[][] tab){
 		//inicia el tablero a vacia
-		for (int i=0; i<ancho; i++){
-			for (int j=0; j<alto; j++){
+		for (int i=0; i<=ancho; i++){
+			for (int j=0; j<=alto; j++){
 				setCasilla(i,j,Ficha.VACIA);
 				
 			}
