@@ -10,13 +10,14 @@ public class Tablero {
 	private int alto;
 	private int ancho;
 	
-	public Tablero (int h, int w){// h = alto  w = ancho(del ingles)
+	public Tablero (int w, int h){// h = alto  w = ancho(del ingles)
 		this.alto = h;
 		this.ancho = w;
 		
-                if (ancho<=1)ancho=1;
-                if (alto<=1) alto=1;
-		this.tablero = new Ficha [alto][ancho];
+                if (ancho<1) ancho=1;
+                if (alto<1)  alto=1;
+                
+		this.tablero = new Ficha [ancho][alto];
 		
 		iniciaTablero(tablero);
 		
@@ -32,18 +33,19 @@ public class Tablero {
 		return this.ancho;
 	}
 
-	public Ficha getCasilla(int h, int w){
-		if (h<0 ||w<0 ||h>alto || w>ancho){
+	public Ficha getCasilla(int w, int h){ 
+		
+		if (h<1 ||w<1 ||h>=alto || w>=ancho){
 			
 			return Ficha.VACIA;
 		}
-		return tablero[h][w];
+		return tablero[w][h];
 		
 	}
 	
-	public void setCasilla(int h, int w, Ficha f){
+	public void setCasilla(int w, int h, Ficha f){
 		
-		tablero[h][w] = f;			
+		tablero[w][h] = f;			
 		
 	}	
 	
@@ -55,9 +57,9 @@ public class Tablero {
 	
 	private void iniciaTablero(Ficha[][] tab){
 		//inicia el tablero a vacia
-		for (int i=0; i<alto;i++){
-			for (int j=0;j<ancho;j++){
-				tab[i][j]=Ficha.VACIA;
+		for (int i=0; i<ancho; i++){
+			for (int j=0; j<alto; j++){
+				setCasilla(i,j,Ficha.VACIA);
 				
 			}
 		}
