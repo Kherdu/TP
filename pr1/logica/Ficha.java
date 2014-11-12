@@ -1,4 +1,4 @@
-package pr1;
+package tp.pr1.logica;
 
 public enum Ficha {
 

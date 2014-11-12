@@ -1,4 +1,4 @@
-package pr1;
+package tp.pr1.logica;
 
 import java.util.Arrays;
 
@@ -11,47 +11,50 @@ public class Tablero {
 	private int ancho;
 	
 	public Tablero (int h, int w){// h = alto  w = ancho(del ingles)
+		this.alto = h;
+		this.ancho = w;
 		
-		alto = h;
-		ancho = w;
-		Ficha tablero[][] = new Ficha [alto][ancho];
+                if (ancho<=1)ancho=1;
+                if (alto<=1) alto=1;
+		this.tablero = new Ficha [alto][ancho];
+		
 		iniciaTablero(tablero);
 		
 		
 	}
 
 	public int getAlto() {
-		return alto;
+		return this.alto;
 	}
 
 	
 	public int getAncho() {
-		return ancho;
+		return this.ancho;
 	}
 
 	public Ficha getCasilla(int h, int w){
-		
+		if (h<0 ||w<0 ||h>alto || w>ancho){
+			
+			return Ficha.VACIA;
+		}
 		return tablero[h][w];
-		
-		
 		
 	}
 	
 	public void setCasilla(int h, int w, Ficha f){
 		
-		tablero[h][w] = f;
-					
+		tablero[h][w] = f;			
 		
 	}	
+	
 	public void reset(){
+		
 		iniciaTablero(tablero);
-		
-		
 		
 	}
 	
 	private void iniciaTablero(Ficha[][] tab){
-		
+		//inicia el tablero a vacia
 		for (int i=0; i<alto;i++){
 			for (int j=0;j<ancho;j++){
 				tab[i][j]=Ficha.VACIA;
@@ -63,7 +66,7 @@ public class Tablero {
 	
 	
 	private char parserFicha(Ficha f){
-		
+		//saca el caracter equivalente de la ficha para escribir
 		char ret='\0';
 		switch (f){
 		
@@ -77,35 +80,33 @@ public class Tablero {
 				ret='X';
 				break;
 		}
-		
-		
+
 		return ret;
 	}
 	
 	@Override
 	public String toString() {
-		
-		String ret=null;
+		//pinta tablero
+		String ret=("");
 		
 		for (int i=0;i<alto;i++){
 			ret+=('|');
 			for (int j=0;j<ancho;j++){
-				ret+=parserFicha(getCasilla(i,j));
-				
+				ret+=parserFicha(getCasilla(i,j));	
 			}
-			ret+=('|' + '\n');
+			ret+=('|' + System.lineSeparator());
 		}
 		ret+=('+');
 		for (int k=0;k<ancho;k++){
 			ret+=('-');
 		}
-		ret+=('+' + '\n');
+		ret+=('+' + System.lineSeparator());
 		
 		ret+=(' ');
 		for (int l=0;l<ancho;l++){
 			ret+=(l+1);
 		}
-		ret+=(' ' + '\n');
+		ret+=(' ' + System.lineSeparator());
 		return ret;
 	}
 	
