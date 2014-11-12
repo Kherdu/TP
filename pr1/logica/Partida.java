@@ -104,8 +104,8 @@ public class Partida {
 		int i=0;
 		while (i<tablero.getAlto() && !flag){
 			
-			if (tablero.getCasilla(i, n)!=Ficha.VACIA){
-				ret=tablero.getCasilla(i, n);
+			if (tablero.getCasilla(n, i)!=Ficha.VACIA){
+				ret=tablero.getCasilla(n, i);
 				flag=true;
 			}
 		i++;
@@ -123,16 +123,16 @@ public class Partida {
                            int col=moveStack[lastPos];
 		int i = fila(col);
                 Ficha ret= Ficha.VACIA;
-                    if ((tablero.getCasilla(i, col)==turno)){//para blancas
+                    if ((tablero.getCasilla(col, i)==turno)){//para blancas
                         int j=col;
                         int cont=1;
                         //horizontal
-                        while(j>0 && (tablero.getCasilla(i, j)==turno) && cont<4){//izquierda
+                        while(j>0 && (tablero.getCasilla(j, i)==turno) && cont<4){//izquierda
                             cont++;
                             j--;
                         }
                         j=col; //reiniciamos j
-                        while(j<(tablero.getAncho()-1) && (tablero.getCasilla(i, j)==turno) && cont<4){//derecha
+                        while(j<(tablero.getAncho()-1) && (tablero.getCasilla(j, i)==turno) && cont<4){//derecha
                             cont++;
                             j--;
                         }
@@ -141,7 +141,7 @@ public class Partida {
                         cont=1;
                         j=col;
                         //vertical
-                        while(i>0 && tablero.getCasilla(i, col)==turno && cont<4 ){
+                        while(i>0 && tablero.getCasilla(col, i)==turno && cont<4 ){
                             cont++;
                             i--;
                         }
@@ -150,13 +150,13 @@ public class Partida {
                         //diagonales
               
                          cont=1;
-                        while (i>0 && col>0 && cont<4 && tablero.getCasilla(i,col)==turno){ //izquierda
+                        while (i>0 && col>0 && cont<4 && tablero.getCasilla(col,i)==turno){ //izquierda
                          cont++;
                          i--;
                          col--;
                         }
                         if (cont==4) this.ganador=turno;
-                        while (i>0 && col<tablero.getAncho() && cont<4 && tablero.getCasilla(i,col)==turno){ //derecha
+                        while (i>0 && col<tablero.getAncho() && cont<4 && tablero.getCasilla(col,i)==turno){ //derecha
                          cont++;
                          i--;
                          col--;
@@ -173,7 +173,7 @@ public class Partida {
 		//probar si la partida ha terminado, usar tras cada movimiento
             if (!terminada){
                int n=0;
-		while (n<tablero.getAncho() && tablero.getCasilla(tablero.getAlto()-1, n)!=Ficha.VACIA){ 
+		while (n<tablero.getAncho() && tablero.getCasilla(n, tablero.getAlto()-1)!=Ficha.VACIA){ 
 			n++;
 		}
 		if (n== (tablero.getAncho()-1)) terminada=true; //si tablero lleno
@@ -202,7 +202,7 @@ public class Partida {
 
 		boolean fullCol=false;
 		
-		if (tablero.getCasilla(0, w)!=Ficha.VACIA) 
+		if (tablero.getCasilla(w, 0)!=Ficha.VACIA) 
 			fullCol=true;
 		
 		if (isTerminada()|| f!=turno || fullCol) {
@@ -212,7 +212,7 @@ public class Partida {
 			
 		}	else {
 			
-			tablero.setCasilla(fila(w), w, f);
+			tablero.setCasilla(w , fila(w) , f);
                         moveStack[lastPos]=w;
 			advPointer();
                         if (numJugadas!=10){
@@ -237,7 +237,7 @@ public class Partida {
                  int h=tablero.getAlto();
                         h--;
                         
-			while (h>=0 && tablero.getCasilla(h, w)!=Ficha.VACIA){
+			while (h>=0 && tablero.getCasilla(w, h)!=Ficha.VACIA){
 				h--;
 				
 			}
