@@ -46,7 +46,7 @@ public class Controlador {
 				System.out.print("Introduce la columna: ");
 				st=scan(in);
 				col=Integer.parseInt(st);
-				partida.ejecutaMovimiento(partida.getTurno(), col-1);
+				partida.ejecutaMovimiento(partida.getTurno(), col);
                                 }
 			}
                         if (s.compareToIgnoreCase("reiniciar")==0){
