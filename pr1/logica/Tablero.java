@@ -1,6 +1,6 @@
 package tp.pr1.logica;
 
-import java.util.Arrays;
+
 
 public class Tablero {
 
@@ -34,7 +34,8 @@ public class Tablero {
 	}
 
 	public Ficha getCasilla(int w, int h){ 
-		
+		h--;
+		w--;
 			
 		if (h<0 ||w<0 ||h>=alto || w>=ancho){
 			
@@ -45,6 +46,8 @@ public class Tablero {
 	}
 	
 	public void setCasilla(int w, int h, Ficha f){
+		h--;
+		w--;
 			
 		if (!(h<0 ||w<0 ||h>=alto || w>=ancho)){
 			
@@ -96,22 +99,22 @@ public class Tablero {
 		//pinta tablero
 		String ret=("");
 		
-		for (int i=0;i<alto;i++){
+		for (int i=1;i<=alto;i++){ //fichas
 			ret+=('|');
-			for (int j=0;j<ancho;j++){
+			for (int j=1;j<=ancho;j++){
 				ret+=parserFicha(getCasilla(j,i));	
 			}
 			ret+=('|' + System.lineSeparator());
 		}
 		ret+=('+');
-		for (int k=0;k<ancho;k++){
+		for (int k=1;k<=ancho;k++){
 			ret+=('-');
 		}
 		ret+=('+' + System.lineSeparator());
 		
 		ret+=(' ');
-		for (int l=0;l<ancho;l++){
-			ret+=(l+1);
+		for (int l=1;l<=ancho;l++){
+			ret+=(l);
 		}
 		ret+=(' ' + System.lineSeparator());
 		return ret;

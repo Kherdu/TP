@@ -41,26 +41,26 @@ public class Controlador {
 			
 			if (s.compareToIgnoreCase("poner")==0){
 				if (partida.isTerminada()==true){
-                                    System.out.println("acabada");
-                                }else {
+                     System.out.println("acabada");
+				}else {
 				System.out.print("Introduce la columna: ");
 				st=scan(in);
 				col=Integer.parseInt(st);
 				partida.ejecutaMovimiento(partida.getTurno(), col);
-                                }
+                }
 			}
-                        if (s.compareToIgnoreCase("reiniciar")==0){
-                            partida.reset();
-                        }
-                        if (s.compareToIgnoreCase("salir")==0){
-                           System.exit(0);
-                        }
-                        if (s.compareToIgnoreCase("deshacer")==0){
-                            if(partida.undo()){
-                                System.out.println("deshecho");}
-                            else System.out.println("no");
-                          
-                        }
+		   else if (s.compareToIgnoreCase("reiniciar")==0){
+        	   partida.reset();}
+           
+		   else if (s.compareToIgnoreCase("salir")==0){
+               System.exit(0);}
+           
+		   else if (s.compareToIgnoreCase("deshacer")==0){
+               if(partida.undo()){
+                     System.out.println("deshecho");}
+           else System.out.println("no");}
+           
+           else System.out.println("comando incorrecto");
                         
 			
 	}

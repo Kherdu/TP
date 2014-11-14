@@ -94,25 +94,7 @@ public class Partida {
                 return this.turno;
 	}
 	
-	public Ficha searchCol(){
-		
-		//devuelve la ultima columna introducida
-		Ficha ret;
-		ret=Ficha.VACIA;
-		int n=moveStack[lastPos];
-		boolean flag=false;
-		int i=0;
-		while (i<tablero.getAlto() && !flag){
-			
-			if (tablero.getCasilla(n, i)!=Ficha.VACIA){
-				ret=tablero.getCasilla(n, i);
-				flag=true;
-			}
-		i++;
-		}
-			
-		return ret;
-	}
+	
 	
 	
 	
@@ -173,7 +155,7 @@ public class Partida {
 		//probar si la partida ha terminado, usar tras cada movimiento
             if (!terminada){
                int n=0;
-		while (n<tablero.getAncho() && tablero.getCasilla(n, tablero.getAlto()-1)!=Ficha.VACIA){ 
+		while (n<tablero.getAncho() && tablero.getCasilla(n,0)!=Ficha.VACIA){ 
 			n++;
 		}
 		if (n== (tablero.getAncho()-1)) terminada=true; //si tablero lleno
@@ -196,26 +178,32 @@ public class Partida {
 		return this.tablero;
 		
 	}
+	
 	public boolean ejecutaMovimiento(Ficha f, int w){
 		
 		boolean ret=true; //salida
-		boolean fullCol=false;
-		int colreal=w-1;
 		
-		if (tablero.getCasilla(colreal, tablero.getAlto())!=Ficha.VACIA) {
-			fullCol=true;
+		if (w<1 || w>tablero.getAncho()){ //si se intenta meter fuera del tablero
+			ret=false;
+			System.err.println("wutmovimiento Incorrecto");
+			
+		}
+		
+		if (tablero.getCasilla(w,fila(w))!=Ficha.VACIA) {
+			//si columna completa
 			ret=false;
 			System.err.println("Movimiento Incorrecto");
 		}
-		if (isTerminada()|| f!=turno) {
-			//si terminamos partida, el turno no es del jugador o la columna esta completa
+		else if (isTerminada()|| f!=turno) {
+			//si terminamos partida o el turno no es del jugador
 			ret=false;
+			System.err.println("movimiento incorrecto");
 			
 			
 		}	else {
-			
-			tablero.setCasilla(colreal , fila(colreal) , f);
-            moveStack[lastPos]=colreal;
+			int fila=fila(w);
+			tablero.setCasilla(w , fila(w) , f);
+            moveStack[lastPos]=w;
 			advPointer();
             if (numJugadas!=10){
               numJugadas++;
@@ -235,20 +223,38 @@ public class Partida {
 
 
         public int fila(int w){
-         
-                 int h=tablero.getAlto();
-                        h--;
+         //TODO
+        		 
+                 int fila=tablero.getAlto();        
                         
-			while (h>=0 && tablero.getCasilla(w, h)!=Ficha.VACIA){
-				h--;
+			while (fila>1 && tablero.getCasilla(w, fila)!=Ficha.VACIA){
+				fila--;
 				
 			}
                
                     
-            return h;
+            return fila;
             
         }
         
-
+    /*    public Ficha searchCol(){
+    		
+    		//devuelve la ultima columna introducida
+    		Ficha ret;
+    		ret=Ficha.VACIA;
+    		int n=moveStack[lastPos];
+    		boolean flag=false;
+    		int i=0;
+    		while (i<tablero.getAlto() && !flag){
+    			
+    			if (tablero.getCasilla(n, i)!=Ficha.VACIA){
+    				ret=tablero.getCasilla(n, i);
+    				flag=true;
+    			}
+    		i++;
+    		}
+    			
+    		return ret;
+    	}*/
 
 }
