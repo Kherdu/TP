@@ -43,21 +43,18 @@ public class Partida {
 		//deshacer movimiento
 		boolean ret=false;
 		
-		if (numJugadas != 0){
+		if (numJugadas > 0){
+			if(lastPos == 0)lastPos = 10;
 			
-			int h=0;
-			while (h<=tablero.getAlto() && tablero.getCasilla(h, moveStack[lastPos])!=Ficha.VACIA){
-				
-				h++;
-			}
-			tablero.setCasilla(h, moveStack[lastPos], Ficha.VACIA);
+			int pos=moveStack[lastPos-1];
+			int h=(fila(pos)+1); //
+		
+			tablero.setCasilla(pos,h, Ficha.VACIA);
 			ret=true;
 			numJugadas--;
 			fwdPointer();
-			
+			cambiaTurno();
 		}
-		
-		
 		return ret;
 	}
 	
@@ -83,10 +80,7 @@ public class Partida {
 	}
 	public Ficha getTurno(){
 		//saca el turno actual
-		
-                
 		Ficha ret=this.turno;
-		
 		if (terminada){
 			ret=Ficha.VACIA;
 		}
@@ -95,81 +89,80 @@ public class Partida {
 	}
 	
 	
-	
-	
-	
 	public Ficha getGanador(){
 		
 		//sacar ganador, comprobar vertical, horizontal y DIAGONAL.
 
-                           int col=moveStack[lastPos];
-		int i = fila(col);
+        int col=moveStack[lastPos]; //columna de la casilla
+		int i = (fila(col)+1); //fila de la casilla
                 Ficha ret= Ficha.VACIA;
-                    if ((tablero.getCasilla(col, i)==turno)){//para blancas
+                    if ((tablero.getCasilla(col, i)==turno)){
                         int j=col;
-                        int cont=1;
+                        int cont=0;//la propia casilla
                         //horizontal
                         while(j>0 && (tablero.getCasilla(j, i)==turno) && cont<4){//izquierda
                             cont++;
                             j--;
                         }
-                        j=col; //reiniciamos j
-                        while(j<(tablero.getAncho()-1) && (tablero.getCasilla(j, i)==turno) && cont<4){//derecha
+                        j=col+1; //reiniciamos j para contar a la derecha de la casilla
+                        while(j<=(tablero.getAncho()) && (tablero.getCasilla(j, i)==turno) && cont<4){//derecha
                             cont++;
-                            j--;
+                            j++;
                         }
                         if (cont==4) this.ganador=turno;
                         //fin horizontal
-                        cont=1;
+                        
+                        
+                        cont=0;
                         j=col;
                         //vertical
-                        while(i>0 && tablero.getCasilla(col, i)==turno && cont<4 ){
+                        while(i<=tablero.getAlto() && tablero.getCasilla(j, i)==turno && cont<4 ){
                             cont++;
-                            i--;
+                            i++;
                         }
                         if (cont==4) this.ganador=turno;
                         
                         //diagonales
-              
-                         cont=1;
-                        while (i>0 && col>0 && cont<4 && tablero.getCasilla(col,i)==turno){ //izquierda
-                         cont++;
-                         i--;
-                         col--;
+                        i=(fila(col)+1);
+                        cont=0;
+                        j=col;
+                        while (i<=tablero.getAlto() && j>0 && cont<4 && tablero.getCasilla(j,i)==turno){ //izquierda
+                        	cont++;
+                        	i++;
+                        	j--;
                         }
                         if (cont==4) this.ganador=turno;
-                        while (i>0 && col<tablero.getAncho() && cont<4 && tablero.getCasilla(col,i)==turno){ //derecha
+                        cont=0;
+                        j=col;
+                        i=(fila(col)+1);
+                        while (i<=tablero.getAlto() && j<=tablero.getAncho() && cont<4 && tablero.getCasilla(j,i)==turno){ //derecha
                          cont++;
-                         i--;
-                         col--;
+                         i++;
+                         j++;
                         }
                         if (cont==4) this.ganador=turno;
                     }
-                
-		
-		return ganador;
+                    if (ganador!=Ficha.VACIA) terminada=true;
+                    return ganador;
 	}
 	
 	public boolean isTerminada(){
 		
 		//probar si la partida ha terminado, usar tras cada movimiento
-            if (!terminada){
-               int n=0;
-		while (n<tablero.getAncho() && tablero.getCasilla(n,0)!=Ficha.VACIA){ 
-			n++;
-		}
-		if (n== (tablero.getAncho()-1)) terminada=true; //si tablero lleno
+        if (!terminada){
+        	int n=1;
+        	
+        	while (n<tablero.getAncho() && tablero.getCasilla(n,1)!=Ficha.VACIA){ 
+        		n++;
+        	}
+        	if (n==(tablero.getAncho())) terminada=true; //si tablero lleno==fila mas alta llena sin vacios
 		
-		n=0;
-               
-               if (getGanador()!=Ficha.VACIA){
-                terminada=true; //si hay ganador
-               }
+        	if (getGanador()!=Ficha.VACIA){
+        		terminada=true; //si hay ganador
+        	}
              
-            }
-	
-		
-		return terminada;
+        }
+        return terminada;
 	}
 	
 	
@@ -185,37 +178,45 @@ public class Partida {
 		
 		if (w<1 || w>tablero.getAncho()){ //si se intenta meter fuera del tablero
 			ret=false;
-			System.err.println("wutmovimiento Incorrecto");
+			System.err.println("Movimiento Incorrecto");
 			
 		}
-		
-		if (tablero.getCasilla(w,fila(w))!=Ficha.VACIA) {
+		else if (tablero.getCasilla(w,fila(w))!=Ficha.VACIA) {
 			//si columna completa
 			ret=false;
 			System.err.println("Movimiento Incorrecto");
 		}
-		else if (isTerminada()|| f!=turno) {
-			//si terminamos partida o el turno no es del jugador
+		else if (terminada) {
+			//si terminamos partida
 			ret=false;
-			System.err.println("movimiento incorrecto");
-			
-			
-		}	else {
+			System.err.println("Movimiento incorrecto");
+		}
+		else if (f!=turno){
+			//el turno no pertenece al jugador
+			ret=false;
+			System.err.println("Movimiento incorrecto");
+		} 
+		else {
 			int fila=fila(w);
 			tablero.setCasilla(w , fila(w) , f);
-            moveStack[lastPos]=w;
-			advPointer();
-            if (numJugadas!=10){
-              numJugadas++;
-			}   
-			if (turno==Ficha.BLANCA)
-               turno=Ficha.NEGRA;
-            else if (turno==Ficha.NEGRA)
-               turno=Ficha.BLANCA;
-                
-			
+			moveStack[lastPos]=w;
+            if (getGanador()!=Ficha.VACIA){
+            	System.out.println(tablero.toString());
+				System.out.print("Ganan las ");
+				if (turno==Ficha.BLANCA) 
+					System.out.println("blancas");
+				else if (turno==Ficha.NEGRA) 
+					System.out.println("negras");
+				
+			}else{ 
+				
+				advPointer();
+				if (numJugadas!=10){
+					numJugadas++;
+				}   
+				cambiaTurno();
+			}
 		}
-		
 		
 		
 		return ret;
@@ -223,9 +224,9 @@ public class Partida {
 
 
         public int fila(int w){
-         //TODO
+         //devuelve la primera fila vacia de la columna que le pasas
         		 
-                 int fila=tablero.getAlto();        
+            int fila=tablero.getAlto();        
                         
 			while (fila>1 && tablero.getCasilla(w, fila)!=Ficha.VACIA){
 				fila--;
@@ -237,24 +238,12 @@ public class Partida {
             
         }
         
-    /*    public Ficha searchCol(){
-    		
-    		//devuelve la ultima columna introducida
-    		Ficha ret;
-    		ret=Ficha.VACIA;
-    		int n=moveStack[lastPos];
-    		boolean flag=false;
-    		int i=0;
-    		while (i<tablero.getAlto() && !flag){
-    			
-    			if (tablero.getCasilla(n, i)!=Ficha.VACIA){
-    				ret=tablero.getCasilla(n, i);
-    				flag=true;
-    			}
-    		i++;
-    		}
-    			
-    		return ret;
-    	}*/
-
+        private void cambiaTurno(){
+        	if (turno==Ficha.BLANCA)
+				turno=Ficha.NEGRA;
+			else if (turno==Ficha.NEGRA)
+				turno=Ficha.BLANCA;
+        	
+        }
+    
 }

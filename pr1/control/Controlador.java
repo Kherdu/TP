@@ -2,6 +2,7 @@ package tp.pr1.control;
 
 import java.util.Scanner;
 
+import tp.pr1.logica.Ficha;
 import tp.pr1.logica.Partida;
 
 public class Controlador {
@@ -20,11 +21,15 @@ public class Controlador {
 		this.in=new Scanner(System.in);
 		
 			do{
-			
+				
 			lectura=null;
-			System.out.println(partida.getTablero().toString());;
-			System.out.println("juegan "+partida.getTurno().toString());
-			System.out.print("Que quieres hacer?: ");
+			System.out.print(partida.getTablero().toString());;
+			System.out.print("Juegan ");
+			if (partida.getTurno()==Ficha.BLANCA) 
+				System.out.println("blancas");
+			else if (partida.getTurno()==Ficha.NEGRA) 
+				System.out.println("negras");
+			System.out.print("Qué quieres hacer? ");
 			lectura=scan(in);
 			parse(lectura);
 			
@@ -56,11 +61,10 @@ public class Controlador {
                System.exit(0);}
            
 		   else if (s.compareToIgnoreCase("deshacer")==0){
-               if(partida.undo()){
-                     System.out.println("deshecho");}
-           else System.out.println("no");}
+               if(!partida.undo()) System.err.println("Imposible deshacer.");
+               
            
-           else System.out.println("comando incorrecto");
+		   } else System.err.println("orden incorrecta");
                         
 			
 	}

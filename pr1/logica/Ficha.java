@@ -4,3 +4,5 @@ public enum Ficha {
 
 	VACIA,BLANCA,NEGRA;
 }
+
+

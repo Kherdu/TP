@@ -117,6 +117,7 @@ public class Tablero {
 			ret+=(l);
 		}
 		ret+=(' ' + System.lineSeparator());
+		ret+=(System.lineSeparator());
 		return ret;
 	}
 	
