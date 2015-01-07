@@ -24,9 +24,9 @@ public class Partida {
 	this.ganador = Ficha.VACIA;
 	this.lastPos = 0;
 	this.numJugadas = 0;
-        this.height = reglas.getAlto();
-        this.width = reglas.getAncho();
-        this.juego = reglas;
+    this.height = reglas.getAlto();
+    this.width = reglas.getAncho();
+    this.juego = reglas;
 	}
 
     public boolean ejecutaMovimiento(Ficha f, int w) {

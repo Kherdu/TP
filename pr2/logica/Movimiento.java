@@ -2,11 +2,10 @@ package tp.pr2.logica;
 
 
 
-public class Movimiento {
+public abstract class Movimiento {
 
     public Ficha getJugador(){
     	
-        
         return Ficha.NEGRA;
     }
     
