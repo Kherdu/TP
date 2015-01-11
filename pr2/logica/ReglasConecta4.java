@@ -5,19 +5,143 @@ public class ReglasConecta4 implements ReglasJuego {
     private Tablero tablero;
     private final int alto;
     private final int ancho;
+    private Ficha ganador;
     
     public ReglasConecta4() {
 	
         this.ancho = 7;
         this.alto = 6;
-        
+        this.ganador=Ficha.VACIA;
         
     }
 
     @Override // hay que acerla aunque no se para que si ya esta en partida....
     public Ficha hayGanador(Movimiento ultimoMovimiento, Tablero t){
+    	// sacar ganador, comprobar vertical, horizontal y DIAGONAL.
+    	int cont = 0;
+
+    	// vertical
+    	for (int j = 1; j <= tablero.getAncho() && cont < 4 && !isGanador(); j++) {
+                cont = 0;// reiniciamos contador
+                
+            for (int i = 1; i <= tablero.getAlto() && cont < 4 && !isGanador(); i++) {
+    		if (tablero.getCasilla(j, i) != ultimoMovimiento.getJugador())
+                        cont = 0;
+                    else
+                        cont++;
+    		if (cont == 4) {
+                        ganador = ultimoMovimiento.getJugador();
+                        
+    		}
+                }
+    	}
+
+    	// horizontales
+    	for (int i = 1; i <= tablero.getAlto() && cont < 4 && !isGanador(); i++) {
+                cont = 0;// reiniciamos contador
+                
+                for (int j = 1; j <= tablero.getAncho() && cont < 4 && !isGanador(); j++) {
+                    if (tablero.getCasilla(j, i) != ultimoMovimiento.getJugador())
+                        cont = 0;
+    		else
+                        cont++;
+    		if (cont == 4) {
+                        ganador = ultimoMovimiento.getJugador();
+                        
+    		}
+                }
+    	}
+
+    	// diagonales hacia la derecha \
+    	// diagonales que empiezan con j=1
+    	for (int j = 1; j <= (tablero.getAncho() - 3) && cont < 4 && !isGanador(); j++) {
+                int i = 1;// Doble indice para saltar por la diagonal
+                int j2 = j;
+                cont = 0;
+                while (i <= tablero.getAlto() && j2 <= tablero.getAncho()
+                && cont < 4 && !isGanador()) {
+                    
+                
+    		if (tablero.getCasilla(j2, i) != ultimoMovimiento.getJugador())
+                        cont = 0;
+    		else
+                        cont++;
+    		if (cont == 4) {
+                        ganador = ultimoMovimiento.getJugador();
+                       
+    		}
+    		i++;
+    		j2++;
+                }
+            }
+
+            // diagonales hacia la derecha \
+    	// diagonales con i=1
+    	for (int i = 1; i <= (tablero.getAlto() - 3) && cont < 4 && !isGanador(); i++) {
+                int i2 = i;// Doble indice para saltar por la diagonal
+                int j = 1;
+                cont = 0;
+                while (i2 <= tablero.getAlto() && j <= tablero.getAncho()
+                && cont < 4 && !isGanador()) {
+                    
+    		if (tablero.getCasilla(j, i2) != ultimoMovimiento.getJugador())
+                        cont = 0;
+    		else
+                        cont++;
+    		if (cont == 4) {
+                        ganador = ultimoMovimiento.getJugador();
+                        
+    		}
+    		i2++;
+    		j++;
+                }
+    	}
+
+    	// diagonales hacia la izquierda /
+    	// diagonales con j=1
+    	for (int j = tablero.getAncho(); j >= (1 + 3) && cont < 4 && !isGanador(); j--) {
+                int i = 1;// Doble indice para saltar por la diagonal
+                int j2 = j;
+                cont = 0;
+                while (i <= tablero.getAlto() && j2 >= 1 && cont < 4 && !isGanador()) {
+    		if (tablero.getCasilla(j2, i) != ultimoMovimiento.getJugador())
+                        cont = 0;
+    		else
+                        cont++;
+    		if (cont == 4) {
+                        ganador = ultimoMovimiento.getJugador();
+                        
+    		}
+    		i++;
+    		j2--;
+                }
+    	}
+    	// diagonales hacia la izquierda /
+    	// diagonales con j=7
+    	for (int i = 1; i <= (tablero.getAlto() - 3) && cont < 4 && !isGanador(); i++) {
+                int i2 = i;// Doble indice para saltar por la diagonal
+                int j = tablero.getAncho();
+                cont = 0;
+                while (i2 <= tablero.getAlto() && j >= 1 && cont < 4 && !isGanador()) {
+    		if (tablero.getCasilla(j, i2) != ultimoMovimiento.getJugador())
+                        cont = 0;
+    		else
+                        cont++;
+    		if (cont == 4) {
+                        ganador = ultimoMovimiento.getJugador();
+                        
+    		}
+    		i2++;
+    		j--;
+                }
+    	}
+
+    	if (ganador != Ficha.VACIA) {
+                
+                ganador =ultimoMovimiento.getJugador();
+            }
+        return ganador;
         
-    return Ficha.BLANCA;
     
     }
 
@@ -62,6 +186,7 @@ public class ReglasConecta4 implements ReglasJuego {
         return true;
     }
 
+    
     @Override
     public int getAlto() {
         return alto;
@@ -72,6 +197,12 @@ public class ReglasConecta4 implements ReglasJuego {
         return ancho;
     }
     
+    public boolean isGanador(){
+    	boolean ret=false;
+    	
+    		if (ganador!=Ficha.BLANCA|| ganador!=Ficha.NEGRA) ret=true;
+    	return ret;
+    }
    
         
 }

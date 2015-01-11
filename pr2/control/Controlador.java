@@ -1,5 +1,8 @@
 package tp.pr2.control;
 import java.util.Scanner;
+
+import tp.pr2.logica.Movimiento;
+import tp.pr2.logica.MovimientoConecta4;
 import tp.pr2.logica.Partida;
 import tp.pr2.logica.ReglasConecta4;
 import tp.pr2.logica.Ficha;
@@ -7,9 +10,12 @@ public class Controlador {
     
     private Partida partida;
     private Scanner in;
+    private Movimiento m;
+    private String tipo; //si es co la partida es de complica, si es c4 conecta4
     
     public Controlador(Partida partida, Scanner in) {
 	this.partida = partida;
+	this.tipo="c4";
     }   
     
     public void run() {
@@ -37,22 +43,26 @@ public class Controlador {
 	in.close();
     }
     
-    	public void parse(String s) {
+    public void parse(String s) {
 		// parser-ejecucion
 		int col;
 		String st;
 		if (s.compareToIgnoreCase("poner") == 0) {
                     if (partida.isTerminada() == true) {
-			System.out.println("acabada");
+                    	System.out.println("acabada");
                     } else {
-			System.out.print("Introduce la columna: ");
-			st = in.nextLine();
-			col = Integer.parseInt(st);
-			partida.ejecutaMovimiento(partida.getTurno(), col);
+                    		System.out.print("Introduce la columna: ");
+                    		st = in.nextLine();
+                    		col = Integer.parseInt(st);
+                    		if(tipo.compareTo("c4")==0){
+                    			m= new MovimientoConecta4(col,partida.getTurno());
+                    			partida.ejecutaMovimiento(m);
+                    		} //else reglas co
                     }
 		} else if (s.compareToIgnoreCase("reiniciar") == 0) {
                     partida.reset(partida.getJuego());
                     System.out.print("Partida reiniciada.");
+					
 		} else if (s.compareToIgnoreCase("salir") == 0) {
 
                     System.exit(0);
@@ -66,15 +76,17 @@ public class Controlador {
                     if (st.compareToIgnoreCase("c4") == 0){
                         ReglasConecta4 reglas = new ReglasConecta4();
                         partida.reset(reglas);
+                        tipo="c4";
                     }else if(st.compareToIgnoreCase("co") == 0){
-                       //ReglasComplica reglas = new ReglasComplica();
+                        //ReglasComplica reglas = new ReglasComplica(); 
+                    	//incluir comprobacion si esta en un juego que no pueda re-elegirlo
                         System.out.print("Jugando al complica");
+                        tipo="co";
                     }else System.out.println("No te entiendo.");
                     
-                    
-                
+              
                 } else
 			System.err.println("No te entiendo.");
-                        
-	}
+    }                 
+		
 }

@@ -1,7 +1,8 @@
 package tp.pr2.logica;
 
 public class Partida {
-    private int height;
+   
+	private int height;
     private int width;
 
     private static int n = 10;
@@ -9,7 +10,7 @@ public class Partida {
     private Ficha turno; // jugador que tiene el turno
     private boolean terminada;
     private Ficha ganador; //
-    private int[] moveStack; // array posiciones
+    private Movimiento[] moveStack; // array posiciones, sustituir por clase nueva que guarde posicion y color de ficha
     private int lastPos; // puntero para array circular
     private int numJugadas;
     private ReglasJuego juego;
@@ -20,202 +21,46 @@ public class Partida {
 	tablero = reglas.iniciaTablero();
 	this.turno = reglas.jugadorInicial();
 	this.terminada = false;
-	this.moveStack = new int[n];
+	this.moveStack = new MovimientoConecta4[n];
 	this.ganador = Ficha.VACIA;
 	this.lastPos = 0;
 	this.numJugadas = 0;
     this.height = reglas.getAlto();
     this.width = reglas.getAncho();
     this.juego = reglas;
+    
 	}
 
-    public boolean ejecutaMovimiento(Ficha f, int w) {
-  boolean ret = true; // salida
-
-	if (w < 1 || w > tablero.getAncho()) { // si se intenta meter fuera del											// tablero
-            ret = false;
-            System.err.println("Movimiento incorrecto");
-	} else if (tablero.getCasilla(w, fila(w)) != Ficha.VACIA) {
-            // si columna completa
-            ret = false;
-            System.err.println("Movimiento incorrecto");
-	} else if (terminada) {
-            // si terminamos partida
-            ret = false;
-            System.err.println("Movimiento incorrecto");
-	} else if (f != turno) {
-            // el turno no pertenece al jugador
-            ret = false;
-            System.err.println("Movimiento incorrecto");
-        } else {
-            tablero.setCasilla(w, fila(w), f);
-            moveStack[lastPos] = w;
-            
-            if (getGanador() != Ficha.VACIA) {                
-		System.out.println(tablero.toString());
-		System.out.print("Ganan las ");
-                
-		if (turno == Ficha.BLANCA)
-                    System.out.println("blancas");
-		else if (turno == Ficha.NEGRA)
-                    System.out.println("negras");
-            } else {
-                advPointer();
-                    
-                if (numJugadas != 10) {
-                    numJugadas++;
-                }
-                    
-            cambiaTurno();                
-            }
-	}
-
-	return ret;
-	
+    public boolean ejecutaMovimiento(Movimiento mov) {
+    
+    	boolean ret=mov.ejecutaMovimiento(tablero);
+    	ganador= juego.hayGanador(mov, tablero);
+    	cambiaTurno();
+    	if (numJugadas != 10) {
+              numJugadas++;
+          }
+        advPointer();      
+      
+    	return ret;
+		
     }
     
     public Ficha getGanador() {
-	// sacar ganador, comprobar vertical, horizontal y DIAGONAL.
-	int cont = 0;
-
-	// vertical
-	for (int j = 1; j <= tablero.getAncho() && cont < 4 && !terminada; j++) {
-            cont = 0;// reiniciamos contador
-            
-            for (int i = 1; i <= tablero.getAlto() && cont < 4 && !terminada; i++) {
-		if (tablero.getCasilla(j, i) != getTurno())
-                    cont = 0;
-                else
-                    cont++;
-		if (cont == 4) {
-                    ganador = getTurno();
-                    terminada = true;
-		}
-            }
-	}
-
-	// horizontales
-	for (int i = 1; i <= tablero.getAlto() && cont < 4 && !terminada; i++) {
-            cont = 0;// reiniciamos contador
-            
-            for (int j = 1; j <= tablero.getAncho() && cont < 4 && !terminada; j++) {
-                if (tablero.getCasilla(j, i) != getTurno())
-                    cont = 0;
-		else
-                    cont++;
-		if (cont == 4) {
-                    ganador = getTurno();
-                    terminada = true;
-		}
-            }
-	}
-
-	// diagonales hacia la derecha \
-	// diagonales que empiezan con j=1
-	for (int j = 1; j <= (tablero.getAncho() - 3) && cont < 4 && !terminada; j++) {
-            int i = 1;// Doble indice para saltar por la diagonal
-            int j2 = j;
-            cont = 0;
-            while (i <= tablero.getAlto() && j2 <= tablero.getAncho()
-            && cont < 4 && !terminada) {
-                
-            
-		if (tablero.getCasilla(j2, i) != getTurno())
-                    cont = 0;
-		else
-                    cont++;
-		if (cont == 4) {
-                    ganador = getTurno();
-                    terminada = true;
-		}
-		i++;
-		j2++;
-            }
-        }
-
-        // diagonales hacia la derecha \
-	// diagonales con i=1
-	for (int i = 1; i <= (tablero.getAlto() - 3) && cont < 4 && !terminada; i++) {
-            int i2 = i;// Doble indice para saltar por la diagonal
-            int j = 1;
-            cont = 0;
-            while (i2 <= tablero.getAlto() && j <= tablero.getAncho()
-            && cont < 4 && !terminada) {
-                
-		if (tablero.getCasilla(j, i2) != getTurno())
-                    cont = 0;
-		else
-                    cont++;
-		if (cont == 4) {
-                    ganador = getTurno();
-                    terminada = true;
-		}
-		i2++;
-		j++;
-            }
-	}
-
-	// diagonales hacia la izquierda /
-	// diagonales con j=1
-	for (int j = tablero.getAncho(); j >= (1 + 3) && cont < 4 && !terminada; j--) {
-            int i = 1;// Doble indice para saltar por la diagonal
-            int j2 = j;
-            cont = 0;
-            while (i <= tablero.getAlto() && j2 >= 1 && cont < 4 && !terminada) {
-		if (tablero.getCasilla(j2, i) != getTurno())
-                    cont = 0;
-		else
-                    cont++;
-		if (cont == 4) {
-                    ganador = getTurno();
-                    terminada = true;
-		}
-		i++;
-		j2--;
-            }
-	}
-	// diagonales hacia la izquierda /
-	// diagonales con j=7
-	for (int i = 1; i <= (tablero.getAlto() - 3) && cont < 4 && !terminada; i++) {
-            int i2 = i;// Doble indice para saltar por la diagonal
-            int j = tablero.getAncho();
-            cont = 0;
-            while (i2 <= tablero.getAlto() && j >= 1 && cont < 4 && !terminada) {
-		if (tablero.getCasilla(j, i2) != getTurno())
-                    cont = 0;
-		else
-                    cont++;
-		if (cont == 4) {
-                    ganador = getTurno();
-                    terminada = true;
-		}
-		i2++;
-		j--;
-            }
-	}
-
-	if (ganador != Ficha.VACIA) {
-            terminada = true;
-            ganador = turno;
-        }
-    return ganador;
-    
-    }
-    
-    public Tablero getTablero() {
-
-	return this.tablero;
-
+	/*Devuelve el color del ganador. Sólo válido si la partida ya ha terminado (isTerminada() == true).
+    	Returns:
+    	Color del ganador. Si la partida terminó en tablas, Ficha.VACIA. Si la partida no ha terminado aún, el resultado es indeterminado.
+    */
+    	return ganador;
     }
     
     public Ficha getTurno() {
-	// saca el turno actual
-	Ficha ret = this.turno;
-	if (terminada) {
-            ret = Ficha.VACIA;
-	}
+		// saca el turno actual
+		Ficha ret = this.turno;
+		if (terminada) {
+			ret = Ficha.VACIA;
+		}
 
-	return ret;
+		return ret;
         
     }
     
@@ -246,13 +91,13 @@ public class Partida {
 
 	this.turno = Ficha.BLANCA;
 	this.terminada = false;
-	this.moveStack = new int[n];
+	this.moveStack = new MovimientoConecta4[n];
 	this.ganador = Ficha.VACIA;
 	this.lastPos = 0;
 	this.numJugadas = 0;
 	tablero.reset();
-        this.height = reglas.getAlto();
-        this.width = reglas.getAncho();
+    this.height = reglas.getAlto();
+    this.width = reglas.getAncho();
         
     }
 
@@ -260,7 +105,7 @@ public class Partida {
 	// deshacer movimiento
 	boolean ret = false;
 
-	if (numJugadas > 0) {
+	/*if (numJugadas > 0) {
             if (lastPos == 0)	lastPos = 10;
 
             int pos = moveStack[lastPos - 1];
@@ -271,8 +116,13 @@ public class Partida {
             numJugadas--;
             fwdPointer();
             cambiaTurno();
-	}
-        return ret;
+	}*/ 
+	
+	Movimiento deshaz;
+	deshaz=moveStack[lastPos-1];
+	deshaz.undo(tablero);
+    return ret;
+    	
     }
     
     public ReglasJuego getJuego() {
@@ -321,7 +171,11 @@ public class Partida {
 
     }
 
+	public Tablero getTablero() {
+		return tablero;
+	}
 
+    
     
     
 }
