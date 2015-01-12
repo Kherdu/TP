@@ -27,4 +27,10 @@ public class MovimientoComplica extends Movimiento {
 		
 	}
 
+	@Override
+	public int getColumna() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

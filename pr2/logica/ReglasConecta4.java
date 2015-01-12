@@ -163,7 +163,7 @@ public class ReglasConecta4 implements ReglasJuego {
         
     }
 
-    @Override // repito lo anterior
+    @Override 
     public Ficha siguienteTurno(Ficha ultimoEnPoner, Tablero t){
         Ficha ret = Ficha.VACIA;
         if (ultimoEnPoner == Ficha.BLANCA){
@@ -179,11 +179,21 @@ public class ReglasConecta4 implements ReglasJuego {
         return ret;
     }
  
-    @Override // repito lo anterior....
+    @Override 
     public boolean tablas(Ficha ultimoEnPoner, Tablero t){
-    
+    	boolean ret=false;
+    	int n = 1;
+
+        while (n < tablero.getAncho()
+        && tablero.getCasilla(n, 1) != Ficha.VACIA) {
+	
+            n++;
+        }
         
-        return true;
+        if (n == (tablero.getAncho()))
+        	ret = true;
+    	
+        return ret;
     }
 
     

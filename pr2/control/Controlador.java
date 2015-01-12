@@ -71,7 +71,7 @@ public class Controlador {
                     if (!partida.undo())
 			System.err.println("Imposible deshacer.");
 
-		}else if (s.compareToIgnoreCase("jugar") == 0){
+		} else if (s.compareToIgnoreCase("jugar") == 0){
                     st = in.nextLine();
                     if (st.compareToIgnoreCase("c4") == 0){
                         ReglasConecta4 reglas = new ReglasConecta4();

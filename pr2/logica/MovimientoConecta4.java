@@ -32,35 +32,17 @@ public class MovimientoConecta4 extends Movimiento {
     
         boolean ret = true; // salida
 
-	if (columna < 1 || columna > tab.getAncho()) { // si se intenta meter fuera del tablero
+	if (columna < 1 || columna > tab.getAncho() || fila(columna,tab)==0) { // si se intenta meter fuera del tablero
             ret = false;
             System.err.println("Movimiento incorrecto");
-	} else if (tab.getCasilla(columna, fila(columna, tab)) != Ficha.VACIA) {
+	} else if (tab.getCasilla(columna, (fila(columna, tab))) != Ficha.VACIA) {
             // si columna completa
             ret = false;
             System.err.println("Movimiento incorrecto");
-            /*} else if (terminada) {
-            // si terminamos partida
-            ret = false;
-            System.err.println("Movimiento incorrecto");
-			} else if (ficha !=color) {
-            // el turno no pertenece al jugador
-            ret = false;
-            System.err.println("Movimiento incorrecto");
-        	} else {*/
+           
 	}
             tab.setCasilla(columna, fila(columna, tab), ficha);
-            //---->registro movimientos    moveStack[lastPos] = columna;
-            /*   if (hayGanador() != Ficha.VACIA) {                
-			System.out.println(tab.toString());
-			System.out.print("Ganan las ");
-                
-			if (turno == Ficha.BLANCA)
-            System.out.println("blancas");
-			else if (turno == Ficha.NEGRA)
-            System.out.println("negras");
-            } else {*/
-                           
+             
             
 	
 
@@ -71,7 +53,8 @@ public class MovimientoConecta4 extends Movimiento {
     @Override
     public void undo(Tablero tab){
         
-    
+    tab.setCasilla(columna,(fila(columna,tab)+1), Ficha.VACIA);
+   
     }
 
     @Override
@@ -79,17 +62,19 @@ public class MovimientoConecta4 extends Movimiento {
     	
     return ficha;
     }
+    
+    
+    
     public int fila(int w, Tablero tablero) {
     	// devuelve la primera fila vacia de la columna que le pasas, si esta
-    	// llena devuelve 1
+    	// llena devuelve 0
 
     	int fila = tablero.getAlto();
 
-    	while (fila > 1 && tablero.getCasilla(w, fila) != Ficha.VACIA) {
-                fila--;
-
+    	while(tablero.getCasilla(w, fila)!=Ficha.VACIA && fila>=1){
+    		fila--;
     	}
-
+    	
     	return fila;
 
         }
