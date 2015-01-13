@@ -10,8 +10,8 @@ public class MovimientoComplica extends Movimiento {
 	 public MovimientoComplica( int donde, Ficha color) {
 		this.ficha=color;
 		this.columna=donde;
-		
-		ultimaBorrada=0;
+		this.ultimaBorrada=0;
+		this.borrados= new MovimientoComplica[10];
 	}
 
 	
