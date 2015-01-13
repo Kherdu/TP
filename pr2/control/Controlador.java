@@ -6,16 +6,17 @@ import tp.pr2.logica.MovimientoConecta4;
 import tp.pr2.logica.Partida;
 import tp.pr2.logica.ReglasConecta4;
 import tp.pr2.logica.Ficha;
+import tp.pr2.logica.ReglasComplica;
+
+
 public class Controlador {
     
     private Partida partida;
     private Scanner in;
     private Movimiento m;
-    private String tipo; //si es co la partida es de complica, si es c4 conecta4
     
     public Controlador(Partida partida, Scanner in) {
 	this.partida = partida;
-	this.tipo="c4";
     }   
     
     public void run() {
@@ -76,12 +77,11 @@ public class Controlador {
                     if (st.compareToIgnoreCase("c4") == 0){
                         ReglasConecta4 reglas = new ReglasConecta4();
                         partida.reset(reglas);
-                        tipo="c4";
+                        System.out.print("Jugando al conecta 4");
                     }else if(st.compareToIgnoreCase("co") == 0){
-                        //ReglasComplica reglas = new ReglasComplica(); 
-                    	//incluir comprobacion si esta en un juego que no pueda re-elegirlo
+                        ReglasComplica reglas = new ReglasComplica(); 
+                    	partida.reset(reglas);
                         System.out.print("Jugando al complica");
-                        tipo="co";
                     }else System.out.println("No te entiendo.");
                     
               

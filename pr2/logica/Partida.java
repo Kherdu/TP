@@ -63,7 +63,11 @@ public class Partida {
 
 	this.turno = Ficha.BLANCA;
 	this.terminada = false;
-	this.moveStack = new MovimientoConecta4[n]; //añadir if dependiendo de si son reglas de c4 o co
+	if (reglas.getTipo() == "c4"){
+		this.moveStack = new MovimientoConecta4[n]; 
+	}else if(reglas.getTipo() == "co"){
+		this.moveStack = new MovimientoComplica[n];	
+	}
 	this.ganador = Ficha.VACIA;
 	this.lastPos = 0;
 	this.numJugadas = 0;
@@ -82,7 +86,7 @@ public class Partida {
     	}else{
     		ret=mov.ejecutaMovimiento(tablero);
     		moveStack[lastPos]=mov;
-    		avanzaTurno();      
+    		if (ret) avanzaTurno();      
     	}
     	ganador= juego.hayGanador(mov, tablero);
     	if (juego.tablas(mov.getJugador(),tablero)||ganador!=Ficha.VACIA){

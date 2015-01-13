@@ -6,13 +6,14 @@ public class ReglasComplica implements ReglasJuego {
 	private final int alto;
 	private final int ancho;
 	private Ficha ganador;
+	private String tipo;
 	
 	public ReglasComplica() {
 		
 		this.ancho = 4;
         this.alto = 7;
         this.ganador=Ficha.VACIA;
-		
+		this.tipo = "co";
 	}
 
 	@Override
@@ -65,4 +66,8 @@ public class ReglasComplica implements ReglasJuego {
 		return ancho;
 	}
 
+	@Override
+	public String getTipo() {
+			return tipo;
+		}
 }

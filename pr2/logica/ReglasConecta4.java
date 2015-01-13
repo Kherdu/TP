@@ -6,13 +6,14 @@ public class ReglasConecta4 implements ReglasJuego {
     private final int alto;
     private final int ancho;
     private Ficha ganador;
+    private String tipo;
     
     public ReglasConecta4() {
 	
         this.ancho = 7;
         this.alto = 6;
         this.ganador=Ficha.VACIA;
-        
+        this.tipo = "c4";
     }
 
     @Override // hay que acerla aunque no se para que si ya esta en partida....
@@ -216,6 +217,13 @@ public class ReglasConecta4 implements ReglasJuego {
     		if (ganador!=Ficha.VACIA) ret=true;
     	return ret;
     }
+
+
+    @Override
+    public String getTipo() {
+		return tipo;
+	}
    
+    
         
 }
