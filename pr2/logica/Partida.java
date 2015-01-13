@@ -21,7 +21,11 @@ public class Partida {
 	this.tablero = reglas.iniciaTablero();
 	this.turno = reglas.jugadorInicial();
 	this.terminada = false;
-	this.moveStack = new MovimientoConecta4[n];
+	if (reglas.getTipo() == "c4"){
+		this.moveStack = new MovimientoConecta4[n]; 
+	}else if(reglas.getTipo() == "co"){
+		this.moveStack = new MovimientoComplica[n];	
+	}
 	this.ganador = Ficha.VACIA;
 	this.lastPos = 0;
 	this.numJugadas = 0;
