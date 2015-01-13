@@ -107,12 +107,13 @@ public class Partida {
     public boolean undo() {
 	// deshacer movimiento
 	boolean ret = false;
-	
-	if (numJugadas>0 && lastPos>0){
+	if (numJugadas>0 && lastPos>=0){
 		Movimiento deshaz;
-		deshaz=moveStack[lastPos-1];
-		deshaz.undo(tablero);
+		
 		retrocedeTurno();
+		deshaz=moveStack[lastPos];
+		deshaz.undo(tablero);
+		
 		ret=true;
 	}
     return ret;

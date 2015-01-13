@@ -10,7 +10,7 @@ public class MovimientoComplica extends Movimiento {
 	 public MovimientoComplica( int donde, Ficha color) {
 		this.ficha=color;
 		this.columna=donde;
-		borrados=null;
+		
 		ultimaBorrada=0;
 	}
 
@@ -39,23 +39,27 @@ public class MovimientoComplica extends Movimiento {
 	
 	@Override
 	public boolean ejecutaMovimiento(Tablero tab) {
+		
 		 boolean ret = true; // salida
 		 MovimientoComplica mov= new MovimientoComplica(columna,tab.getCasilla(columna, tab.getAlto()));
+		 
+	 if (columna < 1 || columna > tab.getAncho() ) { // si se intenta meter fuera del tablero
+         ret = false;
+         System.err.println("Movimiento incorrecto");
+	 } else {
 		 if( fila(columna,tab)==0){ //si columna llena
 			
 			borrados[ultimaBorrada]=mov;
 			ultimaBorrada++;
 			bajaColumna(tab,columna);
 			
-		 }if (columna < 1 || columna > tab.getAncho() ) { // si se intenta meter fuera del tablero
-		            ret = false;
-		            System.err.println("Movimiento incorrecto");
-		 } 
+		 }
 		 
 		 tab.setCasilla(columna, fila(columna, tab), ficha); //si no esta llena movimiento normal y guardar vacio en el array
 		 	mov.setFicha(Ficha.VACIA);
 		 	borrados[ultimaBorrada]=mov;
-			ultimaBorrada++;       
+			advPila(); 
+	 }
 		 return ret;
 	}
 
@@ -86,6 +90,17 @@ public class MovimientoComplica extends Movimiento {
 			 t.setCasilla(w, i+1, aux);
 		 }
 		 t.setCasilla(w, 1, Ficha.VACIA);//vaciamos la de arriba para luego colocar
+	 }
+	 
+	 private void advPila(){
+		 ultimaBorrada++;
+		 if (ultimaBorrada==10) ultimaBorrada=0;
+			 
+		 
+	 }
+	 private void fwdPila(){
+		 ultimaBorrada--;
+		 if (ultimaBorrada==0) ultimaBorrada=9;
 	 }
 	
 

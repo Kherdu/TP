@@ -17,7 +17,7 @@ public class ReglasComplica implements ReglasJuego {
 
 	@Override
 	public Ficha hayGanador(Movimiento ultimoMovimiento, Tablero t) {
-		// TODO Auto-generated method stub
+		// tiene que contar el numero de 4 en rayas, hay que comprobar esto antes que el ganador... absurdo en este modo?
 		return null;
 	}
 
@@ -50,7 +50,7 @@ public class ReglasComplica implements ReglasJuego {
 
 	@Override
 	public boolean tablas(Ficha ultimoEnPoner, Tablero t) {
-		// tiene que contar el numero de 4 en rayas, hay que comprobar esto antes que el ganador... absurdo en este modo?
+		
 		
 		return false;
 	}
