@@ -18,14 +18,15 @@ public class ReglasConecta4 implements ReglasJuego {
     @Override // hay que acerla aunque no se para que si ya esta en partida....
     public Ficha hayGanador(Movimiento ultimoMovimiento, Tablero t){
     	// sacar ganador, comprobar vertical, horizontal y DIAGONAL.
+    	ganador = Ficha.VACIA;
     	int cont = 0;
 
     	// vertical
-    	for (int j = 1; j <= tablero.getAncho() && cont < 4 && !isGanador(); j++) {
+    	for (int j = 1; j <= t.getAncho() && cont < 4 && !isGanador(); j++) {
                 cont = 0;// reiniciamos contador
                 
-            for (int i = 1; i <= tablero.getAlto() && cont < 4 && !isGanador(); i++) {
-    		if (tablero.getCasilla(j, i) != ultimoMovimiento.getJugador())
+            for (int i = 1; i <= t.getAlto() && cont < 4 && !isGanador(); i++) {
+    		if (t.getCasilla(j, i) != ultimoMovimiento.getJugador())
                         cont = 0;
                     else
                         cont++;
@@ -37,11 +38,11 @@ public class ReglasConecta4 implements ReglasJuego {
     	}
 
     	// horizontales
-    	for (int i = 1; i <= tablero.getAlto() && cont < 4 && !isGanador(); i++) {
+    	for (int i = 1; i <= t.getAlto() && cont < 4 && !isGanador(); i++) {
                 cont = 0;// reiniciamos contador
                 
-                for (int j = 1; j <= tablero.getAncho() && cont < 4 && !isGanador(); j++) {
-                    if (tablero.getCasilla(j, i) != ultimoMovimiento.getJugador())
+                for (int j = 1; j <= t.getAncho() && cont < 4 && !isGanador(); j++) {
+                    if (t.getCasilla(j, i) != ultimoMovimiento.getJugador())
                         cont = 0;
     		else
                         cont++;
@@ -54,15 +55,15 @@ public class ReglasConecta4 implements ReglasJuego {
 
     	// diagonales hacia la derecha \
     	// diagonales que empiezan con j=1
-    	for (int j = 1; j <= (tablero.getAncho() - 3) && cont < 4 && !isGanador(); j++) {
+    	for (int j = 1; j <= (t.getAncho() - 3) && cont < 4 && !isGanador(); j++) {
                 int i = 1;// Doble indice para saltar por la diagonal
                 int j2 = j;
                 cont = 0;
-                while (i <= tablero.getAlto() && j2 <= tablero.getAncho()
+                while (i <= t.getAlto() && j2 <= t.getAncho()
                 && cont < 4 && !isGanador()) {
                     
                 
-    		if (tablero.getCasilla(j2, i) != ultimoMovimiento.getJugador())
+    		if (t.getCasilla(j2, i) != ultimoMovimiento.getJugador())
                         cont = 0;
     		else
                         cont++;
@@ -77,14 +78,14 @@ public class ReglasConecta4 implements ReglasJuego {
 
             // diagonales hacia la derecha \
     	// diagonales con i=1
-    	for (int i = 1; i <= (tablero.getAlto() - 3) && cont < 4 && !isGanador(); i++) {
+    	for (int i = 1; i <= (t.getAlto() - 3) && cont < 4 && !isGanador(); i++) {
                 int i2 = i;// Doble indice para saltar por la diagonal
                 int j = 1;
                 cont = 0;
-                while (i2 <= tablero.getAlto() && j <= tablero.getAncho()
+                while (i2 <= t.getAlto() && j <= t.getAncho()
                 && cont < 4 && !isGanador()) {
                     
-    		if (tablero.getCasilla(j, i2) != ultimoMovimiento.getJugador())
+    		if (t.getCasilla(j, i2) != ultimoMovimiento.getJugador())
                         cont = 0;
     		else
                         cont++;
@@ -99,12 +100,12 @@ public class ReglasConecta4 implements ReglasJuego {
 
     	// diagonales hacia la izquierda /
     	// diagonales con j=1
-    	for (int j = tablero.getAncho(); j >= (1 + 3) && cont < 4 && !isGanador(); j--) {
+    	for (int j = t.getAncho(); j >= (1 + 3) && cont < 4 && !isGanador(); j--) {
                 int i = 1;// Doble indice para saltar por la diagonal
                 int j2 = j;
                 cont = 0;
-                while (i <= tablero.getAlto() && j2 >= 1 && cont < 4 && !isGanador()) {
-    		if (tablero.getCasilla(j2, i) != ultimoMovimiento.getJugador())
+                while (i <= t.getAlto() && j2 >= 1 && cont < 4 && !isGanador()) {
+    		if (t.getCasilla(j2, i) != ultimoMovimiento.getJugador())
                         cont = 0;
     		else
                         cont++;
@@ -118,12 +119,12 @@ public class ReglasConecta4 implements ReglasJuego {
     	}
     	// diagonales hacia la izquierda /
     	// diagonales con j=7
-    	for (int i = 1; i <= (tablero.getAlto() - 3) && cont < 4 && !isGanador(); i++) {
+    	for (int i = 1; i <= (t.getAlto() - 3) && cont < 4 && !isGanador(); i++) {
                 int i2 = i;// Doble indice para saltar por la diagonal
-                int j = tablero.getAncho();
+                int j = t.getAncho();
                 cont = 0;
-                while (i2 <= tablero.getAlto() && j >= 1 && cont < 4 && !isGanador()) {
-    		if (tablero.getCasilla(j, i2) != ultimoMovimiento.getJugador())
+                while (i2 <= t.getAlto() && j >= 1 && cont < 4 && !isGanador()) {
+    		if (t.getCasilla(j, i2) != ultimoMovimiento.getJugador())
                         cont = 0;
     		else
                         cont++;
@@ -212,7 +213,7 @@ public class ReglasConecta4 implements ReglasJuego {
     public boolean isGanador(){
     	boolean ret=false;
     	
-    		if (ganador!=Ficha.BLANCA|| ganador!=Ficha.NEGRA) ret=true;
+    		if (ganador!=Ficha.VACIA) ret=true;
     	return ret;
     }
    
