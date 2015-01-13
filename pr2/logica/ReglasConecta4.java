@@ -145,7 +145,7 @@ public class ReglasConecta4 implements ReglasJuego {
     
     }
 
-    @Override // hecha aunque no se para que si ya esta en partida...
+    @Override 
     public Tablero iniciaTablero(){
         
         
@@ -156,7 +156,7 @@ public class ReglasConecta4 implements ReglasJuego {
     }
 
    
-    @Override // repito lo anterior....
+    @Override 
     public Ficha jugadorInicial(){
     
         return Ficha.BLANCA;

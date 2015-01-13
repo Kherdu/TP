@@ -5,8 +5,9 @@ public class MovimientoConecta4 extends Movimiento {
     private int columna;
     
   
-
-	public Ficha getFicha() {
+	@Override
+	public Ficha getJugador(){
+	    	
 		return ficha;
 	}
 
@@ -57,14 +58,7 @@ public class MovimientoConecta4 extends Movimiento {
    
     }
 
-    @Override
-    public Ficha getJugador(){
-    	
-    return ficha;
-    }
-    
-    
-    
+  
     public int fila(int w, Tablero tablero) {
     	// devuelve la primera fila vacia de la columna que le pasas, si esta
     	// llena devuelve 0

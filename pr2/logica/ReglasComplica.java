@@ -1,9 +1,18 @@
 package tp.pr2.logica;
 
 public class ReglasComplica implements ReglasJuego {
-
+	
+	private Tablero tablero;
+	private final int alto;
+	private final int ancho;
+	private Ficha ganador;
+	
 	public ReglasComplica() {
-		// TODO Auto-generated constructor stub
+		
+		this.ancho = 4;
+        this.alto = 7;
+        this.ganador=Ficha.VACIA;
+		
 	}
 
 	@Override
@@ -14,38 +23,46 @@ public class ReglasComplica implements ReglasJuego {
 
 	@Override
 	public Tablero iniciaTablero() {
-		// TODO Auto-generated method stub
-		return null;
+		tablero = new Tablero(this.ancho, this.alto);
+        return tablero;
 	}
 
 	@Override
 	public Ficha jugadorInicial() {
-		// TODO Auto-generated method stub
-		return null;
+		 return Ficha.BLANCA;
 	}
 
 	@Override
 	public Ficha siguienteTurno(Ficha ultimoEnPoner, Tablero t) {
-		// TODO Auto-generated method stub
-		return null;
+		 Ficha ret = Ficha.VACIA;
+	        if (ultimoEnPoner == Ficha.BLANCA){
+	            
+	            ret = Ficha.NEGRA;
+	            
+	        }else if (ultimoEnPoner == Ficha.NEGRA){
+	            
+	            ret = Ficha.BLANCA;
+	            
+	        } 
+	        
+	        return ret;
 	}
 
 	@Override
 	public boolean tablas(Ficha ultimoEnPoner, Tablero t) {
-		// TODO Auto-generated method stub
+		// tiene que contar el numero de 4 en rayas, hay que comprobar esto antes que el ganador... absurdo en este modo?
+		
 		return false;
 	}
 
 	@Override
 	public int getAlto() {
-		// TODO Auto-generated method stub
-		return 0;
+		 return alto;
 	}
 
 	@Override
 	public int getAncho() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ancho;
 	}
 
 }
