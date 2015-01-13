@@ -89,17 +89,27 @@ public class Partida {
     		terminada=true;
     	}
     	return ret;
-		
+    	/*
+    	boolean ret=mov.ejecutaMovimiento(tablero);
+    	if (ret && mov.getJugador()==turno && ganador==Ficha.VACIA){
+    		moveStack[lastPos]=mov;
+    		avanzaTurno();  
+    		
+    	}
+    	ganador= juego.hayGanador(mov, tablero);
+    	if (juego.tablas(mov.getJugador(),tablero)||ganador!=Ficha.VACIA){
+    		terminada=true;
+    	}
+    	return ret;
+    */
     }
     
     public boolean undo() {
 	// deshacer movimiento
 	boolean ret = false;
-
-
+	
 	if (numJugadas>0 && lastPos>0){
 		Movimiento deshaz;
-		
 		deshaz=moveStack[lastPos-1];
 		deshaz.undo(tablero);
 		retrocedeTurno();

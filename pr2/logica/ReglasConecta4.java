@@ -181,16 +181,18 @@ public class ReglasConecta4 implements ReglasJuego {
  
     @Override 
     public boolean tablas(Ficha ultimoEnPoner, Tablero t){
+    	
+    	//comprueba la fila superior de todo el tablero
     	boolean ret=false;
     	int n = 1;
 
-        while (n < tablero.getAncho()
-        && tablero.getCasilla(n, 1) != Ficha.VACIA) {
+        while (n <= t.getAncho()
+        && t.getCasilla(n, 1) != Ficha.VACIA) {
 	
             n++;
         }
         
-        if (n == (tablero.getAncho()))
+        if (n == (t.getAncho()+1))
         	ret = true;
     	
         return ret;
