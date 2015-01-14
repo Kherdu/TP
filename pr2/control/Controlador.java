@@ -59,7 +59,8 @@ public class Controlador {
                     } else {
                     		System.out.print("Introduce la columna: ");
                     		st = in.nextLine();
-                    		col = Integer.parseInt(st);
+                    	
+                    		col = Integer.parseInt(st.trim());
                     		if(partida.getJuego().getTipo()==Juego.CONECTA4){ //creamos movimiento tipo c4 o co segun sea un juego u otro
                     			m= new MovimientoConecta4(col,partida.getTurno());
                     			partida.ejecutaMovimiento(m);
@@ -80,22 +81,18 @@ public class Controlador {
                     if (!partida.undo())
 			System.err.println("Imposible deshacer.");
 
-		} else if (s.compareToIgnoreCase("jugar") == 0){
-				System.out.println("a que?");
-                    st = in.nextLine();
-                    if (st.compareToIgnoreCase("c4") == 0){
-                        ReglasConecta4 reglas = new ReglasConecta4();
-                        partida.reset(reglas);
-                        System.out.print("Jugando al conecta 4");
-                    }else if(st.compareToIgnoreCase("co") == 0){
-                        ReglasComplica reglas = new ReglasComplica(); 
-                    	partida.reset(reglas);
-                        System.out.print("Jugando al complica");
-                    }else System.out.println("No te entiendo.");
-                    
-              
-                } else
-			System.err.println("No te entiendo.");
+		} else if (s.compareToIgnoreCase("jugar c4") == 0){
+			 ReglasConecta4 reglas = new ReglasConecta4();
+             partida.reset(reglas);
+             System.out.println("Partida reiniciada.");
+		}else if (s.compareToIgnoreCase("jugar co") == 0){
+			 ReglasComplica reglas = new ReglasComplica();
+             partida.reset(reglas);
+             System.out.println("Partida reiniciada.");
+	
+        }else System.out.println("No te entiendo.");
+		
+		
     }                 
 		
 }

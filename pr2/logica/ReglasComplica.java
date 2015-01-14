@@ -221,6 +221,10 @@ public class ReglasComplica implements ReglasJuego {
 						ganador = Ficha.NEGRA;
 					}else ganador = Ficha.BLANCA;
 				}
+				if (vecesGanaUltimo > 0 && vecesGanaContrario>0) {
+					ganador=Ficha.VACIA;
+				}
+				
 				return ganador;
 			}
 
