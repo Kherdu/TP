@@ -21,9 +21,9 @@ public class Partida {
 	this.tablero = reglas.iniciaTablero();
 	this.turno = reglas.jugadorInicial();
 	this.terminada = false;
-	if (reglas.getTipo() == "c4"){
+	if (reglas.getTipo() == Juego.CONECTA4){
 		this.moveStack = new MovimientoConecta4[n]; 
-	}else if(reglas.getTipo() == "co"){
+	}else if(reglas.getTipo() == Juego.COMPLICA){
 		this.moveStack = new MovimientoComplica[n];	
 	}
 	this.ganador = Ficha.VACIA;
@@ -67,18 +67,21 @@ public class Partida {
 
 	this.turno = Ficha.BLANCA;
 	this.terminada = false;
-	if (reglas.getTipo() == "c4"){
+	if (reglas.getTipo() == Juego.CONECTA4){
 		this.moveStack = new MovimientoConecta4[n]; 
-	}else if(reglas.getTipo() == "co"){
+		this.juego= new ReglasConecta4();
+	}else if(reglas.getTipo() == Juego.COMPLICA){
 		this.moveStack = new MovimientoComplica[n];	
+		this.juego= new ReglasComplica();
 	}
 	this.ganador = Ficha.VACIA;
 	this.lastPos = 0;
 	this.numJugadas = 0;
-	tablero.reset();
+	
     this.height = reglas.getAlto();
     this.width = reglas.getAncho();
-        
+    this.tablero= new Tablero(width,height);
+    
     }
 
     

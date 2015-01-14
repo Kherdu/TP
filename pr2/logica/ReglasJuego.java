@@ -23,7 +23,7 @@ public interface ReglasJuego {
     
     int getAncho();
     
-    String getTipo();
+    Juego getTipo();
     
  
 }

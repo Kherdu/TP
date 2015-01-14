@@ -50,7 +50,7 @@ public class MovimientoComplica extends Movimiento {
 		 if( fila(columna,tab)==0){ //si columna llena
 			
 			borrados[ultimaBorrada]=mov;
-			ultimaBorrada++;
+			advPila();
 			bajaColumna(tab,columna);
 			
 		 }
@@ -65,7 +65,16 @@ public class MovimientoComplica extends Movimiento {
 
 	@Override
 	public void undo(Tablero tab) {
+		 
+		if (fila(columna,tab)>0){ //columna no llena
+			tab.setCasilla(columna,(fila(columna,tab)+1), Ficha.VACIA);
+		}
 		
+		else{ 
+			subeColumna(tab,columna);
+			tab.setCasilla(columna, tab.getAlto(), borrados[ultimaBorrada-1].getJugador());
+		}
+		fwdPila();
 		
 	}
 
@@ -90,6 +99,16 @@ public class MovimientoComplica extends Movimiento {
 			 t.setCasilla(w, i+1, aux);
 		 }
 		 t.setCasilla(w, 1, Ficha.VACIA);//vaciamos la de arriba para luego colocar
+	 }
+	 
+	 public void subeColumna(Tablero t, int w){
+		 //
+		 Ficha aux;
+		 for (int i=2;i<=t.getAlto();i++){ //subimos todas las fichas una casilla, deshechando la ficha de arriba de todo (w,0)
+			 aux=t.getCasilla(w, i); 
+			 t.setCasilla(w, i-1, aux);
+		 }
+		 
 	 }
 	 
 	 private void advPila(){

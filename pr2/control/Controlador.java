@@ -1,6 +1,7 @@
 package tp.pr2.control;
 import java.util.Scanner;
 
+import tp.pr2.logica.Juego;
 import tp.pr2.logica.Movimiento;
 import tp.pr2.logica.MovimientoComplica;
 import tp.pr2.logica.MovimientoConecta4;
@@ -15,11 +16,12 @@ public class Controlador {
     private Partida partida;
     private Scanner in;
     private Movimiento m;
-    private String tipo;
+    
     
     public Controlador(Partida partida, Scanner in) {
 	this.partida = partida;
-	this.tipo="c4"; //por defecto jugamos al c4
+	
+	
     }   
     
     public void run() {
@@ -58,10 +60,10 @@ public class Controlador {
                     		System.out.print("Introduce la columna: ");
                     		st = in.nextLine();
                     		col = Integer.parseInt(st);
-                    		if(tipo.compareTo("c4")==0){ //creamos movimiento tipo c4 o co segun sea un juego u otro
+                    		if(partida.getJuego().getTipo()==Juego.CONECTA4){ //creamos movimiento tipo c4 o co segun sea un juego u otro
                     			m= new MovimientoConecta4(col,partida.getTurno());
                     			partida.ejecutaMovimiento(m);
-                    		} else if (tipo.compareTo("co")==0){
+                    		} else if (partida.getJuego().getTipo()==Juego.COMPLICA){
                     			m= new MovimientoComplica(col,partida.getTurno());
                     			partida.ejecutaMovimiento(m);
                     		}
@@ -79,6 +81,7 @@ public class Controlador {
 			System.err.println("Imposible deshacer.");
 
 		} else if (s.compareToIgnoreCase("jugar") == 0){
+				System.out.println("a que?");
                     st = in.nextLine();
                     if (st.compareToIgnoreCase("c4") == 0){
                         ReglasConecta4 reglas = new ReglasConecta4();
