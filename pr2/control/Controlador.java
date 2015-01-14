@@ -90,7 +90,7 @@ public class Controlador {
              partida.reset(reglas);
              System.out.println("Partida reiniciada.");
 	
-        }else System.out.println("No te entiendo.");
+        }else System.err.println("No te entiendo.");
 		
 		
     }                 
