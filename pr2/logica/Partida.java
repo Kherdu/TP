@@ -90,7 +90,7 @@ public class Partida {
     	boolean ret=true;
     	if (ganador!=Ficha.VACIA || mov.getJugador()!= turno || mov.getColumna()>tablero.getAncho() || mov.getColumna()<1){ //si hay ya ganador o el movimiento no pertenece al jugador al que le toca o es una casilla de fuera del tablero
     		ret=false;
-    		System.err.println("Movimiento incorrecto");
+    		
     	}else{
     		ret=mov.ejecutaMovimiento(tablero);
     		moveStack[lastPos]=mov;
@@ -176,6 +176,9 @@ public class Partida {
 		return tablero;
 	}
 
+	public String pintaTablero(){
+		return tablero.toString();
+	}
 	
     
     

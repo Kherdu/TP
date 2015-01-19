@@ -32,7 +32,7 @@ public class Controlador {
         while (!partida.isTerminada()) {
 
             lectura = null;
-            System.out.print(partida.getTablero().toString());
+            System.out.print(partida.pintaTablero());
             System.out.print("Juegan ");
             
             if (partida.getTurno() == Ficha.BLANCA){
@@ -59,15 +59,17 @@ public class Controlador {
                     } else {
                     		System.out.print("Introduce la columna: ");
                     		st = in.nextLine();
-                    	
+                    		boolean correcto=true;
                     		col = Integer.parseInt(st.trim());
                     		if(partida.getJuego().getTipo()==Juego.CONECTA4){ //creamos movimiento tipo c4 o co segun sea un juego u otro
                     			m= new MovimientoConecta4(col,partida.getTurno());
-                    			partida.ejecutaMovimiento(m);
+                    			correcto=partida.ejecutaMovimiento(m);
+                    			
                     		} else if (partida.getJuego().getTipo()==Juego.COMPLICA){
                     			m= new MovimientoComplica(col,partida.getTurno());
-                    			partida.ejecutaMovimiento(m);
+                    			correcto=partida.ejecutaMovimiento(m);
                     		}
+                    		if (correcto==false) System.err.println("Movimiento incorrecto");
                     }
 		} else if (s.compareToIgnoreCase("reiniciar") == 0) {
                     partida.reset(partida.getJuego());
