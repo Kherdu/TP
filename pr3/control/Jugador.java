@@ -1,5 +1,11 @@
-package tp.pr3.control;
+	package tp.pr3.control;
 
-public interface  Jugador {
+import tp.pr3.logica.Ficha;
+import tp.pr3.logica.Movimiento;
+import tp.pr3.logica.Tablero;
 
+public interface Jugador {
+	
+	
+	Movimiento getMovimiento(Tablero tab,Ficha color);
 }

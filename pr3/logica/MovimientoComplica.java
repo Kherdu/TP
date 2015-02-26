@@ -45,7 +45,7 @@ public class MovimientoComplica extends Movimiento {
 			ret = false;
 			System.err.println("Movimiento incorrecto");
 		} else {
-			if (fila(columna, tab) == 0) { // si columna llena
+			if (Utiles.fila(columna, tab) == 0) { // si columna llena
 				mov.setFicha(tab.getCasilla(columna, tab.getAlto()));
 				borrados[ultimaBorrada] = mov;
 				advPila();
@@ -53,12 +53,8 @@ public class MovimientoComplica extends Movimiento {
 
 			}
 
-			tab.setCasilla(columna, fila(columna, tab), ficha); // si no esta
-																// llena
-																// movimiento
-																// normal y
-																// guardar vacio
-																// en el array
+			tab.setCasilla(columna, Utiles.fila(columna, tab), ficha); 
+			// si no esta llena movimiento normal y guardar vacio en el array
 
 			borrados[ultimaBorrada] = mov;
 			advPila();
@@ -69,8 +65,8 @@ public class MovimientoComplica extends Movimiento {
 	@Override
 	public void undo(Tablero tab) {
 
-		if (fila(columna, tab) > 0) { // columna no llena
-			tab.setCasilla(columna, (fila(columna, tab) + 1), Ficha.VACIA);
+		if (Utiles.fila(columna, tab) > 0) { // columna no llena
+			tab.setCasilla(columna, (Utiles.fila(columna, tab) + 1), Ficha.VACIA);
 		}
 
 		else { // columna llena
@@ -79,25 +75,13 @@ public class MovimientoComplica extends Movimiento {
 				tab.setCasilla(columna, tab.getAlto(),
 						borrados[ultimaBorrada - 1].getJugador());
 			} else
-				tab.setCasilla(columna, (fila(columna, tab) + 1), Ficha.VACIA);
+				tab.setCasilla(columna, (Utiles.fila(columna, tab) + 1), Ficha.VACIA);
 		}
 		fwdPila();
 
 	}
 
-	public int fila(int w, Tablero tablero) {
-		// devuelve la primera fila vacia de la columna que le pasas, si esta
-		// llena devuelve 0
-
-		int fila = tablero.getAlto();
-
-		while (tablero.getCasilla(w, fila) != Ficha.VACIA && fila >= 1) {
-			fila--;
-		}
-
-		return fila;
-
-	}
+	
 
 	public void bajaColumna(Tablero t, int w) {
 

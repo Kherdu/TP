@@ -1,5 +1,17 @@
 package tp.pr3.control;
 
-public class JugadorAleatorioComplica {
+import tp.pr3.logica.Ficha;
+import tp.pr3.logica.Movimiento;
+import tp.pr3.logica.Tablero;
+
+public class JugadorAleatorioComplica implements Jugador{
+
+
+	
+	@Override
+	public Movimiento getMovimiento(Tablero tab, Ficha color) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
