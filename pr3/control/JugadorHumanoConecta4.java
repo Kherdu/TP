@@ -21,10 +21,11 @@ public class JugadorHumanoConecta4 implements Jugador {
 	public Movimiento getMovimiento(Tablero tab, Ficha color) {
 		//System.out.println("Introduce la fila: ");   //parser
 		//int fila = sc.nextInt();
+		FactoriaTipoJuego cosa= new FactoriaConecta4();
 		System.out.print("Introduce la columna: "	);
 		int columna = sc.nextInt();
 		sc.nextLine();
-		return new MovimientoConecta4(columna,color);
+		return cosa.creaMovimiento(columna,Utiles.fila(columna, tab),color);
 	}
 	
 

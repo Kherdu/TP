@@ -86,7 +86,7 @@ public class Partida {
 
 	}
 
-	public boolean ejecutaMovimiento(Movimiento mov) {
+	public boolean ejecutaMovimiento(Movimiento mov) { //void que lanza excepcion
 
 		boolean ret = true;
 		if (ganador != Ficha.VACIA || mov.getJugador() != turno

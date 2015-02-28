@@ -10,6 +10,15 @@ import tp.pr3.logica.ReglasJuego;
 
 public class FactoriaConecta4 implements FactoriaTipoJuego {
 
+	
+	
+	
+	public FactoriaConecta4(){
+		
+		
+	}
+	
+	
 	@Override
 	public ReglasJuego creaReglas() {
 		
@@ -17,7 +26,7 @@ public class FactoriaConecta4 implements FactoriaTipoJuego {
 	}
 
 	@Override
-	public Movimiento creaMovimiento(int col, int fila, Ficha color) {
+	public  Movimiento creaMovimiento(int col, int fila, Ficha color) {
 		
 		return new MovimientoConecta4(col,color);
 	}

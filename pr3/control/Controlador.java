@@ -52,7 +52,7 @@ public class Controlador {
 	}
 
 	public void parse(String s) {
-		// parser-ejecucion
+		// parser-ejecucion, cambiar para que lance excepciones... en ejecutamovimiento deberia lanzarlas cuando sea fuera del tablero, en sitio ocupado y cuando esta finalizada la partida
 		int col;
 		String st;
 		if (s.compareToIgnoreCase("poner") == 0) {
@@ -65,7 +65,7 @@ public class Controlador {
 				col = Integer.parseInt(st.trim());
 				if (partida.getJuego().getTipo() == Juego.CONECTA4) { 
 				
-					// creamos movimiento tipo c4 o co segun sea un juego u otro
+					// creamos movimiento tipo c4 o co segun sea un juego u otro, ahora se encarga la factoria
 					m = new MovimientoConecta4(col, partida.getTurno());
 					correcto = partida.ejecutaMovimiento(m);
 
