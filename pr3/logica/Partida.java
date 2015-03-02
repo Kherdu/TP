@@ -1,5 +1,9 @@
 package tp.pr3.logica;
 
+import java.util.Scanner;
+
+import tp.pr3.control.Jugador;
+
 public class Partida {
 
 	private int height;
@@ -86,7 +90,7 @@ public class Partida {
 
 	}
 
-	public boolean ejecutaMovimiento(Movimiento mov) { //void que lanza excepcion
+	public void ejecutaMovimiento(Movimiento mov) throws MovimientoInvalido {
 
 		boolean ret = true;
 		if (ganador != Ficha.VACIA || mov.getJugador() != turno
@@ -107,7 +111,7 @@ public class Partida {
 		if (juego.tablas(mov.getJugador(), tablero) || ganador != Ficha.VACIA) {
 			terminada = true;
 		}
-		return ret;
+	
 
 	}
 
@@ -131,8 +135,18 @@ public class Partida {
 		return juego;
 	}
 
+	
+	public void Mover( Jugador j, Scanner sc ) throws MovimientoInvalido{
+			
+		Movimiento m= j.getMovimiento(tablero, turno) ;
+		ejecutaMovimiento(m);
+	}
+	
+	
 	// -----------------------------------------------------------------------
 
+	
+	
 	private void avanzaTurno() {
 		// advance Pointer
 		if (lastPos == 9) {

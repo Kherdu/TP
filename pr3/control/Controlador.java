@@ -7,6 +7,7 @@ import tp.pr3.logica.Juego;
 import tp.pr3.logica.Movimiento;
 import tp.pr3.logica.MovimientoComplica;
 import tp.pr3.logica.MovimientoConecta4;
+import tp.pr3.logica.MovimientoInvalido;
 import tp.pr3.logica.Partida;
 import tp.pr3.logica.ReglasComplica;
 import tp.pr3.logica.ReglasConecta4;
@@ -24,13 +25,17 @@ public class Controlador {
 		this.partida = partida;
 		this.f=factoria;
 		this.in=sc;
+		this.jugador1= f.creaJugadorHumanoConsola(in);
+		this.jugador2= f.creaJugadorHumanoConsola(in);
+		//this.m=f.creaMovimiento(col, fila, color); aun no tenemos definidos fila ni columna
 	}
+
+	
 
 	public void run() {
 
 		String lectura;
 		this.in = new Scanner(System.in);
-
 		while (!partida.isTerminada()) {
 
 			lectura = null;
@@ -56,7 +61,7 @@ public class Controlador {
 		int col;
 		String st;
 		if (s.compareToIgnoreCase("poner") == 0) {
-			if (partida.isTerminada() == true) {
+			/*if (partida.isTerminada() == true) {
 				System.out.println("acabada");
 			} else {
 				System.out.print("Introduce la columna: ");
@@ -68,19 +73,24 @@ public class Controlador {
 					// creamos movimiento tipo c4 o co segun sea un juego u otro, ahora se encarga la factoria
 					m = new MovimientoConecta4(col, partida.getTurno());
 					correcto = partida.ejecutaMovimiento(m);
-
-				} else if (partida.getJuego().getTipo() == Juego.COMPLICA) {
+				*/try{
+				partida.Mover(jugador1, in);
+				
+				}catch (MovimientoInvalido e){
+					e.printStackTrace();
+				}
+				/* else if (partida.getJuego().getTipo() == Juego.COMPLICA) {
 					m = new MovimientoComplica(col, partida.getTurno());
 					correcto = partida.ejecutaMovimiento(m);
 				}
 				if (correcto == false)
-					System.err.println("Movimiento incorrecto");
+					System.err.println("Movimiento incorrecto");*/
 			}
-		} else if (s.compareToIgnoreCase("reiniciar") == 0) {
+		 else if (s.compareToIgnoreCase("reiniciar") == 0) {
 			partida.reset(partida.getJuego());
 			System.out.print("Partida reiniciada.");
 
-		} else if (s.compareToIgnoreCase("salir") == 0) {
+		} else if (s.compareToIgnoreCase("salir") == 0) { 
 
 			System.exit(0);
 

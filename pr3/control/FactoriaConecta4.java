@@ -10,11 +10,7 @@ import tp.pr3.logica.ReglasJuego;
 
 public class FactoriaConecta4 implements FactoriaTipoJuego {
 
-	
-	
-	
 	public FactoriaConecta4(){
-		
 		
 	}
 	
@@ -34,8 +30,8 @@ public class FactoriaConecta4 implements FactoriaTipoJuego {
 
 	@Override
 	public Jugador creaJugadorAleatorio() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return new JugadorAleatorioConecta4();
 	}
 
 	@Override

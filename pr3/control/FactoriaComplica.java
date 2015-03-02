@@ -10,9 +10,13 @@ import tp.pr3.logica.ReglasJuego;
 
 public class FactoriaComplica implements FactoriaTipoJuego {
 
+	FactoriaComplica(){
+		
+	}
 	@Override
 	public ReglasJuego creaReglas() {
-		return new ReglasComplica();	}
+		return new ReglasComplica();	
+		}
 
 	@Override
 	public Movimiento creaMovimiento(int col, int fila, Ficha color) {
@@ -21,13 +25,12 @@ public class FactoriaComplica implements FactoriaTipoJuego {
 
 	@Override
 	public Jugador creaJugadorAleatorio() {
-		// TODO Auto-generated method stub
-		return null;
+		return new JugadorAleatorioComplica();
 	}
 
 	@Override
 	public Jugador creaJugadorHumanoConsola(Scanner in) {
-		return new JugadorHumanoConecta4(in);
+		return new JugadorHumanoComplica(in);
 	}
 
 	
