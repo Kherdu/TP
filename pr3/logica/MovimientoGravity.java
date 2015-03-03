@@ -22,14 +22,14 @@ public class MovimientoGravity extends Movimiento{
 		
 	}
 
+	// falla porque no esta puesto void en la intefaz.
 	@Override
-	public boolean ejecutaMovimiento(Tablero tab) {
+	public void ejecutaMovimiento(Tablero tab) throws MovimientoInvalido {
 		
-		boolean ret = true;
+		
 		boolean aux = false;
 		if (columna < 1 || columna > tab.getAncho() || fila < 1 || fila > tab.getAlto()){
-			ret = false;
-			System.err.println("Movimiento incorrecto");
+			throw new MovimientoInvalido("PENE");
 		}else{
 			
 			// usar el parseio de direccion.
@@ -93,11 +93,92 @@ public class MovimientoGravity extends Movimiento{
 					
 				}
 				
+				aux = false;
+				
+			}else if(parseoDireccion(tab) == "LT"){
+				int c = columna;
+				int f = fila;
+				while (c >= 1 && f >= 1 && aux == false){
+					
+					if (tab.getCasilla(c-1, f-1) != Ficha.VACIA || c == 1 || f == 1){
+						
+						tab.setCasilla(c, f, color);
+						aux = true;
+					}else {
+						c--;
+						f--;
+						
+					}
+					
+				}
+				
+			aux = false;
+				
+			}else if (parseoDireccion(tab) == "LD"){
+				
+				int c = columna;
+				int f = fila;
+				while (c >= 1 && f <= tab.getAlto() && aux == false){
+					
+					if (tab.getCasilla(c-1, f+1) != Ficha.VACIA || c == 1 || f == tab.getAlto()){
+						
+						tab.setCasilla(c, f, color);
+						aux = true;
+					}else {
+						c--;
+						f++;
+						
+					}
+					
+				}
+				
+				aux = false;
+				
+			}else if(parseoDireccion(tab) == "RT"){
+				
+				int c = columna;
+				int f = fila;
+				while (c <= tab.getAncho() && f >= 1 && aux == false){
+					
+					if (tab.getCasilla(c+1, f-1) != Ficha.VACIA || c == tab.getAncho() || f == 1){
+						
+						tab.setCasilla(c, f, color);
+						aux = true;
+					}else {
+						c++;
+						f--;
+						
+					}
+					
+				}
+				
+			aux = false;	
+				
+			}else if (parseoDireccion(tab) == "RD"){
+				
+				int c = columna;
+				int f = fila;
+				while (c <= tab.getAncho() && f >= tab.getAlto() && aux == false){
+					
+					if (tab.getCasilla(c+1, f+1) != Ficha.VACIA || c == tab.getAncho() || f == tab.getAlto()){
+						
+						tab.setCasilla(c, f, color);
+						aux = true;
+					}else {
+						c++;
+						f++;
+						
+					}
+					
+				}
+				
+				aux = false;
+				
 			}
 			
 		}
 		
-		return ret;
+		
 	}
 
 	@Override

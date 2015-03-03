@@ -28,23 +28,21 @@ public class MovimientoConecta4 extends Movimiento {
 	}
 
 	@Override
-	public boolean ejecutaMovimiento(Tablero tab) {
+	public void ejecutaMovimiento(Tablero tab) throws MovimientoInvalido {
 
-		boolean ret = true; // salida
+		
 
 		if (columna < 1 || columna > tab.getAncho() || Utiles.fila(columna, tab) == 0) { 
 			// si se intenta meter fuera del tablero
-			ret = false;
-			System.err.println("Movimiento incorrecto");
+			throw new MovimientoInvalido("pene");
 		} else if (tab.getCasilla(columna, (Utiles.fila(columna, tab))) != Ficha.VACIA) {
 			// si columna completa
-			ret = false;
-			System.err.println("Movimiento incorrecto");
+			throw new MovimientoInvalido("pene");
 
 		}
 		tab.setCasilla(columna, Utiles.fila(columna, tab), ficha);
 
-		return ret;
+		
 	}
 
 	@Override

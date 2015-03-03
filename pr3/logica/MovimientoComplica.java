@@ -35,15 +35,15 @@ public class MovimientoComplica extends Movimiento {
 	}
 
 	@Override
-	public boolean ejecutaMovimiento(Tablero tab) {
+	public void ejecutaMovimiento(Tablero tab) throws MovimientoInvalido {
 
-		boolean ret = true; // salida
+		
 		MovimientoComplica mov = new MovimientoComplica(columna, Ficha.VACIA);
 
 		if (columna < 1 || columna > tab.getAncho()) { // si se intenta meter
 														// fuera del tablero
-			ret = false;
-			System.err.println("Movimiento incorrecto");
+			
+			throw new MovimientoInvalido("roto");
 		} else {
 			if (Utiles.fila(columna, tab) == 0) { // si columna llena
 				mov.setFicha(tab.getCasilla(columna, tab.getAlto()));
@@ -59,7 +59,7 @@ public class MovimientoComplica extends Movimiento {
 			borrados[ultimaBorrada] = mov;
 			advPila();
 		}
-		return ret;
+		
 	}
 
 	@Override

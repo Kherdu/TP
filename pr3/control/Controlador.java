@@ -1,5 +1,6 @@
 package tp.pr3.control;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import tp.pr3.logica.Ficha;
@@ -20,6 +21,7 @@ public class Controlador {
 	private FactoriaTipoJuego f;
 	private Jugador jugador1;
 	private Jugador jugador2;
+	private ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 
 	public Controlador(FactoriaTipoJuego factoria,Partida partida, Scanner sc) {
 		this.partida = partida;
@@ -27,10 +29,12 @@ public class Controlador {
 		this.in=sc;
 		this.jugador1= f.creaJugadorHumanoConsola(in);
 		this.jugador2= f.creaJugadorHumanoConsola(in);
-		//this.m=f.creaMovimiento(col, fila, color); aun no tenemos definidos fila ni columna
+		this.jugadores.add(jugador1);
+		this.jugadores.add(jugador2);
+	
 	}
 
-	
+
 
 	public void run() {
 
@@ -61,30 +65,18 @@ public class Controlador {
 		int col;
 		String st;
 		if (s.compareToIgnoreCase("poner") == 0) {
-			/*if (partida.isTerminada() == true) {
-				System.out.println("acabada");
-			} else {
-				System.out.print("Introduce la columna: ");
-				st = in.nextLine();
-				boolean correcto = true;
-				col = Integer.parseInt(st.trim());
-				if (partida.getJuego().getTipo() == Juego.CONECTA4) { 
+			
+			try{
+				for (Jugador j: jugadores){
+					
+					partida.Mover(j, in);
 				
-					// creamos movimiento tipo c4 o co segun sea un juego u otro, ahora se encarga la factoria
-					m = new MovimientoConecta4(col, partida.getTurno());
-					correcto = partida.ejecutaMovimiento(m);
-				*/try{
-				partida.Mover(jugador1, in);
+				}
 				
-				}catch (MovimientoInvalido e){
+			}catch (MovimientoInvalido e){
 					e.printStackTrace();
-				}
-				/* else if (partida.getJuego().getTipo() == Juego.COMPLICA) {
-					m = new MovimientoComplica(col, partida.getTurno());
-					correcto = partida.ejecutaMovimiento(m);
-				}
-				if (correcto == false)
-					System.err.println("Movimiento incorrecto");*/
+			}
+				
 			}
 		 else if (s.compareToIgnoreCase("reiniciar") == 0) {
 			partida.reset(partida.getJuego());

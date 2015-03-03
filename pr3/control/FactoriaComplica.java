@@ -10,7 +10,7 @@ import tp.pr3.logica.ReglasJuego;
 
 public class FactoriaComplica implements FactoriaTipoJuego {
 
-	FactoriaComplica(){
+	public FactoriaComplica(){
 		
 	}
 	@Override

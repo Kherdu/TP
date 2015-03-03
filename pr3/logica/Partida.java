@@ -92,20 +92,19 @@ public class Partida {
 
 	public void ejecutaMovimiento(Movimiento mov) throws MovimientoInvalido {
 
-		boolean ret = true;
+		
 		if (ganador != Ficha.VACIA || mov.getJugador() != turno
 				|| mov.getColumna() > tablero.getAncho()
 				|| mov.getColumna() < 1) { // si hay ya ganador o el movimiento
 											// no pertenece al jugador al que le
 											// toca o es una casilla de fuera
 											// del tablero
-			ret = false;
-
+			
+			throw new MovimientoInvalido("penee");
 		} else {
-			ret = mov.ejecutaMovimiento(tablero);
+			mov.ejecutaMovimiento(tablero);
 			moveStack[lastPos] = mov;
-			if (ret)
-				avanzaTurno();
+			avanzaTurno();
 		}
 		ganador = juego.hayGanador(mov, tablero);
 		if (juego.tablas(mov.getJugador(), tablero) || ganador != Ficha.VACIA) {
