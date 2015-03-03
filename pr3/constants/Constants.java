@@ -11,6 +11,8 @@ public class Constants {
 	public static int AltoC4=6;
 	public static int AnchoCo=4;
 	public static int AltoCo=7;
+	public static int altoGv=10;
+	public static int anchoGv=10;
 	
 
 }

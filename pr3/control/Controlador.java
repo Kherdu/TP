@@ -62,8 +62,7 @@ public class Controlador {
 
 	public void parse(String s) {
 		// parser-ejecucion, cambiar para que lance excepciones... en ejecutamovimiento deberia lanzarlas cuando sea fuera del tablero, en sitio ocupado y cuando esta finalizada la partida
-		int col;
-		String st;
+		
 		if (s.compareToIgnoreCase("poner") == 0) {
 			
 			try{
@@ -79,7 +78,7 @@ public class Controlador {
 				
 			}
 		 else if (s.compareToIgnoreCase("reiniciar") == 0) {
-			partida.reset(partida.getJuego());
+			partida.reset(f.creaReglas());
 			System.out.print("Partida reiniciada.");
 
 		} else if (s.compareToIgnoreCase("salir") == 0) { 

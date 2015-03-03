@@ -1,5 +1,7 @@
 package tp.pr3.logica;
 
+import tp.pr3.constants.Constants;
+
 public class ReglasGravity implements ReglasJuego{
 
 	private Tablero tablero;
@@ -10,8 +12,8 @@ public class ReglasGravity implements ReglasJuego{
 
 	public ReglasGravity() {
 
-		this.ancho = 10;
-		this.alto = 10;
+		this.ancho = Constants.anchoGv;
+		this.alto = Constants.altoGv;
 		this.ganador = Ficha.VACIA;
 		this.tipo = Juego.GRAVITY;
 	}
