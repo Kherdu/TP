@@ -14,9 +14,7 @@ public class Partida {
 	private Ficha turno; // jugador que tiene el turno
 	private boolean terminada;
 	private Ficha ganador; //
-	private Movimiento[] moveStack; // array posiciones, sustituir por clase
-									// nueva que guarde posicion y color de
-									// ficha
+	private Movimiento[] moveStack; // array posiciones para deshacer
 	private int lastPos; // puntero para array circular
 	private int numJugadas;
 	private ReglasJuego juego;

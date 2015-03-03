@@ -13,7 +13,13 @@ public class JugadorAleatorioConecta4 implements Jugador{
 
 	@Override
 	public Movimiento getMovimiento(Tablero tab, Ficha color) {
-		int random = (int) ((Math.random()*Constants.AnchoC4)+1);
+		
+		int random=0;
+		
+		do{
+			random = (int) ((Math.random()*Constants.AnchoC4)+1);
+		}while (Utiles.fila(random, tab)==0);
+		
 		FactoriaTipoJuego f= new FactoriaConecta4();
 		
 		return f.creaMovimiento(random,Utiles.fila(random, tab),color);

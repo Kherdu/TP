@@ -19,7 +19,7 @@ public class ReglasConecta4 implements ReglasJuego {
 	}
 
 	@Override
-	// hay que acerla aunque no se para que si ya esta en partida....
+	
 	public Ficha hayGanador(Movimiento ultimoMovimiento, Tablero t) {
 		// sacar ganador, comprobar vertical, horizontal y DIAGONAL.
 		ganador = Ficha.VACIA;
@@ -151,7 +151,7 @@ public class ReglasConecta4 implements ReglasJuego {
 	@Override
 	public Tablero iniciaTablero() {
 
-		tablero = new Tablero(this.ancho, this.alto);
+		this.tablero = new Tablero(ancho, alto);
 		return tablero;
 
 	}
