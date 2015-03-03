@@ -10,8 +10,12 @@ public class JugadorAleatorioGravity implements Jugador{
 
 	@Override
 	public Movimiento getMovimiento(Tablero tab, Ficha color) {
-		// TODO Auto-generated method stub
-		return null;
+		FactoriaTipoJuego f= new FactoriaConecta4();
+		int columnaRandom = (int) ((Math.random()*tab.getAncho())+1);
+		int filaRandom = (int) ((Math.random()*tab.getAlto())+1);
+		
+		
+		return f.creaMovimiento(columnaRandom,filaRandom,color);
 	}
 
 }

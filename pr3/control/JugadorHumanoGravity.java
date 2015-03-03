@@ -17,8 +17,6 @@ private Scanner sc;
 	}
 
 
-
-
 	@Override
 	public Movimiento getMovimiento(Tablero tab, Ficha color) {
 		

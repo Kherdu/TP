@@ -1,5 +1,7 @@
 package tp.pr3.logica;
 
+import tp.pr3.constants.Constants;
+
 public class ReglasConecta4 implements ReglasJuego {
 
 	private Tablero tablero;
@@ -10,8 +12,8 @@ public class ReglasConecta4 implements ReglasJuego {
 
 	public ReglasConecta4() {
 
-		this.ancho = 7;
-		this.alto = 6;
+		this.ancho = Constants.AnchoC4;
+		this.alto = Constants.AltoC4;
 		this.ganador = Ficha.VACIA;
 		this.tipo = Juego.CONECTA4;
 	}

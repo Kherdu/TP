@@ -17,6 +17,11 @@ public class FactoriaGravity implements FactoriaTipoJuego{
 	public ReglasJuego creaReglas() {
 		return new ReglasGravity();
 	}
+	
+	public ReglasJuego creaReglas(int alto, int ancho){
+		
+		return new ReglasGravity(alto,ancho);
+	}
 
 	@Override
 	public Movimiento creaMovimiento(int col, int fila, Ficha color) {

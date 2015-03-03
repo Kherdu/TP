@@ -15,6 +15,14 @@ public class ReglasGravity implements ReglasJuego{
 		this.ganador = Ficha.VACIA;
 		this.tipo = Juego.GRAVITY;
 	}
+	
+	public ReglasGravity(int ancho, int alto){
+		
+		this.ancho=ancho;
+		this.alto=alto;
+		this.ganador = Ficha.VACIA;
+		this.tipo = Juego.GRAVITY;
+	}
 	@Override
 	public Ficha hayGanador(Movimiento ultimoMovimiento, Tablero t) {
 		// TODO Auto-generated method stub
@@ -47,14 +55,12 @@ public class ReglasGravity implements ReglasJuego{
 
 	@Override
 	public int getAlto() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.alto;
 	}
 
 	@Override
 	public int getAncho() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.ancho;
 	}
 
 	@Override

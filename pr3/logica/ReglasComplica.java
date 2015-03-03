@@ -1,4 +1,5 @@
 package tp.pr3.logica;
+import tp.pr3.constants.Constants;
 
 public class ReglasComplica implements ReglasJuego {
 
@@ -10,8 +11,8 @@ public class ReglasComplica implements ReglasJuego {
 
 	public ReglasComplica() {
 
-		this.ancho = 4;
-		this.alto = 7;
+		this.ancho = Constants.AnchoCo;
+		this.alto = Constants.AltoCo;
 		this.ganador = Ficha.VACIA;
 		this.tipo = Juego.COMPLICA;
 	}
