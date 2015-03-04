@@ -28,16 +28,16 @@ public class MovimientoGravity extends Movimiento{
 		
 		
 		boolean aux = false;
-		if (columna < 1 || columna > tab.getAncho() || fila < 1 || fila > tab.getAlto()){
+		if (columna < 1 || columna > tab.getAncho() || fila < 1 || fila > tab.getAlto() || tab.getCasilla(columna, fila) != Ficha.VACIA){
 			throw new MovimientoInvalido("PENE");
 		}else{
 			
-			// usar el parseio de direccion.
+			// usar el parseo de direccion.
 			if (parseoDireccion(tab) == "LRTD"){
 				
 				tab.setCasilla(columna, fila, color);
 				
-			}else if (parseoDireccion(tab) == "L"){
+			}else if (parseoDireccion(tab).equalsIgnoreCase("L")){
 				
 				for (int i = columna; i >= 1 && aux == false; i--){
 					
@@ -51,7 +51,7 @@ public class MovimientoGravity extends Movimiento{
 				}
 			aux = false;
 				
-			}else if (parseoDireccion(tab) == "R"){
+			}else if (parseoDireccion(tab).equalsIgnoreCase("R")){
 				
 				for (int i = columna; i <= tab.getAncho() && aux == false; i++){
 					
@@ -65,7 +65,7 @@ public class MovimientoGravity extends Movimiento{
 				}
 			aux = false;
 			
-			}else if(parseoDireccion(tab) == "T"){
+			}else if(parseoDireccion(tab).equalsIgnoreCase("T")){
 				
 				for (int i = fila; i >= 1 && aux == false; i--){
 					
@@ -80,9 +80,9 @@ public class MovimientoGravity extends Movimiento{
 				
 			aux = false;	
 				
-			}else if (parseoDireccion(tab) == "D"){
+			}else if (parseoDireccion(tab).equalsIgnoreCase("D")){
 				
-				for (int i = columna; i <= tab.getAlto() && aux == false; i++){
+				for (int i = fila; i <= tab.getAlto() && aux == false; i++){
 					
 					if (tab.getCasilla(columna, (i+1)) != Ficha.VACIA || (i == tab.getAlto())){						
 						
@@ -95,7 +95,7 @@ public class MovimientoGravity extends Movimiento{
 				
 				aux = false;
 				
-			}else if(parseoDireccion(tab) == "LT"){
+			}else if(parseoDireccion(tab).equalsIgnoreCase("LT")){
 				int c = columna;
 				int f = fila;
 				while (c >= 1 && f >= 1 && aux == false){
@@ -114,7 +114,7 @@ public class MovimientoGravity extends Movimiento{
 				
 			aux = false;
 				
-			}else if (parseoDireccion(tab) == "LD"){
+			}else if (parseoDireccion(tab).equalsIgnoreCase("LD")){
 				
 				int c = columna;
 				int f = fila;
@@ -134,7 +134,7 @@ public class MovimientoGravity extends Movimiento{
 				
 				aux = false;
 				
-			}else if(parseoDireccion(tab) == "RT"){
+			}else if(parseoDireccion(tab).equalsIgnoreCase("RT")){
 				
 				int c = columna;
 				int f = fila;
@@ -154,11 +154,11 @@ public class MovimientoGravity extends Movimiento{
 				
 			aux = false;	
 				
-			}else if (parseoDireccion(tab) == "RD"){
+			}else if (parseoDireccion(tab).equalsIgnoreCase("RD")){
 				
 				int c = columna;
 				int f = fila;
-				while (c <= tab.getAncho() && f >= tab.getAlto() && aux == false){
+				while (c <= tab.getAncho() && f <= tab.getAlto() && aux == false){
 					
 					if (tab.getCasilla(c+1, f+1) != Ficha.VACIA || c == tab.getAncho() || f == tab.getAlto()){
 						
@@ -183,18 +183,20 @@ public class MovimientoGravity extends Movimiento{
 
 	@Override
 	public void undo(Tablero tab) {
-		// TODO Auto-generated method stub
+		
+		tab.setCasilla(columna, (Utiles.fila(columna, tab) + 1), Ficha.VACIA);
 		
 	}
 
 	@Override
 	public int getColumna() {
-		// TODO Auto-generated method stub
+		
 		return columna;
 	}
 
 	private String parseoDireccion(Tablero tab){
 		
+		cercania = "";
 		
 			if (tab.getAncho() - columna == columna - 1){
 				
@@ -202,7 +204,7 @@ public class MovimientoGravity extends Movimiento{
 				
 				if (tab.getAlto() - fila == fila - 1){
 						
-					cercania += "LRTD";
+					cercania = "LRTD";
 				
 				}else if (tab.getAlto() - fila > fila - 1){
 					// lo de abajo es lo maximo.
