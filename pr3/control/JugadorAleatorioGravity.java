@@ -13,7 +13,7 @@ public class JugadorAleatorioGravity implements Jugador{
 		
 		int columnaRandom=0;
 		int filaRandom=0;
-		FactoriaTipoJuego f= new FactoriaConecta4();
+		FactoriaTipoJuego f= new FactoriaGravity();
 		do {
 			columnaRandom = (int) ((Math.random()*tab.getAncho())+1);
 			filaRandom = (int) ((Math.random()*tab.getAlto())+1);

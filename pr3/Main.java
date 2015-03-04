@@ -2,6 +2,8 @@ package tp.pr3;
 
 import java.util.Scanner;
 
+import org.apache.commons.cli.Options;
+
 import tp.pr3.control.Controlador;
 import tp.pr3.control.FactoriaConecta4;
 import tp.pr3.control.FactoriaComplica;
@@ -14,9 +16,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		
-		
-		//con la entrada de argumentos cambiar el tipo de juego, reglas y factoria
+		Options options= new Options();
+		options.addOption("h", false, "Muestra esta ayuda.");
+		options.addOption("g", true, "Tipo de juego (c4, co, gr). Por defecto, c4.");
 		
 		FactoriaTipoJuego f = new FactoriaConecta4();
 	    ReglasJuego reglas= f.creaReglas(); 
