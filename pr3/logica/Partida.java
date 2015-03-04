@@ -28,6 +28,8 @@ public class Partida {
 			this.moveStack = new MovimientoConecta4[n];
 		} else if (reglas.getTipo() == Juego.COMPLICA) {
 			this.moveStack = new MovimientoComplica[n];
+		}else if(reglas.getTipo() == Juego.GRAVITY){
+			this.moveStack = new MovimientoGravity[n];			
 		}
 		this.ganador = Ficha.VACIA;
 		this.lastPos = 0;
@@ -69,15 +71,21 @@ public class Partida {
 
 	public void reset(ReglasJuego reglas) {
 
-		this.turno = Ficha.BLANCA;
-		this.terminada = false;
+		
+		
 		if (reglas.getTipo() == Juego.CONECTA4) {
 			this.moveStack = new MovimientoConecta4[n];
 			this.juego = new ReglasConecta4();
 		} else if (reglas.getTipo() == Juego.COMPLICA) {
 			this.moveStack = new MovimientoComplica[n];
 			this.juego = new ReglasComplica();
+		} else if (reglas.getTipo() == Juego.GRAVITY){
+			this.moveStack = new MovimientoGravity[n];
+			this.juego = new ReglasGravity();			
 		}
+		
+		this.turno = Ficha.BLANCA;
+		this.terminada = false;
 		this.ganador = Ficha.VACIA;
 		this.lastPos = 0;
 		this.numJugadas = 0;
