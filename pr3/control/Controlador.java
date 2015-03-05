@@ -28,7 +28,7 @@ public class Controlador {
 		this.jugador1 = f.creaJugadorHumanoConsola(in);
 		this.jugador2 = f.creaJugadorHumanoConsola(in);
 		this.jugadores.add(0,jugador1);
-		this.jugadores.add(0,jugador2);
+		this.jugadores.add(1,jugador2);
 		this.reglas = f.creaReglas();
 
 	}
@@ -107,17 +107,37 @@ public class Controlador {
 					String ju = st.nextToken();
 
 					if (ju.compareToIgnoreCase("c4") == 0) {
-						f = new FactoriaConecta4();
-						reglas = f.creaReglas();
+						this.f = new FactoriaConecta4();
+						this.jugador1 = f.creaJugadorHumanoConsola(in);
+						this.jugador2 = f.creaJugadorHumanoConsola(in);
+						jugadores.remove(0);
+						jugadores.add(0, jugador1);
+						jugadores.remove(1);						
+						jugadores.add(1, jugador2);
+						reglas = f.creaReglas();						
 						partida.reset(reglas);
 						System.out.println("Partida reiniciada.");
 					} else if (ju.compareToIgnoreCase("co") == 0) {
 						f = new FactoriaComplica();
+						this.jugador1 = f.creaJugadorHumanoConsola(in);
+						this.jugador2 = f.creaJugadorHumanoConsola(in);
+						jugadores.remove(0);
+						jugadores.add(0, jugador1);
+						jugadores.remove(1);						
+						jugadores.add(1, jugador2);
 						reglas = f.creaReglas();
+						partida.reset(reglas);
 						System.out.println("Partida reiniciada.");
 					} else if (ju.compareToIgnoreCase("gr") == 0) {
 						f = new FactoriaGravity();
+						this.jugador1 = f.creaJugadorHumanoConsola(in);
+						this.jugador2 = f.creaJugadorHumanoConsola(in);
+						jugadores.remove(0);
+						jugadores.add(0, jugador1);
+						jugadores.remove(1);						
+						jugadores.add(1, jugador2);
 						reglas = f.creaReglas();
+						partida.reset(reglas);
 						System.out.println("Partida reiniciada.");
 					}
 				} else
@@ -128,8 +148,7 @@ public class Controlador {
 				if (aux.compareToIgnoreCase("jugador") == 0) {
 					String color = st.nextToken();
 					if (color.compareToIgnoreCase("blancas") == 0) {
-						// jugador blanco = jugador 1, jugador negro=
-						// jugador 2
+						// jugador blanco = jugador 1, jugador negro= jugador 2
 						String ju = st.nextToken();
 						if (ju.compareToIgnoreCase("humano") == 0) {
 							jugador1 = f.creaJugadorHumanoConsola(in);//cargarnos arraylist y volver a meter el jugador nuevo

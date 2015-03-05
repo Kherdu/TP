@@ -28,9 +28,13 @@ public class MovimientoGravity extends Movimiento{
 		
 		
 		boolean aux = false;
-		if (columna < 1 || columna > tab.getAncho() || fila < 1 || fila > tab.getAlto() || tab.getCasilla(columna, fila) != Ficha.VACIA){
-			throw new MovimientoInvalido("PENE");
-		}else{
+		if (columna < 1 || columna > tab.getAncho() || fila < 1 || fila > tab.getAlto()){
+			throw new MovimientoInvalido("Posicion incorrecta");
+		}else if (tab.getCasilla(columna, fila) != Ficha.VACIA){
+			throw new MovimientoInvalido("Casilla ocupada");
+			
+		}		
+		else{
 			
 			// usar el parseo de direccion.
 			if (parseoDireccion(tab) == "LRTD"){

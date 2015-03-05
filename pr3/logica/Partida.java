@@ -106,7 +106,7 @@ public class Partida {
 											// toca o es una casilla de fuera
 											// del tablero
 			
-			throw new MovimientoInvalido("penee");
+			throw new MovimientoInvalido("Error");
 		} else {
 			mov.ejecutaMovimiento(tablero);
 			moveStack[lastPos] = mov;
