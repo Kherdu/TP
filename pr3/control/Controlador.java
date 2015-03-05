@@ -32,7 +32,7 @@ public class Controlador {
 		this.reglas = f.creaReglas();
 
 	}
-
+	
 	public void run() {
 
 		String lectura;
@@ -116,6 +116,10 @@ public class Controlador {
 						jugadores.add(1, jugador2);
 						reglas = f.creaReglas();						
 						partida.reset(reglas);
+						
+						jugador1= f.creaJugadorHumanoConsola(in);
+						jugadores.remove(0);
+						jugadores.add(0, jugador1);
 						System.out.println("Partida reiniciada.");
 					} else if (ju.compareToIgnoreCase("co") == 0) {
 						f = new FactoriaComplica();
@@ -186,6 +190,8 @@ public class Controlador {
 						}
 
 						f = new FactoriaGravity(fi, c);
+						reglas = f.creaReglas();
+						partida.reset(reglas);
 						System.out.println("Partida reiniciada.");
 					}
 				}

@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import org.apache.commons.cli.*;
 
+import tp.pr3.constants.Constants;
 import tp.pr3.control.Controlador;
 import tp.pr3.control.FactoriaComplica;
 import tp.pr3.control.FactoriaConecta4;
@@ -43,19 +44,27 @@ public class Main {
 		} else
 			try {
 				parser = new BasicParser();
-				cmdLine = parser.parse(options, args);
-
+				cmdLine = parser.parse(options, args, false);
+				
 				if (cmdLine.hasOption("h")) {
+<<<<<<< HEAD
 					new HelpFormatter()
 							.printHelp(
 									"tp.pr3.Main [-g <game>] [-h] [-x <columnNumber>] [-y <rowNumber>]",
 									options);
+=======
+					new HelpFormatter().printHelp(Constants.MensajeAyudaConsola, options);
+>>>>>>> origin/master
 
-				}
-				if (cmdLine.hasOption("g")) {
+				} else if (cmdLine.hasOption("g")) {
 					game = cmdLine.getOptionValue("game");
+<<<<<<< HEAD
 					if (game == "c4") {
 						c.run();
+=======
+					if (game.compareToIgnoreCase("c4") == 0) {
+						ok=true;
+>>>>>>> origin/master
 					} else if (game == "co") {
 						f= new FactoriaComplica();
 						reglas = f.creaReglas();
@@ -73,13 +82,25 @@ public class Main {
 							c.run();
 						}
 						
-					}
+					}else throw new ParseException("Juego '" + game + "' Incorrecto");
 
 				}
+<<<<<<< HEAD
 				
 			} catch (Exception e) {
 				System.out.println(cmdLine.getArgs().toString());
 				salida=1;
+=======
+				if (ok){
+					reglas = f.creaReglas();
+					p = new Partida(reglas);
+					c = new Controlador(f, p, in);
+					c.run();
+				}
+			}  catch (ParseException ex){
+				System.err.println(ex.getMessage());
+				System.err.println("Use -h|--help para más detalles.");
+>>>>>>> origin/master
 			}
 	}
 
