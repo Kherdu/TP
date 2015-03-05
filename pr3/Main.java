@@ -33,7 +33,7 @@ public class Main {
 		Controlador c = new Controlador(f, p, in);
 		
 		// aqui irian los optionGroup para incompatibilidades de argumentos
-		if (args == null || args.length < 1 || args[0] == null) {
+		/*if (args == null || args.length < 1 || args[0] == null) {
 			ok=true;
 		} else
 			try {
@@ -72,8 +72,9 @@ public class Main {
 			}  catch (ParseException ex){
 				System.err.println(ex.getMessage());
 				System.err.println("Use -h|--help para más detalles.");
-			}
+			}*/
 		
+		c.run();
 	}
 	
 	

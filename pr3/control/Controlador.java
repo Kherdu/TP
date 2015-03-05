@@ -39,7 +39,7 @@ public class Controlador {
 		this.in = new Scanner(System.in);
 		while (!partida.isTerminada()) {
 			try {
-				for (Jugador j : jugadores) {
+				for (int i=0;i<jugadores.size();i++) {
 					lectura = null;
 					System.out.print(partida.pintaTablero());
 					System.out.print("Juegan ");
@@ -53,7 +53,7 @@ public class Controlador {
 					System.out.print("Qué quieres hacer? ");
 
 					lectura = in.nextLine();
-					parse(lectura, j);
+					parse(lectura, jugadores.get(i));
 				}
 			} catch (InstruccionInvalida e) {
 
