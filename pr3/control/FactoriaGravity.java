@@ -14,7 +14,7 @@ public class FactoriaGravity implements FactoriaTipoJuego{
 	private int ancho;
 	private int alto;
 	
-	FactoriaGravity(){
+	public FactoriaGravity(){
 		this.alto=Constants.altoGv;
 		this.ancho=Constants.anchoGv;
 	}

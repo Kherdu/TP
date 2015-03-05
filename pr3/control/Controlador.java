@@ -67,6 +67,7 @@ public class Controlador {
 		// parser-ejecucion, cambiar para que lance excepciones... en
 		// ejecutamovimiento deberia lanzarlas cuando sea fuera del tablero, en
 		// sitio ocupado y cuando esta finalizada la partida
+		// elegir jugar contra la maquina
 
 		StringTokenizer st = new StringTokenizer(s);
 		if (st.hasMoreTokens()) {
@@ -75,7 +76,7 @@ public class Controlador {
 
 				if ((aux.compareToIgnoreCase("poner")) == 0) {
 					try {
-						for (Jugador j : jugadores) {
+						for (Jugador j : jugadores) {  //posiblemente es necesario cambiar este bucle de sitio para que este recogiendo todo el parser
 							partida.Mover(j, in);
 						}
 					} catch (MovimientoInvalido e) {
@@ -118,6 +119,26 @@ public class Controlador {
 					}
 				}else System.out.println("controlador 119");
 
+			} else if (st.countTokens() == 3){
+				
+				if (aux.compareToIgnoreCase("jugador")==0){
+					String color=st.nextToken();
+					if (color.compareToIgnoreCase("blancas")==0 ){
+						//jugador blanco = jugador 1, jugador negro= jugador 2	
+						String ju=st.nextToken();
+						if (ju.compareToIgnoreCase("humano")==0 ){
+							jugador1=f.creaJugadorHumanoConsola(in);
+						}else if(ju.compareToIgnoreCase("aleatorio")==0)
+							jugador1=f.creaJugadorAleatorio();
+					}else if (color.compareToIgnoreCase("negras")==0){
+						String ju=st.nextToken();
+						if (ju.compareToIgnoreCase("humano")==0 ){
+							jugador2=f.creaJugadorHumanoConsola(in);
+						}else if(ju.compareToIgnoreCase("aleatorio")==0)
+							jugador2=f.creaJugadorAleatorio();
+					}
+				}
+				
 			} else if (st.countTokens() == 4) {
 
 				if (aux.compareToIgnoreCase("jugar") == 0) {
