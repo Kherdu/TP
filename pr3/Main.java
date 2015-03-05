@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import org.apache.commons.cli.*;
 
+import tp.pr3.constants.Constants;
 import tp.pr3.control.Controlador;
 import tp.pr3.control.FactoriaComplica;
 import tp.pr3.control.FactoriaConecta4;
@@ -37,15 +38,14 @@ public class Main {
 		} else
 			try {
 				parser = new BasicParser();
-				cmdLine = parser.parse(options, args);
-
+				cmdLine = parser.parse(options, args, false);
+				
 				if (cmdLine.hasOption("h")) {
-					new HelpFormatter().printHelp("tp.pr3.Main [-g <game>] [-h] [-x <columnNumber>] [-y <rowNumber>]", options);
+					new HelpFormatter().printHelp(Constants.MensajeAyudaConsola, options);
 
-				}
-				if (cmdLine.hasOption("g")) {
+				} else if (cmdLine.hasOption("g")) {
 					game = cmdLine.getOptionValue("game");
-					if (game == "c4") {
+					if (game.compareToIgnoreCase("c4") == 0) {
 						ok=true;
 					} else if (game == "co") {
 						f= new FactoriaComplica();
@@ -60,7 +60,7 @@ public class Main {
 							
 						}
 						
-					}
+					}else throw new ParseException("Juego '" + game + "' Incorrecto");
 
 				}
 				if (ok){
@@ -71,7 +71,7 @@ public class Main {
 				}
 			}  catch (ParseException ex){
 				System.err.println(ex.getMessage());
-				new HelpFormatter().printHelp("h", options);
+				System.err.println("Use -h|--help para más detalles.");
 			}
 		
 	}

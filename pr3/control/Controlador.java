@@ -28,11 +28,11 @@ public class Controlador {
 		this.jugador1 = f.creaJugadorHumanoConsola(in);
 		this.jugador2 = f.creaJugadorHumanoConsola(in);
 		this.jugadores.add(0,jugador1);
-		this.jugadores.add(0,jugador2);
+		this.jugadores.add(1,jugador2);
 		this.reglas = f.creaReglas();
 
 	}
-
+	
 	public void run() {
 
 		String lectura;
@@ -110,14 +110,20 @@ public class Controlador {
 						f = new FactoriaConecta4();
 						reglas = f.creaReglas();
 						partida.reset(reglas);
+						
+						jugador1= f.creaJugadorHumanoConsola(in);
+						jugadores.remove(0);
+						jugadores.add(0, jugador1);
 						System.out.println("Partida reiniciada.");
 					} else if (ju.compareToIgnoreCase("co") == 0) {
 						f = new FactoriaComplica();
 						reglas = f.creaReglas();
+						partida.reset(reglas);
 						System.out.println("Partida reiniciada.");
 					} else if (ju.compareToIgnoreCase("gr") == 0) {
 						f = new FactoriaGravity();
 						reglas = f.creaReglas();
+						partida.reset(reglas);
 						System.out.println("Partida reiniciada.");
 					}
 				} else
@@ -167,6 +173,8 @@ public class Controlador {
 						}
 
 						f = new FactoriaGravity(fi, c);
+						reglas = f.creaReglas();
+						partida.reset(reglas);
 						System.out.println("Partida reiniciada.");
 					}
 				}
