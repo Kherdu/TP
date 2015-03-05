@@ -2,10 +2,7 @@ package tp.pr3.logica;
 
 public class MovimientoInvalido extends java.lang.Exception{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+
 
 	public MovimientoInvalido(){
 	

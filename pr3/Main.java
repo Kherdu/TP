@@ -1,6 +1,5 @@
 package tp.pr3;
 
-import java.io.OutputStream;
 import java.util.Scanner;
 
 import org.apache.commons.cli.*;
@@ -15,12 +14,12 @@ import tp.pr3.logica.ReglasJuego;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static int main(String[] args) {
 
+		int salida=0;
 		int columnNumber = 0;
 		int rowNumber = 0;
 		String game = null;
-		OutputStream output = null;
 		CommandLineParser parser = null;
 		CommandLine cmdLine = null;
 		Options options = new Options();
@@ -39,8 +38,7 @@ public class Main {
 		Controlador c = new Controlador(f, p, in);
 
 		// aqui irian los optionGroup para incompatibilidades de argumentos
-		if (args == null) {
-			
+		if (args == null || args.length < 1 || args[0] == null) {
 			c.run();
 		} else
 			try {
@@ -68,7 +66,7 @@ public class Main {
 						if (cmdLine.hasOption("x") && cmdLine.hasOption("y")){
 							columnNumber=Integer.parseInt(cmdLine.getOptionValue("x"));
 							rowNumber=Integer.parseInt(cmdLine.getOptionValue("y"));
-							f= new FactoriaGravity();
+							f= new FactoriaGravity(rowNumber,columnNumber);
 							reglas = f.creaReglas();
 							p = new Partida(reglas);
 							c = new Controlador(f, p, in);
@@ -78,13 +76,12 @@ public class Main {
 					}
 
 				}
-				if (cmdLine.hasOption("h")) {
-
-				}
+				
 			} catch (Exception e) {
-
+				System.out.println(cmdLine.getArgs().toString());
+				salida=1;
 			}
-
+		return salida;
 	}
 
 }
