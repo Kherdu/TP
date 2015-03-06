@@ -186,7 +186,7 @@ public class Controlador {
 							System.err.println("NO");
 						}
 
-						f = new FactoriaGravity(fi,c);
+						f = new FactoriaGravity(c,fi);
 						this.jugador1 = f.creaJugadorHumanoConsola(in);
 						this.jugador2 = f.creaJugadorHumanoConsola(in);
 						jugadores = new ArrayList<Jugador>();

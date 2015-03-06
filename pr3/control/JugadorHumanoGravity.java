@@ -21,11 +21,12 @@ private Scanner sc;
 	public Movimiento getMovimiento(Tablero tab, Ficha color) {
 		
 		FactoriaTipoJuego cosa= new FactoriaGravity();
-		System.out.print("Introduce la fila: ");
-		int fila = sc.nextInt();
+		
 		System.out.print("Introduce la columna: ");
 		int columna = sc.nextInt();
 		sc.nextLine();
+		System.out.print("Introduce la fila: ");
+		int fila = sc.nextInt();
 		return cosa.creaMovimiento(columna, fila, color);
 		
 	}

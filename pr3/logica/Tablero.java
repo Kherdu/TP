@@ -87,7 +87,7 @@ public class Tablero {
 		String ret = ("");
 
 		for (int i = 1; i <= alto; i++) { // fichas
-			ret += ('|');
+			ret += ('|'); //barras verticales
 
 			for (int j = 1; j <= ancho; j++) {
 				ret += parserFicha(getCasilla(j, i));
@@ -98,17 +98,18 @@ public class Tablero {
 
 		ret += ('+');
 
-		for (int k = 1; k <= ancho; k++) {
+		for (int k = 1; k <= ancho; k++) { //barras de abajo
 			ret += ('-');
 		}
 
 		ret += ('+' + System.lineSeparator());
 		ret += (' ');
-
-		for (int l = 1; l <= ancho; l++) {
-			ret += (l);
-			if (l==10){
-				l=0;
+		int add=1;
+		for (int l = 1; l <= ancho; l++) { //numeros
+			ret += (add);
+			add++;
+			if (add==9){
+				add=0;
 			}
 		}
 
