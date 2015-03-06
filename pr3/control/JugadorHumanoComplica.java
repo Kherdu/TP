@@ -19,7 +19,7 @@ public class JugadorHumanoComplica implements Jugador{
 
 	@Override
 	public Movimiento getMovimiento(Tablero tab, Ficha color) {
-		FactoriaTipoJuego f= new FactoriaConecta4();
+		FactoriaTipoJuego f= new FactoriaComplica();
 		System.out.print("Introduce la columna: "	);
 		int columna = sc.nextInt();
 		sc.nextLine();

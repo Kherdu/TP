@@ -24,18 +24,13 @@ public class Main {
 		CommandLineParser parser = null;
 		CommandLine cmdLine = null;
 		Options options = generateOptions();
-		boolean ok=false;
 		
 		FactoriaTipoJuego f = new FactoriaConecta4();
 		ReglasJuego reglas = f.creaReglas();
 		Scanner in = new Scanner(System.in);
 		Partida p = new Partida(reglas);
 		Controlador c = new Controlador(f, p, in);
-		
-		// aqui irian los optionGroup para incompatibilidades de argumentos
-		/*if (args == null || args.length < 1 || args[0] == null) {
-			ok=true;
-		} else */
+	
 			try {
 				
 				parser = new BasicParser();
@@ -48,28 +43,31 @@ public class Main {
 						
 					}
 					System.err.println(salida);
+					System.err.println("Use -h|--help para más detalles.");
+					System.exit(1);
 				}
 				
 				if (cmdLine.hasOption("h")) {
 					new HelpFormatter().printHelp(Constants.MensajeAyudaConsola, options);
-					
+					System.exit(0);
 				} else if (cmdLine.hasOption("g")){
 						game = cmdLine.getOptionValue("game");
 						
-						if (game=="c4"){
-							ok=true;
-						}else if (game == "co") {
+						if (game.equalsIgnoreCase("c4")){
+							f=new FactoriaConecta4();
+						}else if (game.equalsIgnoreCase("co")) {
 							f= new FactoriaComplica();
-							ok=true;
-						}else if (game == "gr") {
+							
+						}else if (game.equalsIgnoreCase("gr")) {
+							
 							if (cmdLine.hasOption("x") && cmdLine.hasOption("y")){
 								try{
-									columnNumber=Integer.parseInt(cmdLine.getOptionValue("x"));
-									rowNumber=Integer.parseInt(cmdLine.getOptionValue("y"));
+									columnNumber=Integer.parseInt(cmdLine.getOptionValue("y"));
+									rowNumber=Integer.parseInt(cmdLine.getOptionValue("x"));
 									f=new FactoriaGravity(rowNumber,columnNumber);
-									ok=true;
+									
 								}catch ( NumberFormatException e){
-									System.exit(2);
+									System.exit(1);
 								}
 									
 							}else f=new FactoriaGravity();
@@ -82,7 +80,14 @@ public class Main {
 				System.err.println("Use -h|--help para más detalles.");
 				System.exit(1);
 			}
-		c.run();
+			
+			
+			reglas = f.creaReglas();
+			
+			p = new Partida(reglas);
+			c = new Controlador(f, p, in);
+			
+			c.run();
 	}
 	
 	
@@ -102,10 +107,8 @@ public class Main {
 		options.getOption("g").setArgName("game");
 		options.getOption("x").setArgName("columnNumber");
 		options.getOption("y").setArgName("rowNumber");
+		
 		return options;
-		
-		
-		
-	}
+		}
 
 }

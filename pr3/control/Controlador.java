@@ -110,10 +110,9 @@ public class Controlador {
 						this.f = new FactoriaConecta4();
 						this.jugador1 = f.creaJugadorHumanoConsola(in);
 						this.jugador2 = f.creaJugadorHumanoConsola(in);
-						jugadores.remove(0);
-						jugadores.add(0, jugador1);
-						jugadores.remove(1);						
-						jugadores.add(1, jugador2);
+						jugadores = new ArrayList<Jugador>();
+						jugadores.add(jugador1);
+						jugadores.add(jugador2);
 						reglas = f.creaReglas();						
 						partida.reset(reglas);
 						
@@ -125,10 +124,9 @@ public class Controlador {
 						f = new FactoriaComplica();
 						this.jugador1 = f.creaJugadorHumanoConsola(in);
 						this.jugador2 = f.creaJugadorHumanoConsola(in);
-						jugadores.remove(0);
-						jugadores.add(0, jugador1);
-						jugadores.remove(1);						
-						jugadores.add(1, jugador2);
+						jugadores = new ArrayList<Jugador>();
+						jugadores.add(jugador1);
+						jugadores.add(jugador2);
 						reglas = f.creaReglas();
 						partida.reset(reglas);
 						System.out.println("Partida reiniciada.");
@@ -136,10 +134,9 @@ public class Controlador {
 						f = new FactoriaGravity();
 						this.jugador1 = f.creaJugadorHumanoConsola(in);
 						this.jugador2 = f.creaJugadorHumanoConsola(in);
-						jugadores.remove(0);
-						jugadores.add(0, jugador1);
-						jugadores.remove(1);						
-						jugadores.add(1, jugador2);
+						jugadores = new ArrayList<Jugador>();
+						jugadores.add(jugador1);
+						jugadores.add(jugador2);
 						reglas = f.creaReglas();
 						partida.reset(reglas);
 						System.out.println("Partida reiniciada.");
@@ -189,7 +186,12 @@ public class Controlador {
 							System.err.println("NO");
 						}
 
-						f = new FactoriaGravity(fi, c);
+						f = new FactoriaGravity(fi,c);
+						this.jugador1 = f.creaJugadorHumanoConsola(in);
+						this.jugador2 = f.creaJugadorHumanoConsola(in);
+						jugadores = new ArrayList<Jugador>();
+						jugadores.add(jugador1);
+						jugadores.add(jugador2);
 						reglas = f.creaReglas();
 						partida.reset(reglas);
 						System.out.println("Partida reiniciada.");
