@@ -107,6 +107,9 @@ public class Tablero {
 
 		for (int l = 1; l <= ancho; l++) {
 			ret += (l);
+			if (l==10){
+				l=0;
+			}
 		}
 
 		ret += (System.lineSeparator());

@@ -34,8 +34,9 @@ public class MovimientoConecta4 extends Movimiento {
 
 		if (columna < 1 || columna > tab.getAncho()) { 
 			// si se intenta meter fuera del tablero
-			throw new MovimientoInvalido("Posicion incorrecta.");
-		} else if (tab.getCasilla(columna, (Utiles.fila(columna, tab))) != Ficha.VACIA) {
+			throw new MovimientoInvalido("Posicion incorrecta. Debe estar entre 1 y "+ tab.getAncho());
+			
+		} else if (Utiles.fila(columna, tab)==0) {
 			// si columna completa
 			throw new MovimientoInvalido("Columna llena.");
 

@@ -57,7 +57,7 @@ public class Controlador {
 				}
 			} catch (InstruccionInvalida e) {
 
-				e.printStackTrace();
+				System.err.println(e.getMessage());
 			}
 		}
 		in.close();
@@ -81,7 +81,7 @@ public class Controlador {
 					try {
 						partida.Mover(j, in);
 					} catch (MovimientoInvalido e) {
-						e.printStackTrace();
+						System.err.println(e.getMessage());
 					}
 
 				} else if (aux.compareToIgnoreCase("reiniciar") == 0) {
@@ -99,7 +99,7 @@ public class Controlador {
 
 					System.out.println(Constants.MensajeAyuda);
 				} else
-					System.out.println("controlador 98");
+					throw new InstruccionInvalida("No te entiendo.");
 
 			} else if (st.countTokens() == 1) {
 
@@ -142,7 +142,7 @@ public class Controlador {
 						System.out.println("Partida reiniciada.");
 					}
 				} else
-					System.out.println("controlador 119");
+					throw new InstruccionInvalida(" este juego no se cual es");
 
 			} else if (st.countTokens() == 2) {
 
@@ -198,9 +198,8 @@ public class Controlador {
 					}
 				}
 			} else
-				System.out.println("controlador 139");
-		} else
-			System.out.println("controlador 140");
+				throw new InstruccionInvalida(" mucha basura");
+		} 
 	}
 
 }
