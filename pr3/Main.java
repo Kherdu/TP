@@ -35,45 +35,53 @@ public class Main {
 		// aqui irian los optionGroup para incompatibilidades de argumentos
 		/*if (args == null || args.length < 1 || args[0] == null) {
 			ok=true;
-		} else
+		} else */
 			try {
+				
 				parser = new BasicParser();
 				cmdLine = parser.parse(options, args, false);
+				String[] argumentos=cmdLine.getArgs();
+				String salida="Argumentos no entendidos: ";
+				if (argumentos.length>0){
+					for (int i=0;i<argumentos.length;i++){
+						salida+=argumentos[i]+=" ";
+						
+					}
+					System.err.println(salida);
+				}
 				
 				if (cmdLine.hasOption("h")) {
 					new HelpFormatter().printHelp(Constants.MensajeAyudaConsola, options);
-
-				} else if (cmdLine.hasOption("g")) {
-					game = cmdLine.getOptionValue("game");
-					if (game.compareToIgnoreCase("c4") == 0) {
-						ok=true;
-					} else if (game == "co") {
-						f= new FactoriaComplica();
-						ok=true;
-					} else if (game == "gr") {
-						if (cmdLine.hasOption("x") && cmdLine.hasOption("y")){
-							
-							columnNumber=Integer.parseInt(cmdLine.getOptionValue("x"));
-							rowNumber=Integer.parseInt(cmdLine.getOptionValue("y"));
-							f= new FactoriaGravity(rowNumber,columnNumber);
-							ok=true;
-							
-						}
+					
+				} else if (cmdLine.hasOption("g")){
+						game = cmdLine.getOptionValue("game");
 						
-					}else throw new ParseException("Juego '" + game + "' Incorrecto");
-
-				}
-				if (ok){
-					reglas = f.creaReglas();
-					p = new Partida(reglas);
-					c = new Controlador(f, p, in);
-					c.run();
-				}
-			}  catch (ParseException ex){
+						if (game=="c4"){
+							ok=true;
+						}else if (game == "co") {
+							f= new FactoriaComplica();
+							ok=true;
+						}else if (game == "gr") {
+							if (cmdLine.hasOption("x") && cmdLine.hasOption("y")){
+								try{
+									columnNumber=Integer.parseInt(cmdLine.getOptionValue("x"));
+									rowNumber=Integer.parseInt(cmdLine.getOptionValue("y"));
+									f=new FactoriaGravity(rowNumber,columnNumber);
+									ok=true;
+								}catch ( NumberFormatException e){
+									System.exit(2);
+								}
+									
+							}else f=new FactoriaGravity();
+								
+						}else throw new ParseException("Juego '" + game + "' Incorrecto");
+					}
+						
+			} catch (ParseException ex) {
 				System.err.println(ex.getMessage());
 				System.err.println("Use -h|--help para más detalles.");
-			}*/
-		
+				System.exit(1);
+			}
 		c.run();
 	}
 	
