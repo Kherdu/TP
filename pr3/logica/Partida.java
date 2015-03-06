@@ -99,13 +99,11 @@ public class Partida {
 	public void ejecutaMovimiento(Movimiento mov) throws MovimientoInvalido {
 
 		
-		if (ganador != Ficha.VACIA || mov.getJugador() != turno
-				|| mov.getColumna() > tablero.getAncho()
-				|| mov.getColumna() < 1) { // si hay ya ganador o el movimiento
-											// no pertenece al jugador al que le
-											// toca o es una casilla de fuera
-											// del tablero
-			
+		if (ganador != Ficha.VACIA || mov.getJugador() != turno){ 
+			// si hay ya ganador o el movimiento
+			// no pertenece al jugador al que le
+			// toca o es una casilla de fuera
+			// del tablero			
 			throw new MovimientoInvalido("Error");
 		} else {
 			mov.ejecutaMovimiento(tablero);
