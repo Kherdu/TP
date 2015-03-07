@@ -20,14 +20,14 @@ private Scanner sc;
 	@Override
 	public Movimiento getMovimiento(Tablero tab, Ficha color) {
 		
-		FactoriaTipoJuego cosa= new FactoriaGravity();
+		FactoriaTipoJuego f= new FactoriaGravity();
 		
 		System.out.print("Introduce la columna: ");
 		int columna = sc.nextInt();
 		sc.nextLine();
 		System.out.print("Introduce la fila: ");
 		int fila = sc.nextInt();
-		return cosa.creaMovimiento(columna, fila, color);
+		return f.creaMovimiento(columna, fila, color);
 		
 	}
 

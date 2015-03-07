@@ -111,8 +111,12 @@ public class Partida {
 			avanzaTurno();
 		}
 		ganador = juego.hayGanador(mov, tablero);
-		if (juego.tablas(mov.getJugador(), tablero) || ganador != Ficha.VACIA) {
+		if (ganador != Ficha.VACIA) {
 			terminada = true;
+			
+		}
+		if (juego.tablas(mov.getJugador(), tablero)){
+			terminada=true;
 			
 		}
 	

@@ -108,7 +108,7 @@ public class Tablero {
 		for (int l = 1; l <= ancho; l++) { //numeros
 			ret += (add);
 			add++;
-			if (add==9){
+			if (add==10){
 				add=0;
 			}
 		}

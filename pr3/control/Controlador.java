@@ -38,6 +38,7 @@ public class Controlador {
 		String lectura;
 		this.in = new Scanner(System.in);
 		while (!partida.isTerminada()) {
+		
 			try {
 				for (int i=0;i<jugadores.size();i++) {
 					lectura = null;
@@ -60,6 +61,9 @@ public class Controlador {
 				System.err.println(e.getMessage());
 			}
 		}
+		if (!(partida.getGanador()==Ficha.VACIA)){
+			System.out.println("Ganan las "+ partida.getGanador().toString());
+		}else System.out.println("Partida terminada en tablas.");
 		in.close();
 	}
 
@@ -142,7 +146,7 @@ public class Controlador {
 						System.out.println("Partida reiniciada.");
 					}
 				} else
-					throw new InstruccionInvalida(" este juego no se cual es");
+					throw new InstruccionInvalida("No te entiendo.");
 
 			} else if (st.countTokens() == 2) {
 
@@ -152,23 +156,23 @@ public class Controlador {
 						// jugador blanco = jugador 1, jugador negro= jugador 2
 						String ju = st.nextToken();
 						if (ju.compareToIgnoreCase("humano") == 0) {
-							jugador1 = f.creaJugadorHumanoConsola(in);//cargarnos arraylist y volver a meter el jugador nuevo
-							jugadores.remove(0);
-							jugadores.add(0, jugador1);
+							jugadores.remove(jugador1); //cargarnos arraylist y volver a meter el jugador nuevo
+							this.jugador1 = f.creaJugadorHumanoConsola(in);
+							jugadores.add(jugador1);
 						} else if (ju.compareToIgnoreCase("aleatorio") == 0)
-							jugador1 = f.creaJugadorAleatorio(); 
-							jugadores.remove(0);
-							jugadores.add(0, jugador1);
+							jugadores.remove(jugador1); //cargarnos arraylist y volver a meter el jugador nuevo
+							this.jugador1 = f.creaJugadorAleatorio();
+							jugadores.add(jugador1);
 					} else if (color.compareToIgnoreCase("negras") == 0) {
 						String ju = st.nextToken();
 						if (ju.compareToIgnoreCase("humano") == 0) {
-							jugador2 = f.creaJugadorHumanoConsola(in);
-							jugadores.remove(1);
-							jugadores.add(1, jugador1);
+							jugadores.remove(jugador2); //cargarnos arraylist y volver a meter el jugador nuevo
+							this.jugador2 = f.creaJugadorHumanoConsola(in);
+							jugadores.add(jugador2);
 						} else if (ju.compareToIgnoreCase("aleatorio") == 0)
-							jugador2 = f.creaJugadorAleatorio();
-							jugadores.remove(1);
-							jugadores.add(1, jugador1);
+							jugadores.remove(jugador2); //cargarnos arraylist y volver a meter el jugador nuevo
+							this.jugador2 = f.creaJugadorAleatorio();
+							jugadores.add(jugador2);
 					}
 				}
 
@@ -177,16 +181,16 @@ public class Controlador {
 				if (aux.compareToIgnoreCase("jugar") == 0) {
 					String ju = st.nextToken();
 					if (ju.compareToIgnoreCase("gr") == 0) {
-						int c = 0;
-						int fi = 0;
+						int tabX = 0; //ancho
+						int tabY = 0; //alto
 						try {
-							c = Integer.parseInt(st.nextToken(" "));
-							fi = Integer.parseInt(st.nextToken(" "));
+							tabX = Integer.parseInt(st.nextToken(" "));
+							tabY = Integer.parseInt(st.nextToken(" "));
 						} catch (NumberFormatException e) {
 							System.err.println("NO");
 						}
 
-						f = new FactoriaGravity(c,fi);
+						f = new FactoriaGravity(tabX,tabY);
 						this.jugador1 = f.creaJugadorHumanoConsola(in);
 						this.jugador2 = f.creaJugadorHumanoConsola(in);
 						jugadores = new ArrayList<Jugador>();
@@ -201,5 +205,6 @@ public class Controlador {
 				throw new InstruccionInvalida(" mucha basura");
 		} 
 	}
+	
 
 }
