@@ -113,7 +113,7 @@ public class Partida {
 		ganador = juego.hayGanador(mov, tablero);
 		if (juego.tablas(mov.getJugador(), tablero) || ganador != Ficha.VACIA) {
 			terminada = true;
-			throw new MovimientoInvalido("Partida terminada en tablas.");
+			
 		}
 	
 
