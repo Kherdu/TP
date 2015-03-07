@@ -72,11 +72,11 @@ public class Main {
 									
 							}else f=new FactoriaGravity();
 								
-						}else throw new ParseException("Uso incorrecto:"+ "Juego '" + game + "' Incorrecto");
+						}else throw new ParseException("Uso incorrecto: "+ "Juego '" + game + "' Incorrecto");
 					}
 						
 			} catch (ParseException ex) {
-				System.err.println("Uso incorrecto"+ex.getMessage());
+				System.err.println(ex.getMessage());
 				System.err.println("Use -h|--help para más detalles.");
 				System.exit(1);
 			}
