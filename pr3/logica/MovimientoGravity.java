@@ -29,7 +29,7 @@ public class MovimientoGravity extends Movimiento{
 		
 		boolean aux = false;
 			if (columna < 1 || columna > tab.getAncho() || fila < 1 || fila > tab.getAlto()){
-				throw new MovimientoInvalido("Posicion incorrecta. ");
+				throw new MovimientoInvalido("Posicion incorrecta. Debe estar entre 1 y "+ tab.getAncho());
 			}else if (tab.getCasilla(columna, fila) != Ficha.VACIA){
 				throw new MovimientoInvalido("Casilla ocupada");
 				
