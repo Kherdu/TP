@@ -1,5 +1,5 @@
 package tp.pr3.logica;
-
+//Herencia de movimiento para el juego Gravity
 public class MovimientoGravity extends Movimiento{
 	private int columna;
 	private Ficha color;
@@ -29,20 +29,22 @@ public class MovimientoGravity extends Movimiento{
 		
 		boolean aux = false;
 			if (columna < 1 || columna > tab.getAncho() || fila < 1 || fila > tab.getAlto()){
+				//Si se poner fuera del tablero
 				throw new MovimientoInvalido("Posicion incorrecta. ");
 			}else if (tab.getCasilla(columna, fila) != Ficha.VACIA){
+				//Si la casilla esta ocupada
 				throw new MovimientoInvalido("Casilla ocupada");
 				
 			}		
 			else{
 			
-			// usar el parseo de direccion.
+			// usar el parseo de direccion. para saber hacia donde se va a desplazar la ficha.
 			if (parseoDireccion(tab) == "LRTD"){
-				
+				//Centro
 				tab.setCasilla(columna, fila, color);
 				
 			}else if (parseoDireccion(tab).equalsIgnoreCase("L")){
-				
+				//Izquierda
 				for (int i = columna; i >= 1 && aux == false; i--){
 					
 					if (tab.getCasilla((i-1), fila) != Ficha.VACIA || (i == 1)){						
@@ -56,7 +58,7 @@ public class MovimientoGravity extends Movimiento{
 			aux = false;
 				
 			}else if (parseoDireccion(tab).equalsIgnoreCase("R")){
-				
+				//Derecha
 				for (int i = columna; i <= tab.getAncho() && aux == false; i++){
 					
 					if (tab.getCasilla((i+1), fila) != Ficha.VACIA || (i == tab.getAncho())){						
@@ -70,7 +72,7 @@ public class MovimientoGravity extends Movimiento{
 			aux = false;
 			
 			}else if(parseoDireccion(tab).equalsIgnoreCase("T")){
-				
+				//Arriba
 				for (int i = fila; i >= 1 && aux == false; i--){
 					
 					if (tab.getCasilla(columna, (i-1)) != Ficha.VACIA || (i == 1)){						
@@ -85,7 +87,7 @@ public class MovimientoGravity extends Movimiento{
 			aux = false;	
 				
 			}else if (parseoDireccion(tab).equalsIgnoreCase("D")){
-				
+				//Abajo
 				for (int i = fila; i <= tab.getAlto() && aux == false; i++){
 					
 					if (tab.getCasilla(columna, (i+1)) != Ficha.VACIA || (i == tab.getAlto())){						
@@ -100,6 +102,7 @@ public class MovimientoGravity extends Movimiento{
 				aux = false;
 				
 			}else if(parseoDireccion(tab).equalsIgnoreCase("LT")){
+				//Diagonal hacia arriba a la izquierda
 				int c = columna;
 				int f = fila;
 				while (c >= 1 && f >= 1 && aux == false){
@@ -119,7 +122,7 @@ public class MovimientoGravity extends Movimiento{
 			aux = false;
 				
 			}else if (parseoDireccion(tab).equalsIgnoreCase("LD")){
-				
+				//Diagonal hacia abajo a la izquierda
 				int c = columna;
 				int f = fila;
 				while (c >= 1 && f <= tab.getAlto() && aux == false){
@@ -139,7 +142,7 @@ public class MovimientoGravity extends Movimiento{
 				aux = false;
 				
 			}else if(parseoDireccion(tab).equalsIgnoreCase("RT")){
-				
+				//Diagonal hacia arriba a la derecha
 				int c = columna;
 				int f = fila;
 				while (c <= tab.getAncho() && f >= 1 && aux == false){
@@ -159,7 +162,7 @@ public class MovimientoGravity extends Movimiento{
 			aux = false;	
 				
 			}else if (parseoDireccion(tab).equalsIgnoreCase("RD")){
-				
+				//Diagonal hacia abajo a la derecha
 				int c = columna;
 				int f = fila;
 				while (c <= tab.getAncho() && f <= tab.getAlto() && aux == false){
@@ -187,6 +190,8 @@ public class MovimientoGravity extends Movimiento{
 
 	@Override
 	public void undo(Tablero tab) {
+		//Funcion que se encarga de deshacer movimiento. Funciona muy parecido a ejecutar 
+		//movimiento pero insertando una ficha vacia.
 		boolean aux = false;
 		// usar el parseo de direccion.
 					if (parseoDireccion(tab) == "LRTD"){
@@ -341,7 +346,13 @@ public class MovimientoGravity extends Movimiento{
 	}
 
 	private String parseoDireccion(Tablero tab){
-		
+		/*L = LEFT
+		 *D = DOWN
+		 *T = TOP
+		 *R = RIGHT 
+		 *
+		 *Realiza una comprobacion de hacia donde se va a desplazar la ficha
+		 *insertada en el tablero teniendo en cuanta la cercania a los laterales.*/
 		cercania = "";
 		
 			if (tab.getAncho() - columna == columna - 1){

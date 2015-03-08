@@ -269,7 +269,7 @@ public class ReglasComplica implements ReglasJuego {
 
 	@Override
 	public boolean tablas(Ficha ultimoEnPoner, Tablero t) {
-
+		//No existen tablas en el complica.
 		return false;
 	}
 

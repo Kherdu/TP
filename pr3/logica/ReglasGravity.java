@@ -185,6 +185,9 @@ public class ReglasGravity implements ReglasJuego{
 
 	@Override
 	public boolean tablas(Ficha ultimoEnPoner, Tablero t) {
+		//Recorre todo el tablero si hay alguna posicion vacia, no hay tablas.
+		//Si esta lleno hay tablas.
+		
 		boolean ret = true;
 		
 		for (int i = 1; i <= t.getAncho(); i++){

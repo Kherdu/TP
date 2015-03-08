@@ -1,5 +1,5 @@
 package tp.pr3.logica;
-
+	//Herencia de movimiento para el juego conecta cuatro
 public class MovimientoConecta4 extends Movimiento {
 	private Ficha ficha;
 	private int columna;
@@ -48,7 +48,7 @@ public class MovimientoConecta4 extends Movimiento {
 
 	@Override
 	public void undo(Tablero tab) {
-
+		//Funcion que se encarga del borrado en el juego.
 		tab.setCasilla(columna, (Utiles.fila(columna, tab) + 1), Ficha.VACIA);
 
 	}
