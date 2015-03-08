@@ -208,7 +208,7 @@ public class Controlador {
 					}
 				}
 			} else
-				throw new InstruccionInvalida(" mucha basura");
+				throw new InstruccionInvalida("No te entiendo");
 		}
 	}
 
