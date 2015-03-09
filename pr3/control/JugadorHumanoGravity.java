@@ -27,6 +27,7 @@ private Scanner sc;
 		sc.nextLine();
 		System.out.print("Introduce la fila: ");
 		int fila = sc.nextInt();
+		sc.nextLine();
 		return f.creaMovimiento(columna, fila, color);
 		
 	}

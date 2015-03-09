@@ -34,7 +34,7 @@ public class MovimientoConecta4 extends Movimiento {
 
 		if (columna < 1 || columna > tab.getAncho()) { 
 			// si se intenta meter fuera del tablero
-			throw new MovimientoInvalido("Posicion incorrecta. Debe estar entre 1 y "+ tab.getAncho());
+			throw new MovimientoInvalido("Columna incorrecta. Debe estar entre 1 y "+ tab.getAncho() + ".");
 			
 		} else if (Utiles.fila(columna, tab)==0) {
 			// si columna completa

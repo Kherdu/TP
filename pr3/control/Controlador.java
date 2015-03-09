@@ -35,31 +35,31 @@ public class Controlador {
 
 	public void run() {
 
-		
-		
-		while (!partida.isTerminada()) {
+		int i = 0;
+		while (!partida.isTerminada() && i < jugadores.size()) {
+			String lectura;
+			System.out.print(partida.pintaTablero());
+			System.out.print("Juegan ");
 
-			for (int i = 0; i < jugadores.size(); i++) {
-				String lectura;
-				this.in = new Scanner(System.in);
-				System.out.print(partida.pintaTablero());
-				System.out.print("Juegan ");
-
-				if (partida.getTurno() == Ficha.BLANCA) {
-					System.out.println("blancas");
-				} else if (partida.getTurno() == Ficha.NEGRA) {
-					System.out.println("negras");
-				}
-
-				System.out.print("Qué quieres hacer? ");
-				try {
-					lectura = in.nextLine();
-					parse(lectura, jugadores.get(i));
-					
-				} catch (InstruccionInvalida e) {
-					System.err.println(e.getMessage());
-				}
+			if (partida.getTurno() == Ficha.BLANCA) {
+				System.out.println("blancas");
+			} else if (partida.getTurno() == Ficha.NEGRA) {
+				System.out.println("negras");
 			}
+
+			System.out.print("Qué quieres hacer? ");
+			try {
+				lectura = in.nextLine();
+				parse(lectura, jugadores.get(i));
+
+			} catch (InstruccionInvalida e) {
+				System.err.println(e.getMessage());
+			}
+			i++;
+			if (i == jugadores.size()) {
+				i = 0;
+			}
+
 		}
 		if (!(partida.getGanador() == Ficha.VACIA)) {
 			System.out.println("Ganan las " + partida.getGanador().toString());
@@ -87,7 +87,7 @@ public class Controlador {
 					try {
 						partida.Mover(j, in);
 					} catch (MovimientoInvalido e) {
-						System.err.println(e.getMessage());
+						System.err.print(e.getMessage()+ "\n");
 					}
 
 				} else if (aux.compareToIgnoreCase("reiniciar") == 0) {
@@ -100,7 +100,7 @@ public class Controlador {
 
 				} else if (aux.compareToIgnoreCase("deshacer") == 0) {
 					if (!partida.undo())
-						throw new InstruccionInvalida();
+						throw new InstruccionInvalida("Imposible deshacer.");
 				} else if (aux.compareToIgnoreCase("ayuda") == 0) {
 
 					System.out.println(Constants.MensajeAyuda);
@@ -161,10 +161,12 @@ public class Controlador {
 							jugadores.add(jugador1);
 						} else if (ju.compareToIgnoreCase("aleatorio") == 0)
 							jugadores.remove(jugador1); // cargarnos arraylist y
-														// volver a meter el
-														// jugador nuevo
-						this.jugador1 = f.creaJugadorAleatorio();
+						jugadores.remove(jugador2); // volver a meter el
+						this.jugador1 = f.creaJugadorAleatorio(); // jugador
+																	// nuevo
+						this.jugador2 = f.creaJugadorHumanoConsola(in);
 						jugadores.add(jugador1);
+						jugadores.add(jugador2);
 					} else if (color.compareToIgnoreCase("negras") == 0) {
 						String ju = st.nextToken();
 						if (ju.compareToIgnoreCase("humano") == 0) {
@@ -174,13 +176,16 @@ public class Controlador {
 							this.jugador2 = f.creaJugadorHumanoConsola(in);
 							jugadores.add(jugador2);
 						} else if (ju.compareToIgnoreCase("aleatorio") == 0)
-							jugadores.remove(jugador2); // cargarnos arraylist y
-														// volver a meter el
-														// jugador nuevo
-						this.jugador2 = f.creaJugadorAleatorio();
-						jugadores.add(jugador2);
-					}
-				}
+							jugadores.remove(jugador1); // cargarnos arraylist y
+							jugadores.remove(jugador2); // volver a meter el
+							this.jugador1 = f.creaJugadorHumanoConsola(in); // jugador nuevo
+							this.jugador2 = f.creaJugadorAleatorio();
+							jugadores.add(jugador1);
+							jugadores.add(jugador2);
+					} else
+						throw new InstruccionInvalida("No te entiendo.");
+				} else
+					throw new InstruccionInvalida("No te entiendo.");
 
 			} else if (st.countTokens() == 3) {
 
@@ -195,18 +200,21 @@ public class Controlador {
 						} catch (NumberFormatException e) {
 							System.err.println("NO");
 						}
-
-						f = new FactoriaGravity(tabX, tabY);
-						this.jugador1 = f.creaJugadorHumanoConsola(in);
-						this.jugador2 = f.creaJugadorHumanoConsola(in);
-						jugadores = new ArrayList<Jugador>();
-						jugadores.add(jugador1);
-						jugadores.add(jugador2);
-						reglas = f.creaReglas();
-						partida.reset(reglas);
-						System.out.println("Partida reiniciada.");
+						if (tabX > 0 && tabY > 0) {
+							f = new FactoriaGravity(tabX, tabY);
+							this.jugador1 = f.creaJugadorHumanoConsola(in);
+							this.jugador2 = f.creaJugadorHumanoConsola(in);
+							jugadores = new ArrayList<Jugador>();
+							jugadores.add(jugador1);
+							jugadores.add(jugador2);
+							reglas = f.creaReglas();
+							partida.reset(reglas);
+							System.out.println("Partida reiniciada.");
+						} else
+							throw new InstruccionInvalida("No te entiendo.");
 					}
-				}
+				} else
+					throw new InstruccionInvalida("No te entiendo.");
 			} else
 				throw new InstruccionInvalida("No te entiendo");
 		}
