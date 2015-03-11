@@ -18,13 +18,16 @@ public class Main {
 	public static void main(String[] args) {
 
 		
-		int columnNumber = 0;
-		int rowNumber = 0;
+		// variables del commons.cli
 		String game = null;
 		CommandLineParser parser = null;
 		CommandLine cmdLine = null;
 		Options options = generateOptions();
 		
+		
+		//variables para crear el juego
+		int columnNumber = 0;
+		int rowNumber = 0;
 		FactoriaTipoJuego f = new FactoriaConecta4();
 		ReglasJuego reglas = f.creaReglas();
 		Scanner in = new Scanner(System.in);
@@ -32,7 +35,7 @@ public class Main {
 		Controlador c = new Controlador(f, p, in);
 	
 			try {
-				
+				//si los argumentos son incorrectos
 				parser = new BasicParser();
 				cmdLine = parser.parse(options, args, false);
 				String[] argumentos=cmdLine.getArgs();
@@ -44,7 +47,7 @@ public class Main {
 					}
 					throw new ParseException(salida);
 				}
-				
+				//casos de argumentos de entrada
 				if (cmdLine.hasOption("h")) {
 					new HelpFormatter().printHelp(Constants.MensajeAyudaConsola, options);
 					System.exit(0);
@@ -75,7 +78,7 @@ public class Main {
 						
 			} catch (ParseException ex) {
 				System.err.println("Uso incorrecto: "+ex.getMessage());
-				System.err.println("Use -h|--help para más detalles.");
+				System.err.println("Use -h|--help para mï¿½s detalles.");
 				System.exit(1);
 			}
 			
@@ -88,7 +91,10 @@ public class Main {
 			c.run();
 	}
 	
-	
+	/* 
+	 * clase que genera las opciones de entrada con commons.cli
+	 * 
+	 */
 	
 	private static Options generateOptions(){
 		
@@ -98,9 +104,9 @@ public class Main {
 		options.addOption("g", "game", true,
 				"Tipo de juego (c4, co, gr). Por defecto, c4.");
 		options.addOption("x", "tamX", true,
-				"Número de columnas del tablero (sólo para Gravity). Por defecto, 10.");
+				"Nï¿½mero de columnas del tablero (sï¿½lo para Gravity). Por defecto, 10.");
 		options.addOption("y", "tamY", true,
-				"Número de filas del tablero (sólo para Gravity). Por defecto, 10.");
+				"Nï¿½mero de filas del tablero (sï¿½lo para Gravity). Por defecto, 10.");
 		
 		options.getOption("g").setArgName("game");
 		options.getOption("x").setArgName("columnNumber");

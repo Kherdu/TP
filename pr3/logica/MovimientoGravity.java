@@ -30,7 +30,7 @@ public class MovimientoGravity extends Movimiento{
 		boolean aux = false;
 			if (columna < 1 || columna > tab.getAncho() || fila < 1 || fila > tab.getAlto()){
 				//Si se poner fuera del tablero
-				throw new MovimientoInvalido("Posición incorrecta.");
+				throw new MovimientoInvalido("PosiciÃ³n incorrecta.");
 			}else if (tab.getCasilla(columna, fila) != Ficha.VACIA){
 				//Si la casilla esta ocupada
 				throw new MovimientoInvalido("Casilla ocupada.");
