@@ -17,7 +17,7 @@ public class Controlador {
 	private FactoriaTipoJuego f;
 	private Jugador jugador1;
 	private Jugador jugador2;
-	
+
 	private Jugador[] jugadores;
 	private ReglasJuego reglas;
 
@@ -27,7 +27,7 @@ public class Controlador {
 		this.in = sc;
 		this.jugador1 = f.creaJugadorHumanoConsola(in);
 		this.jugador2 = f.creaJugadorHumanoConsola(in);
-		this.jugadores= new Jugador[Constants.numJugadores];
+		this.jugadores = new Jugador[Constants.numJugadores];
 		this.jugadores[0] = jugador1;
 		this.jugadores[1] = jugador2;
 		this.reglas = f.creaReglas();
@@ -122,11 +122,12 @@ public class Controlador {
 						f = new FactoriaComplica();
 						cambiaJuego(f);
 
-					} else if (ju.compareToIgnoreCase("gr") == 0) {
+					}else throw new InstruccionInvalida("No te entiendo.");
+					/* else if (ju.compareToIgnoreCase("gr") == 0) {
 						f = new FactoriaGravity();
 						cambiaJuego(f);
 
-					}
+					}*/
 				} else
 					throw new InstruccionInvalida("No te entiendo.");
 
@@ -145,20 +146,20 @@ public class Controlador {
 						} else if (ju.compareToIgnoreCase("aleatorio") == 0)
 
 							this.jugador1 = f.creaJugadorAleatorio();
-							cambiaJugadores(jugador1, 0);
-					
+						cambiaJugadores(jugador1, 0);
+
 					} else if (color.compareToIgnoreCase("negras") == 0) {
 						String ju = st.nextToken();
 						if (ju.compareToIgnoreCase("humano") == 0) {
 
 							this.jugador2 = f.creaJugadorHumanoConsola(in);
 							cambiaJugadores(jugador1, 1);
-						
+
 						} else if (ju.compareToIgnoreCase("aleatorio") == 0)
 
 							this.jugador2 = f.creaJugadorAleatorio();
-							cambiaJugadores(jugador1, 1);
-							
+						cambiaJugadores(jugador1, 1);
+
 					} else
 						throw new InstruccionInvalida("No te entiendo.");
 				} else
@@ -177,8 +178,18 @@ public class Controlador {
 						} catch (NumberFormatException e) {
 							System.err.println("NO");
 						}
-						if (tabX > 0 && tabY > 0) {
+						if (tabX > 0 || tabY > 0) {
+							if (tabX <= 0) {
+								tabX = 1;
+							}
+							if (tabY <= 0) {
+								tabY = 1;
+							}
 							f = new FactoriaGravity(tabX, tabY);
+							cambiaJuego(f);
+							System.out.println("Partida reiniciada.");
+						} else if (tabX < 0 && tabY < 0) {
+							f = new FactoriaGravity(1, 1);
 							cambiaJuego(f);
 							System.out.println("Partida reiniciada.");
 						} else
@@ -207,7 +218,7 @@ public class Controlador {
 	private void cambiaJuego(FactoriaTipoJuego f) {
 		this.jugador1 = f.creaJugadorHumanoConsola(in);
 		this.jugador2 = f.creaJugadorHumanoConsola(in);
-		
+
 		jugadores[0] = jugador1;
 		jugadores[1] = jugador2;
 		reglas = f.creaReglas();
