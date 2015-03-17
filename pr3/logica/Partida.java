@@ -6,9 +6,6 @@ import tp.pr3.control.Jugador;
 
 public class Partida {
 
-	private int height;
-	private int width;
-
 	private static int n = 10;
 	private Tablero tablero;
 	private Ficha turno; // jugador que tiene el turno
@@ -18,6 +15,7 @@ public class Partida {
 	private int lastPos; // puntero para array circular
 	private int numJugadas;
 	private ReglasJuego juego;
+	private boolean isTablas;
 
 	public Partida(ReglasJuego reglas) {
 
@@ -28,24 +26,23 @@ public class Partida {
 			this.moveStack = new MovimientoConecta4[n];
 		} else if (reglas.getTipo() == Juego.COMPLICA) {
 			this.moveStack = new MovimientoComplica[n];
-		}else if(reglas.getTipo() == Juego.GRAVITY){
-			this.moveStack = new MovimientoGravity[n];			
+		} else if (reglas.getTipo() == Juego.GRAVITY) {
+			this.moveStack = new MovimientoGravity[n];
 		}
 		this.ganador = Ficha.VACIA;
 		this.lastPos = 0;
 		this.numJugadas = 0;
-		this.height = reglas.getAlto();
-		this.width = reglas.getAncho();
-		this.juego = reglas;
 
+		this.juego = reglas;
+		this.isTablas = false;
 	}
 
 	public Ficha getGanador() {
 		/*
-		 * Devuelve el color del ganador. Sólo válido si la partida ya ha
+		 * Devuelve el color del ganador. Sï¿½lo vï¿½lido si la partida ya ha
 		 * terminado (isTerminada() == true). Returns: Color del ganador. Si la
-		 * partida terminó en tablas, Ficha.VACIA. Si la partida no ha terminado
-		 * aún, el resultado es indeterminado.
+		 * partida terminï¿½ en tablas, Ficha.VACIA. Si la partida no ha terminado
+		 * aï¿½n, el resultado es indeterminado.
 		 */
 		return ganador;
 	}
@@ -71,39 +68,34 @@ public class Partida {
 
 	public void reset(ReglasJuego reglas) {
 
-		
-		
 		if (reglas.getTipo() == Juego.CONECTA4) {
 			this.moveStack = new MovimientoConecta4[n];
 			this.juego = new ReglasConecta4();
 		} else if (reglas.getTipo() == Juego.COMPLICA) {
 			this.moveStack = new MovimientoComplica[n];
 			this.juego = new ReglasComplica();
-		} else if (reglas.getTipo() == Juego.GRAVITY){
+		} else if (reglas.getTipo() == Juego.GRAVITY) {
 			this.moveStack = new MovimientoGravity[n];
-			this.juego = new ReglasGravity();			
+			this.juego = new ReglasGravity();
 		}
-		
+
 		this.turno = Ficha.BLANCA;
 		this.terminada = false;
 		this.ganador = Ficha.VACIA;
 		this.lastPos = 0;
 		this.numJugadas = 0;
 
-		this.height = reglas.getAlto();
-		this.width = reglas.getAncho();
-		this.tablero = new Tablero(width, height);
+		this.tablero = reglas.iniciaTablero();
 
 	}
 
 	public void ejecutaMovimiento(Movimiento mov) throws MovimientoInvalido {
 
-		
-		if (ganador != Ficha.VACIA || mov.getJugador() != turno){ 
+		if (ganador != Ficha.VACIA || mov.getJugador() != turno) {
 			// si hay ya ganador o el movimiento
 			// no pertenece al jugador al que le
 			// toca o es una casilla de fuera
-			// del tablero			
+			// del tablero
 			throw new MovimientoInvalido("Error");
 		} else {
 			mov.ejecutaMovimiento(tablero);
@@ -111,15 +103,14 @@ public class Partida {
 			avanzaTurno();
 		}
 		ganador = juego.hayGanador(mov, tablero);
-		if (ganador != Ficha.VACIA) {
+
+		if (ganador != Ficha.VACIA)
 			terminada = true;
-			
-		}
-		if (juego.tablas(mov.getJugador(), tablero)){
-			terminada=true;
-			
-		}
-	
+
+		isTablas = juego.tablas(mov.getJugador(), tablero);
+
+		if (isTablas)
+			terminada = true;
 
 	}
 
@@ -143,18 +134,14 @@ public class Partida {
 		return juego;
 	}
 
-	
-	public void Mover( Jugador j, Scanner sc ) throws MovimientoInvalido{
-			
-		Movimiento m= j.getMovimiento(tablero, turno) ;
+	public void Mover(Jugador j, Scanner sc) throws MovimientoInvalido {
+
+		Movimiento m = j.getMovimiento(tablero, turno);
 		ejecutaMovimiento(m);
 	}
-	
-	
+
 	// -----------------------------------------------------------------------
 
-	
-	
 	private void avanzaTurno() {
 		// advance Pointer
 		if (lastPos == 9) {
@@ -185,6 +172,10 @@ public class Partida {
 		else if (turno == Ficha.NEGRA)
 			turno = Ficha.BLANCA;
 
+	}
+
+	public boolean isTablas() {
+		return isTablas;
 	}
 
 	public Tablero getTablero() {

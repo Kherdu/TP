@@ -7,12 +7,12 @@ package tp.pr3.constants;
 public class Constants {
 
 	public static final String MensajeAyuda = "Los comandos disponibles son:\n"
-			+ "\nPONER: util�zalo para poner la siguiente ficha."
-			+ "\nDESHACER: deshace el �ltimo movimiento hecho en la partida."
+			+ "\nPONER: utilízalo para poner la siguiente ficha."
+			+ "\nDESHACER: deshace el último movimiento hecho en la partida."
 			+ "\nREINICIAR: reinicia la partida."
 			+ "\nJUGAR [c4|co|gr] [tamX tamY]: cambia el tipo de juego."
 			+ "\nJUGADOR [blancas|negras] [humano|aleatorio]: cambia el tipo de jugador."
-			+ "\nSALIR: termina la aplicaci�n.\nAYUDA: muestra esta ayuda.";
+			+ "\nSALIR: termina la aplicación.\nAYUDA: muestra esta ayuda."+'\n';
 	public static final String MensajeAyudaConsola= "tp.pr3.Main [-g <game>] [-h] [-x <columnNumber>] [-y <rowNumber>]";
 	public static int AnchoC4=7;
 	public static int AltoC4=6;

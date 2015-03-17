@@ -42,7 +42,7 @@ public class Main {
 				String salida="Argumentos no entendidos: ";
 				if (argumentos.length>0){
 					for (int i=0;i<argumentos.length;i++){
-						salida+=argumentos[i]+=" ";
+						salida+=argumentos[i]+=" ";//con la ultima palabra tambien añade espacio, no deberia... 
 						
 					}
 					throw new ParseException(salida);
@@ -68,17 +68,18 @@ public class Main {
 									f=new FactoriaGravity(rowNumber,columnNumber);
 									
 								}catch ( NumberFormatException e){
+									System.err.println("Argumentos no entendidos: "+ e.getMessage());
 									System.exit(1);
 								}
 									
 							}else f=new FactoriaGravity();
 								
-						}else throw new ParseException( "Juego '" + game + "' Incorrecto");
+						}else throw new ParseException( "Juego '" + game + "' incorrecto.");
 					}
 						
 			} catch (ParseException ex) {
 				System.err.println("Uso incorrecto: "+ex.getMessage());
-				System.err.println("Use -h|--help para m�s detalles.");
+				System.err.println("Use -h|--help para más detalles.");
 				System.exit(1);
 			}
 			
@@ -104,9 +105,9 @@ public class Main {
 		options.addOption("g", "game", true,
 				"Tipo de juego (c4, co, gr). Por defecto, c4.");
 		options.addOption("x", "tamX", true,
-				"N�mero de columnas del tablero (s�lo para Gravity). Por defecto, 10.");
+				"Número de columnas del tablero (sólo para Gravity). Por defecto, 10.");
 		options.addOption("y", "tamY", true,
-				"N�mero de filas del tablero (s�lo para Gravity). Por defecto, 10.");
+				"Número de filas del tablero (sólo para Gravity). Por defecto, 10.");
 		
 		options.getOption("g").setArgName("game");
 		options.getOption("x").setArgName("columnNumber");

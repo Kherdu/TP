@@ -38,7 +38,7 @@ public class Controlador {
 
 		int i = 0;
 		// bucle principal si la partida no ha terminado y hay 2 jugadores
-		while (!partida.isTerminada() && i < jugadores.length) {
+		while (!partida.isTerminada() && i < jugadores.length && !partida.isTablas()) {
 			String lectura;
 			System.out.print(partida.pintaTablero());
 			System.out.print("Juegan ");
@@ -64,10 +64,12 @@ public class Controlador {
 
 		}
 		if (!(partida.getGanador() == Ficha.VACIA)) {
+			System.out.print(partida.pintaTablero());
 			System.out.println("Ganan las " + partida.getGanador().toString());
-		} else
+		} else if (partida.isTablas()){
+			System.out.print(partida.pintaTablero());
 			System.out.println("Partida terminada en tablas.");
-
+		}
 		in.close();
 	}
 
@@ -93,7 +95,7 @@ public class Controlador {
 					}
 
 				} else if (aux.compareToIgnoreCase("reiniciar") == 0) {
-					partida.reset(f.creaReglas());
+					reset();
 					System.out.print("Partida reiniciada.");
 
 				} else if (aux.compareToIgnoreCase("salir") == 0) {
@@ -115,19 +117,15 @@ public class Controlador {
 					String ju = st.nextToken();
 
 					if (ju.compareToIgnoreCase("c4") == 0) {
-						this.f = new FactoriaConecta4();
-						cambiaJuego(f);
+						f = new FactoriaConecta4();
+						
 
 					} else if (ju.compareToIgnoreCase("co") == 0) {
 						f = new FactoriaComplica();
-						cambiaJuego(f);
+						
 
 					}else throw new InstruccionInvalida("No te entiendo.");
-					/* else if (ju.compareToIgnoreCase("gr") == 0) {
-						f = new FactoriaGravity();
-						cambiaJuego(f);
-
-					}*/
+					cambiaJuego(f);
 				} else
 					throw new InstruccionInvalida("No te entiendo.");
 
@@ -146,7 +144,7 @@ public class Controlador {
 						} else if (ju.compareToIgnoreCase("aleatorio") == 0)
 
 							this.jugador1 = f.creaJugadorAleatorio();
-						cambiaJugadores(jugador1, 0);
+							cambiaJugadores(jugador1, 0);
 
 					} else if (color.compareToIgnoreCase("negras") == 0) {
 						String ju = st.nextToken();
@@ -158,7 +156,7 @@ public class Controlador {
 						} else if (ju.compareToIgnoreCase("aleatorio") == 0)
 
 							this.jugador2 = f.creaJugadorAleatorio();
-						cambiaJugadores(jugador1, 1);
+							cambiaJugadores(jugador1, 1);
 
 					} else
 						throw new InstruccionInvalida("No te entiendo.");
@@ -176,7 +174,7 @@ public class Controlador {
 							tabX = Integer.parseInt(st.nextToken(" "));
 							tabY = Integer.parseInt(st.nextToken(" "));
 						} catch (NumberFormatException e) {
-							System.err.println("NO");
+							
 						}
 						if (tabX > 0 || tabY > 0) {
 							if (tabX <= 0) {
@@ -187,11 +185,11 @@ public class Controlador {
 							}
 							f = new FactoriaGravity(tabX, tabY);
 							cambiaJuego(f);
-							System.out.println("Partida reiniciada.");
+							
 						} else if (tabX < 0 && tabY < 0) {
 							f = new FactoriaGravity(1, 1);
 							cambiaJuego(f);
-							System.out.println("Partida reiniciada.");
+							
 						} else
 							throw new InstruccionInvalida("No te entiendo.");
 					}
@@ -214,6 +212,11 @@ public class Controlador {
 	/*
 	 * reinicio de juego
 	 */
+	
+	private void reset(){
+		partida.reset(reglas);
+		
+	}
 
 	private void cambiaJuego(FactoriaTipoJuego f) {
 		this.jugador1 = f.creaJugadorHumanoConsola(in);
@@ -223,7 +226,7 @@ public class Controlador {
 		jugadores[1] = jugador2;
 		reglas = f.creaReglas();
 		partida.reset(reglas);
-		System.out.print("Partida reiniciada.");
+		System.out.println("Partida reiniciada.");
 
 	}
 }
