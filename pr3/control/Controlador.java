@@ -17,7 +17,6 @@ public class Controlador {
 	private FactoriaTipoJuego f;
 	private Jugador jugador1;
 	private Jugador jugador2;
-
 	private Jugador[] jugadores;
 	private ReglasJuego reglas;
 
