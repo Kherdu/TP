@@ -96,14 +96,14 @@ public class Main {
 
 		} catch (ParseException ex) {
 			System.err.println("Uso incorrecto: " + ex.getMessage());
-			System.err.println("Use -h|--help para más detalles.");
+			System.err.println("Use -h|--help para mÃ¡s detalles.");
 			System.exit(1);
 		}
 
 		reglas = f.creaReglas();
 		p = new Partida(reglas);
 
-		if (UIs) {
+		if (!UIs) {
 			c = new Controlador(f, p, in);
 			c.run();
 		}else {
@@ -125,9 +125,9 @@ public class Main {
 		options.addOption("g", "game", true,
 				"Tipo de juego (c4, co, gr). Por defecto, c4.");
 		options.addOption("x", "tamX", true,
-				"Número de columnas del tablero (sólo para Gravity). Por defecto, 10.");
+				"NÃºmero de columnas del tablero (sÃ³lo para Gravity). Por defecto, 10.");
 		options.addOption("y", "tamY", true,
-				"Número de filas del tablero (sólo para Gravity). Por defecto, 10.");
+				"NÃºmero de filas del tablero (sÃ³lo para Gravity). Por defecto, 10.");
 		options.addOption("u", "ui", true,
 				" Tipo de interfaz (console, window). Por defecto, console.");
 		options.getOption("g").setArgName("game");

@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import tp.pr4.logica.Ficha;
 import tp.pr4.logica.Movimiento;
-import tp.pr4.logica.MovimientoComplica;
+import tp.pr4.logica.MovimientoComplica;	
 import tp.pr4.logica.ReglasComplica;
 import tp.pr4.logica.ReglasJuego;
 
