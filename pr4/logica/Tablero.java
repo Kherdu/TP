@@ -1,6 +1,6 @@
 package tp.pr4.logica;
 
-public class Tablero {
+public class Tablero implements TableroInmutable {
 
 	private Ficha[][] tablero;
 	private int alto;
@@ -116,6 +116,18 @@ public class Tablero {
 		ret += (System.lineSeparator());
 		ret += (System.lineSeparator());
 		return ret;
+	}
+
+	
+	//por la interfaz
+	@Override
+	public int getFilas() {
+		return this.ancho;
+	}
+
+	@Override
+	public int getColumnas() {
+		return this.alto;
 	}
 
 }

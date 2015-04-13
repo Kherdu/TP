@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import org.apache.commons.cli.*;
 
+import tp.pr4.GUI.ControladorGUI;
+import tp.pr4.GUI.MainWindow;
 import tp.pr4.constants.Constants;
 import tp.pr4.control.ControladorConsola;
 import tp.pr4.control.FactoriaComplica;
@@ -34,7 +36,7 @@ public class Main {
 		ReglasJuego reglas = f.creaReglas();
 		Scanner in = new Scanner(System.in);
 		Partida p = new Partida(reglas);
-		ControladorConsola c = new ControladorConsola(f, p, in);
+		
 
 		try {
 			//si los argumentos son incorrectos
@@ -64,7 +66,7 @@ public class Main {
 				else
 					throw new ParseException("Opcion no valida");
 
-			} else if (cmdLine.hasOption("g")) {
+			} if (cmdLine.hasOption("g")) {
 
 				game = cmdLine.getOptionValue("game");
 
@@ -100,14 +102,25 @@ public class Main {
 			System.exit(1);
 		}
 
+		//creamos el modelo
 		reglas = f.creaReglas();
 		p = new Partida(reglas);
 
+		//creamos los controladores
 		if (!UIs) {
-			c = new ControladorConsola(f, p, in);
+			ControladorConsola c = new ControladorConsola(f, p, in);
+			
 			c.run();
 		}else {
-			//ejecutar modo ventana
+			
+			ControladorGUI c= new ControladorGUI(f,p);
+			c= new ControladorGUI(f,p);
+			MainWindow w= new MainWindow(c);
+			
+			//creas modelo, que es partida y factoria
+			//creas controlador con metodos addobserver
+			//crear vista con el controlador
+			
 			
 		}
 	}
