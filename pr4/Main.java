@@ -5,7 +5,7 @@ import java.util.Scanner;
 import org.apache.commons.cli.*;
 
 import tp.pr4.constants.Constants;
-import tp.pr4.control.Controlador;
+import tp.pr4.control.ControladorConsola;
 import tp.pr4.control.FactoriaComplica;
 import tp.pr4.control.FactoriaConecta4;
 import tp.pr4.control.FactoriaGravity;
@@ -34,7 +34,7 @@ public class Main {
 		ReglasJuego reglas = f.creaReglas();
 		Scanner in = new Scanner(System.in);
 		Partida p = new Partida(reglas);
-		Controlador c = new Controlador(f, p, in);
+		ControladorConsola c = new ControladorConsola(f, p, in);
 
 		try {
 			//si los argumentos son incorrectos
@@ -104,7 +104,7 @@ public class Main {
 		p = new Partida(reglas);
 
 		if (!UIs) {
-			c = new Controlador(f, p, in);
+			c = new ControladorConsola(f, p, in);
 			c.run();
 		}else {
 			//ejecutar modo ventana
