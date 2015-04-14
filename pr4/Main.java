@@ -106,20 +106,17 @@ public class Main {
 		reglas = f.creaReglas();
 		p = new Partida(reglas);
 
-		//creamos los controladores
+		//creamos los controladores segun tenga interfaz grafica o no
 		if (!UIs) {
 			ControladorConsola c = new ControladorConsola(f, p, in);
 			
 			c.run();
 		}else {
 			
-			ControladorGUI c= new ControladorGUI(f,p);
-			c= new ControladorGUI(f,p);
-			MainWindow w= new MainWindow(c);
+			ControladorGUI c= new ControladorGUI(f,p); //controlador con metodos observer
+			MainWindow w= new MainWindow(c); //crear vista con el controlador
 			
-			//creas modelo, que es partida y factoria
-			//creas controlador con metodos addobserver
-			//crear vista con el controlador
+			
 			
 			
 		}

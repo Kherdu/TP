@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 public class MainWindow extends JFrame {
 
+	private static ControladorGUI controlador;
 	
 
 	/**
@@ -17,7 +18,7 @@ public class MainWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainWindow window = new MainWindow();
+					MainWindow window = new MainWindow(controlador);
 					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -29,25 +30,23 @@ public class MainWindow extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public MainWindow() {
-		initialize();
-	}
-
+	
 	public MainWindow(ControladorGUI c) {
-		initialize();
+		controlador=c;
+		initialize(c);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(ControladorGUI c) {
 		
 		this.setBounds(100, 100, 450, 300);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new GridLayout(1,2,20,20));
 		
-		
-		JPanel panelIz= new PanelTablero();
+		//cambiar esto, pasarlo con el tablero inmutable
+		JPanel panelIz= new PanelTablero(c.getReglas().getAlto(),c.getReglas().getAncho());
 		
 		
 		JPanel panelDr= new PanelBotones();

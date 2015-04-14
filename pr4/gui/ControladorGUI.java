@@ -19,4 +19,19 @@ public class ControladorGUI {
 		
 	}
 
+	public FactoriaTipoJuego getFactoria() {
+		return f;
+	}
+
+	public Partida getPartida() {
+		return p;
+	}
+
+	public ReglasJuego getReglas() {
+		return r;
+	}
+	
+	
+	
+
 }
