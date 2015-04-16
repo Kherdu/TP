@@ -24,11 +24,15 @@ public class PanelTablero extends JPanel {
 		JPanel panel_Tablero = new JPanel();
 		//for que añade botones al tablero, con gridLayout de anchura ancho y filas alto
 		panel_Tablero.setLayout(new GridLayout(alto,ancho));
-		Integer numCasillas=alto*ancho;
 		
-		for (int i=0;i<numCasillas;i++){
+		
+		for (int i=0;i<alto;i++){
 			//añadir botones casilla que hereden de observador
-			
+			for (int j=0;j<ancho;j++){
+				Casilla c= new Casilla(i,j);
+				panel_Tablero.add(c);
+				
+			}
 			
 		}
 		

@@ -8,12 +8,19 @@ import tp.pr4.logica.TableroInmutable;
 public class Casilla extends JButton implements Observer{
 	
 	private Ficha color;
+	private Integer x;
+	private Integer y;
 	
-	
-	Casilla(Integer f, Integer c){
+	Casilla(){
 		this.color=Ficha.VACIA;
 		
 		
+	}
+	
+	Casilla(Integer x, Integer y){
+		this.x=x;
+		this.y=y;
+		this.color=Ficha.VACIA;
 	}
 
 	

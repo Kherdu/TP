@@ -6,41 +6,16 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class MainWindow extends JFrame {
 
-	private static ControladorGUI controlador;
+	private ControladorGUI c;
+	
 	
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainWindow window = new MainWindow(controlador);
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the application.
-	 */
-	
 	public MainWindow(ControladorGUI c) {
-		controlador=c;
-		initialize(c);
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize(ControladorGUI c) {
-		
+		this.c=c;
 		this.setBounds(100, 100, 450, 300);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new GridLayout(1,2,20,20));
@@ -58,8 +33,10 @@ public class MainWindow extends JFrame {
 		
 		this.add(panelIz);
 		this.add(panelDr);
-		
+		this.setVisible(true);
 		
 	}
 
+	
+	
 }
