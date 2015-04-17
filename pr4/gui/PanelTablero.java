@@ -5,20 +5,21 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
 public class PanelTablero extends JPanel {
 
-	/**
-	 * Create the panel.
-	 */
+	private ControladorGUI c;
 	public PanelTablero() {
 
 	}
 
-	public PanelTablero(int alto, int ancho) {
+	public PanelTablero(ControladorGUI c,int alto, int ancho) {
 		
+		this.c=c;
 		setLayout(new GridLayout(2, 1, 30, 30));
 
 		JPanel panel_Tablero = new JPanel();
@@ -29,8 +30,8 @@ public class PanelTablero extends JPanel {
 		for (int i=0;i<alto;i++){
 			//añadir botones casilla que hereden de observador
 			for (int j=0;j<ancho;j++){
-				Casilla c= new Casilla(i,j);
-				panel_Tablero.add(c);
+				Casilla cas= new Casilla(i,j);
+				panel_Tablero.add(cas);
 				
 			}
 			
@@ -39,8 +40,16 @@ public class PanelTablero extends JPanel {
 		
 		JPanel panel = new JPanel();
 
-		JButton Aleatorio = new JButton("Movimiento Aleatorio");
-		panel.add(Aleatorio, BorderLayout.SOUTH);
+		JButton aleatorio = new JButton("Movimiento Aleatorio");
+		aleatorio.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0){
+				
+			}
+			
+		});
+		
+		panel.add(aleatorio, BorderLayout.SOUTH);
 
 		add(panel_Tablero);
 		add(panel);

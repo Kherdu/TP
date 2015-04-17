@@ -15,12 +15,15 @@ public interface Observer {
 	 */
 	abstract void onReset(TableroInmutable tab, Ficha turno);
 	
+	
 	/*
 	 * La partida notifica a los observadores que ha terminado la partida llamando a este método. 
 	 * Además proporciona al observador una vista del tablero de sólo
 	 *	lectura y el ganador.
 	 */
 	abstract void onPartidaTerminada(TableroInmutable tablero, Ficha ganador);
+	
+	
 	/*La partida notifica a los observadores que se ha cambiado el juego. Se proporciona
 	 *el estado inicial del tablero y el turno
 	 */
@@ -33,6 +36,8 @@ public interface Observer {
 	 * éxito porque no se puede deshacer.
 	 */
 	abstract void onUndoNotPossible(TableroInmutable tablero, Ficha turno);
+	
+	
 	/* La partida notifica a los observadores que se ha deshecho un movimiento. Además,
      * proporciona el estado final del tablero, el turno del siguiente jugador y si
 	 * hay más movimientos a deshacer o no.
