@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import tp.pr4.control.FactoriaComplica;
+import tp.pr4.control.FactoriaConecta4;
+import tp.pr4.control.FactoriaGravity;
 import tp.pr4.control.FactoriaTipoJuego;
 import tp.pr4.control.Jugador;
 import tp.pr4.logica.Juego;
@@ -80,15 +83,41 @@ public class ControladorGUI {
 
 	public void cambiaJuego(Juego seleccionado, String filas, String columnas) {
 
-
-		try{
-			int h= Integer.parseInt(filas);
-			int w= Integer.parseInt(columnas);
+		if(seleccionado==Juego.GRAVITY){
+			int h;
+			int w;
+			if (filas=="" && columnas==""){
+				f=new FactoriaGravity();
+			}
+				else{
+					try{
+						h= Integer.parseInt(filas);
+						w= Integer.parseInt(columnas);
+						if (h<=0 ){
+							h=1;
+					
+						}
+						if (w<=0){
+							w=1;
+						}
+						f= new FactoriaGravity(h,w);	
+					} catch (NumberFormatException e){
+						JFrame frame= new JFrame();
+						JOptionPane.showMessageDialog(frame, "Numero erroneo");
+					}
 			
-		} catch (NumberFormatException e){
-			JFrame frame= new JFrame();
-			JOptionPane.showMessageDialog(frame, "Numero erroneo");
+				}
+			
+			} else if(seleccionado==Juego.CONECTA4){
+			f=new FactoriaConecta4();
+			
+			} else if (seleccionado==Juego.COMPLICA){
+			f=new FactoriaComplica();
 		}
+		
+		reset(p,r);
+		
+		
 		
 		
 	}
