@@ -1,5 +1,6 @@
 package tp.pr4.GUI;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
@@ -39,6 +40,10 @@ public class PanelTablero extends JPanel {
 		
 		
 		JPanel panel = new JPanel();
+		//hay que pasar el turno BIEN, me acabo de cargar la encapsulacion a saco, pero funciona
+		LabelTurno turno= new LabelTurno(c.getPartida().getTurno().toString());
+		
+		
 
 		JButton aleatorio = new JButton("Movimiento Aleatorio");
 		aleatorio.addActionListener(new ActionListener(){
@@ -50,8 +55,9 @@ public class PanelTablero extends JPanel {
 		});
 		
 		panel.add(aleatorio, BorderLayout.SOUTH);
-
+		panel.add(turno);
 		add(panel_Tablero);
+		
 		add(panel);
 	}
 

@@ -1,36 +1,17 @@
 package tp.pr4.GUI;
 
-import javax.swing.JButton;
+import javax.swing.JLabel;
 
 import tp.pr4.logica.Ficha;
 import tp.pr4.logica.TableroInmutable;
 
-public class Casilla extends JButton implements Observer{
-	
-	private Ficha color;
-	private Integer x;
-	private Integer y;
-	
-	Casilla(){
-		this.color=Ficha.VACIA;
-		
-		
-	}
-	
-	Casilla(Integer x, Integer y){
-		this.x=x;
-		this.y=y;
-		this.color=Ficha.VACIA;
-	}
+public class LabelTurno extends JLabel implements Observer {
 
+	private String etiqueta;
 	
-	
-	public Ficha getColor() {
-		return color;
-	}
-
-	public void setColor(Ficha color) {
-		this.color = color;
+	public LabelTurno(String string) {
+		this.etiqueta=string;
+		this.setText(etiqueta);
 	}
 
 	@Override
@@ -67,7 +48,6 @@ public class Casilla extends JButton implements Observer{
 	public void onMovimientoEnd(TableroInmutable tablero, Ficha jugador,
 			Ficha turno) {
 		// TODO Auto-generated method stub
-		//acordarse de cambiar etiqueta de turno
 		
 	}
 
@@ -76,7 +56,5 @@ public class Casilla extends JButton implements Observer{
 		// TODO Auto-generated method stub
 		
 	}
-
-	
 
 }
