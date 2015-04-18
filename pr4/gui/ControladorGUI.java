@@ -26,7 +26,7 @@ import tp.pr4.logica.TableroInmutable;
 public class ControladorGUI {
 
 	
-	
+	private ArrayList<Observer> observers;
 	private FactoriaTipoJuego f;
 	private Partida p;
 	private ReglasJuego r;
@@ -39,13 +39,9 @@ public class ControladorGUI {
 		p=partida;
 		r=f.creaReglas();
 		j=r.getTipo();
-		
+		observers= new ArrayList<Observer>();
 		tab=p.getTablero();
 		
-	}
-
-	public TableroInmutable getTab() {
-		return tab;
 	}
 
 	public FactoriaTipoJuego getFactoria() {
@@ -61,7 +57,7 @@ public class ControladorGUI {
 	}
 	
 	public void addObserver(Observer o){
-		p.addObserver(o);
+		observers.add(o);
 	}
 	
 	
@@ -71,7 +67,7 @@ public class ControladorGUI {
 	
 	public void reset(FactoriaTipoJuego f){
 		r=f.creaReglas();
-		p.reset(r);
+		p = new Partida(r);
 		j=r.getTipo();
 		
 	}
