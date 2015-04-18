@@ -1,6 +1,8 @@
 package tp.pr4.GUI;
 
 import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -15,11 +17,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.border.Border;
 
+import tp.pr4.logica.Ficha;
 import tp.pr4.logica.Juego;
+import tp.pr4.logica.TableroInmutable;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 
-public class PanelBotones extends JPanel {
+public class PanelBotones extends JPanel implements Observer {
 
 	/**
 	 * Create the panel.
@@ -27,10 +32,12 @@ public class PanelBotones extends JPanel {
 	private ControladorGUI c;
 	private JTextField fieldFilas;
 	private JTextField fieldColumnas;
+	private JComboBox juego;
 	
 	public PanelBotones(ControladorGUI c) {
 		
 		this.c=c;
+		c.addObserver(this);
 		setLayout(new GridLayout(4, 1));
 		
 		Border borde= BorderFactory.createLineBorder(Color.black);
@@ -72,7 +79,7 @@ public class PanelBotones extends JPanel {
 	
 		
 		
-			JComboBox juego = new JComboBox(NombreJuegos);
+			 juego = new JComboBox(NombreJuegos);
 			
 		
 			JButton cambiarJuego = new JButton("cambiar Juego");
@@ -123,6 +130,56 @@ public class PanelBotones extends JPanel {
 			this.add(panel);
 			this.add(panel_1);
 			this.add(panel_2);
+	}
+
+	@Override
+	public void onReset(TableroInmutable tab, Ficha turno) {
+		JFrame frame= new JFrame();
+		JOptionPane.showMessageDialog(frame,
+			   "Partida reiniciada",
+			    "Info",
+			    JOptionPane.INFORMATION_MESSAGE);
+		
+	}
+
+	@Override
+	public void onPartidaTerminada(TableroInmutable tab, Ficha ganador) {
+		// bloquear boton deshacer
+		
+	}
+
+	@Override
+	public void onCambioJuego(TableroInmutable tab, Ficha turno) {
+		JFrame frame= new JFrame();
+		JOptionPane.showMessageDialog(frame,
+			   "Juego cambiado" + juego.getSelectedItem().toString(),
+			    "Info",
+			    JOptionPane.INFORMATION_MESSAGE);
+		
+	}
+
+	@Override
+	public void onUndoNotPossible(TableroInmutable tab, Ficha turno) {
+		// aviso imposible deshacer
+		
+	}
+
+	@Override
+	public void onUndo(TableroInmutable tab, Ficha turno, boolean hayMas) {
+		// nada, lo hace el otro panel
+		
+	}
+
+	@Override
+	public void onMovimientoEnd(TableroInmutable tab, Ficha jugador, Ficha turno) {
+		// nada, lo hace el otro panel
+		
+	}
+
+	@Override
+	public void onMovimientoIncorrecto(TableroInmutable movimientoException) {
+		// nada, lo hace el otro panel
+		
 	}
 
 }

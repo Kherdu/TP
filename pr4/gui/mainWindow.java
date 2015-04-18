@@ -1,5 +1,6 @@
 package tp.pr4.GUI;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 
@@ -7,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import tp.pr4.logica.ReglasJuego;
+import tp.pr4.logica.TableroInmutable;
 
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame {
@@ -18,13 +20,14 @@ public class MainWindow extends JFrame {
 
 	public MainWindow(ControladorGUI c) {
 		this.c=c;
+		
 		this.r=c.getReglas();
-		this.setBounds(100, 100, 700, 500);
+		this.setMinimumSize(new Dimension(800,600));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new GridLayout(1,2,20,20));
 		
-		//cambiar esto, pasarlo con el tablero inmutable
-		JPanel panelIz= new PanelTablero(c,r.getAlto(),r.getAncho());
+	
+		JPanel panelIz= new PanelTablero(c);
 		
 		
 		JPanel panelDr= new PanelBotones(c);
