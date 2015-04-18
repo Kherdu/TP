@@ -1,7 +1,9 @@
 package tp.pr4.logica;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import tp.pr4.GUI.Observer;
 import tp.pr4.control.Jugador;
 
 public class Partida {
@@ -16,10 +18,14 @@ public class Partida {
 	private int numJugadas;
 	private ReglasJuego juego;
 	private boolean isTablas;
+	private ArrayList<Observer> observers;
+	private TableroInmutable tin;
 
 	public Partida(ReglasJuego reglas) {
-
+		
+		
 		this.tablero = reglas.iniciaTablero();
+		this.tin= reglas.iniciaTablero();
 		this.turno = reglas.jugadorInicial();
 		this.terminada = false;
 		if (reglas.getTipo() == Juego.CONECTA4) {
@@ -35,6 +41,7 @@ public class Partida {
 
 		this.juego = reglas;
 		this.isTablas = false;
+		observers= new ArrayList<Observer>();
 	}
 
 	public Ficha getGanador() {
@@ -63,6 +70,7 @@ public class Partida {
 		// probar si la partida ha terminado, usar tras cada movimiento
 
 		return terminada;
+		
 
 	}
 
@@ -86,7 +94,11 @@ public class Partida {
 		this.numJugadas = 0;
 
 		this.tablero = reglas.iniciaTablero();
+		this.tin=reglas.iniciaTablero();
 
+		for(Observer o: observers){
+			o.onReset(tin, turno);
+		}
 	}
 
 	public void ejecutaMovimiento(Movimiento mov) throws MovimientoInvalido {
@@ -96,7 +108,10 @@ public class Partida {
 			// no pertenece al jugador al que le
 			// toca o es una casilla de fuera
 			// del tablero
+			// este throw no es NUNCA posible en el modo GUI
 			throw new MovimientoInvalido("Error");
+			
+			
 		} else {
 			mov.ejecutaMovimiento(tablero);
 			moveStack[lastPos] = mov;
@@ -106,12 +121,20 @@ public class Partida {
 
 		if (ganador != Ficha.VACIA)
 			terminada = true;
-
+			//observadores partidaTerminada con ganador
+			
 		isTablas = juego.tablas(mov.getJugador(), tablero);
 
-		if (isTablas)
+		if (isTablas){
 			terminada = true;
-
+			//observadores partidaTerminada con ganador vacio
+		}
+			
+		for(Observer o: observers){
+			//observadores movimiento correcto
+			o.onMovimientoEnd(tin, mov.getJugador(), turno);
+			
+		}
 	}
 
 	public boolean undo() {
@@ -185,5 +208,12 @@ public class Partida {
 	public String pintaTablero() {
 		return tablero.toString();
 	}
+
+	public void addObserver(Observer o) {
+		observers.add(o);
+		
+	}
+	
+	
 
 }

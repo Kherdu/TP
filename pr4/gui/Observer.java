@@ -21,7 +21,7 @@ public interface Observer {
 	 * Además proporciona al observador una vista del tablero de sólo
 	 *	lectura y el ganador.
 	 */
-	abstract void onPartidaTerminada(TableroInmutable tablero, Ficha ganador);
+	abstract void onPartidaTerminada(TableroInmutable tab, Ficha ganador);
 	
 	
 	/*La partida notifica a los observadores que se ha cambiado el juego. Se proporciona
@@ -35,20 +35,20 @@ public interface Observer {
 	/* La partida notifica a los observadores que una operación deshacer no ha tenido
 	 * éxito porque no se puede deshacer.
 	 */
-	abstract void onUndoNotPossible(TableroInmutable tablero, Ficha turno);
+	abstract void onUndoNotPossible(TableroInmutable tab, Ficha turno);
 	
 	
 	/* La partida notifica a los observadores que se ha deshecho un movimiento. Además,
      * proporciona el estado final del tablero, el turno del siguiente jugador y si
 	 * hay más movimientos a deshacer o no.
 	 */
-	abstract void onUndo(TableroInmutable tablero, Ficha turno, boolean hayMas);
+	abstract void onUndo(TableroInmutable tab, Ficha turno, boolean hayMas);
 	
 	/* La partida notifica a los observadores que se ha terminado de realizar un movimiento.
 	 * Se proporciona además una vista del tablero de sólo lectura, el jugador
      * que ha jugado, y el turno del siguiente jugador.
 	 */
-	abstract void onMovimientoEnd(TableroInmutable tablero, Ficha jugador, Ficha turno);
+	abstract void onMovimientoEnd(TableroInmutable tab, Ficha jugador, Ficha turno);
 	
 	/* La partida notifica que se ha producido un movimiento incorrecto proporcionando
 	 * el objeto MovimientoInvalido con una explicación del problema que se

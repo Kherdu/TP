@@ -116,7 +116,7 @@ public class Mainp4 {
 		}else {
 			
 			ControladorGUI c= new ControladorGUI(f,p); //controlador con metodos observer
-			MainWindow w= new MainWindow(c); //crear vista con el controlador
+			MainWindow w= new MainWindow(c,reglas.jugadorInicial()); //crear vista con el controlador
 			
 			
 		}
