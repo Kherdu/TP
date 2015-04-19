@@ -176,6 +176,7 @@ public class PanelBotones extends JPanel implements Observer {
 			   "No se puede deshacer",
 			    "Error",
 			    JOptionPane.ERROR_MESSAGE);
+		panelundo.setEnabled(false);
 		
 	}
 

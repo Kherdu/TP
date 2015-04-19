@@ -178,7 +178,9 @@ public class PanelTablero extends JPanel implements Observer {
 		this.t=tab;
 		construyeTablero();
 		this.turnoActual=turno;
-		labelTurno=new JLabel( "Turno de: "+ turnoActual.toString());
+		labelTurno.setText( "Turno de: "+ turnoActual.toString());
+		labelTurno.revalidate();
+		panel_Tablero.validate();
 		this.repaint();
 		
 

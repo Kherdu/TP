@@ -98,6 +98,7 @@ public class Partida {
 
 		for(Observer o: observers){
 			o.onReset(tin, turno);
+			o.onCambioJuego(tin, turno);
 		}
 	}
 
@@ -122,12 +123,21 @@ public class Partida {
 		if (ganador != Ficha.VACIA)
 			terminada = true;
 			//observadores partidaTerminada con ganador
+		for(Observer o: observers){
+			
+			o.onPartidaTerminada(tin, ganador);
+			
+		}
 			
 		isTablas = juego.tablas(mov.getJugador(), tablero);
 
 		if (isTablas){
 			terminada = true;
-			//observadores partidaTerminada con ganador vacio
+			for(Observer o: observers){
+				//observadores partidaTerminada con tablas
+				o.onPartidaTerminada(tin, Ficha.VACIA);
+				
+			}
 		}
 			
 		this.tin=tablero;
@@ -149,6 +159,12 @@ public class Partida {
 			deshaz.undo(tablero);
 
 			ret = true;
+		}else {
+			for(Observer o: observers){
+				
+				o.onUndoNotPossible(tin, ganador);
+				
+			}
 		}
 		
 		this.tin=tablero;
