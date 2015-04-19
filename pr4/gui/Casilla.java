@@ -17,14 +17,22 @@ public class Casilla extends JButton{
 		
 	}
 	
-	Casilla(Integer x, Integer y){
+	Casilla(Integer x, Integer y, Ficha color){
 		this.x=x;
 		this.y=y;
-		this.color=Ficha.VACIA;
+		this.color=color;
 	}
 
 	
 	
+	public Integer getcoordX() {
+		return x;
+	}
+
+	public Integer getcoordY() {
+		return y;
+	}
+
 	public Ficha getColor() {
 		return color;
 	}

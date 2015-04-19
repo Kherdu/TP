@@ -9,8 +9,10 @@ import javax.swing.JInternalFrame;
 import javax.swing.BoxLayout;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -33,6 +35,8 @@ public class PanelBotones extends JPanel implements Observer {
 	private JTextField fieldFilas;
 	private JTextField fieldColumnas;
 	private JComboBox juego;
+	private JPanel panel;
+	private JPanel panelundo;
 	
 	public PanelBotones(ControladorGUI c, Ficha jugadorInicial) {
 		
@@ -43,10 +47,13 @@ public class PanelBotones extends JPanel implements Observer {
 		Border borde= BorderFactory.createLineBorder(Color.black);
 		
 		
-		JPanel panel = new JPanel();
+		panelundo = new JPanel();
+		panelundo.setLayout(new FlowLayout());
+		panelundo.setBorder(borde);
+		
+		panel = new JPanel();
 		panel.setLayout(new FlowLayout());
 		panel.setBorder(borde);
-		
 		
 			JButton deshacer = new JButton("Deshacer");
 			deshacer.addActionListener(new ActionListener(){
@@ -54,6 +61,7 @@ public class PanelBotones extends JPanel implements Observer {
 				public void actionPerformed(ActionEvent arg0){
 					c.undo();
 				}
+				
 				
 			});
 			
@@ -67,8 +75,9 @@ public class PanelBotones extends JPanel implements Observer {
 				
 			});
 			
-			panel.add(deshacer);
+			panelundo.add(deshacer);
 			panel.add(reiniciar);
+			
 			
 			
 		Juego[] NombreJuegos= {Juego.COMPLICA,Juego.CONECTA4 , Juego.GRAVITY};
@@ -142,10 +151,11 @@ public class PanelBotones extends JPanel implements Observer {
 		
 	}
 
+	
 	@Override
 	public void onPartidaTerminada(TableroInmutable tab, Ficha ganador) {
-		// bloquear boton deshacer
-		
+		panelundo.setEnabled(false);
+		this.repaint();
 	}
 
 	@Override
@@ -160,7 +170,11 @@ public class PanelBotones extends JPanel implements Observer {
 
 	@Override
 	public void onUndoNotPossible(TableroInmutable tab, Ficha turno) {
-		// aviso imposible deshacer
+		JFrame frame= new JFrame();
+		JOptionPane.showMessageDialog(frame,
+			   "No se puede deshacer",
+			    "Error",
+			    JOptionPane.ERROR_MESSAGE);
 		
 	}
 

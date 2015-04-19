@@ -13,6 +13,8 @@ import tp.pr4.control.Jugador;
 import tp.pr4.control.JugadorAleatorioComplica;
 import tp.pr4.control.JugadorAleatorioConecta4;
 import tp.pr4.control.JugadorAleatorioGravity;
+import tp.pr4.control.JugadorHumanoComplica;
+import tp.pr4.logica.Ficha;
 import tp.pr4.logica.Juego;
 import tp.pr4.logica.Movimiento;
 import tp.pr4.logica.MovimientoComplica;
@@ -31,6 +33,8 @@ public class ControladorGUI {
 	private Partida p;
 	private ReglasJuego r;
 	private Juego j;
+	
+
 	private TableroInmutable tab;
 	public ControladorGUI(FactoriaTipoJuego factoria, Partida partida) {
 		
@@ -43,9 +47,40 @@ public class ControladorGUI {
 		tab=p.getTablero();
 		
 	}
+	
+	public void Mover(int columna, int fila, Ficha turno){
+		
+
+		try{
+			if(j==Juego.COMPLICA){
+		
+				Movimiento m = new MovimientoComplica(columna,turno);
+				p.ejecutaMovimiento(m);
+			}else if (j==Juego.CONECTA4){
+				
+				Movimiento m = new MovimientoConecta4(columna,turno);
+				p.ejecutaMovimiento(m);
+			}else {
+				
+				Movimiento m = new MovimientoGravity(columna,fila,turno);
+				p.ejecutaMovimiento(m);
+			}
+			
+		
+		}catch (MovimientoInvalido e){
+			JFrame frame= new JFrame();
+			JOptionPane.showMessageDialog(frame,
+				    e.getMessage(),
+				    "Error",
+				    JOptionPane.ERROR_MESSAGE);
+		}
+	}
 
 	public TableroInmutable getTab() {
 		return tab;
+	}
+	public Juego getJ() {
+		return j;
 	}
 
 	public FactoriaTipoJuego getFactoria() {
@@ -88,23 +123,26 @@ public class ControladorGUI {
 		
 	}
 
-	public void movAleatorio() {
+	public void movAleatorio(Ficha turno) {
 		
 		
 		try{
 			if(j==Juego.COMPLICA){
-			Jugador jug= new JugadorAleatorioComplica();
-			Movimiento m = jug.getMovimiento(p.getTablero(),p.getTurno());
-			p.ejecutaMovimiento(m);
+		
+				Jugador jug= new JugadorAleatorioComplica();
+				Movimiento m = jug.getMovimiento(p.getTablero(),turno);
+				p.ejecutaMovimiento(m);
 			}else if (j==Juego.CONECTA4){
-			Jugador jug= new JugadorAleatorioConecta4();
-			Movimiento m = jug.getMovimiento(p.getTablero(),p.getTurno());
-			p.ejecutaMovimiento(m);
+				Jugador jug= new JugadorAleatorioConecta4();
+				Movimiento m = jug.getMovimiento(p.getTablero(),turno);
+				p.ejecutaMovimiento(m);
 			}else {
-			Jugador jug= new JugadorAleatorioGravity();
-			Movimiento m = jug.getMovimiento(p.getTablero(),p.getTurno());
-			p.ejecutaMovimiento(m);
+				Jugador jug= new JugadorAleatorioGravity();
+				Movimiento m = jug.getMovimiento(p.getTablero(),turno);
+				
+				p.ejecutaMovimiento(m);
 			}
+			
 		
 		}catch (MovimientoInvalido e){
 			JFrame frame= new JFrame();
@@ -154,8 +192,6 @@ public class ControladorGUI {
 		}
 		
 		reset(f);
-		//falta que el observador mire cuando ha cambiado para repintarse
-		
 		
 		
 	}

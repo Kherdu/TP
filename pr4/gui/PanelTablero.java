@@ -1,7 +1,9 @@
 package tp.pr4.GUI;
 
 import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
@@ -14,7 +16,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import tp.pr4.control.Jugador;
+import tp.pr4.control.JugadorAleatorioComplica;
+import tp.pr4.control.JugadorAleatorioConecta4;
+import tp.pr4.control.JugadorAleatorioGravity;
 import tp.pr4.logica.Ficha;
+import tp.pr4.logica.Juego;
+import tp.pr4.logica.Movimiento;
 import tp.pr4.logica.TableroInmutable;
 
 public class PanelTablero extends JPanel implements Observer {
@@ -54,16 +62,30 @@ public class PanelTablero extends JPanel implements Observer {
 		// filas alto
 
 		panel_Tablero.setLayout(new GridLayout(t.getFilas(), t.getColumnas()));
-		for (int i = 0; i < t.getFilas(); i++) {
-			for (int j = 0; j < t.getColumnas(); j++) {
-				Casilla cas = new Casilla(i, j);
+		for (int i = 1; i < (t.getFilas()+1); i++) {
+			for (int j = 1; j < (t.getColumnas()+1); j++) {
+				
+				Casilla cas = new Casilla(i, j, t.getCasilla(j, i));
+				if (cas.getColor()!=Ficha.VACIA){
+					cas.setEnabled(false);
+					if (cas.getColor()==Ficha.BLANCA){
+						cas.setBackground(Color.WHITE);
+					}else
+						cas.setBackground(Color.black);
+				}
 				panel_Tablero.add(cas);
-
+				cas.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						c.Mover(cas.getcoordX(), cas.getcoordY(), turnoActual);
+						
+					}
+					});
 			}
 
 		}
 		
-	
+		this.repaint();
 		
 
 	}
@@ -76,12 +98,16 @@ public class PanelTablero extends JPanel implements Observer {
 		// cambia turno te lo notifican
 		labelTurno = new JLabel( "Turno de: "+ turnoActual.toString());
 		labelTurno.setBorder(BorderFactory.createLineBorder(Color.black));
+		
 		JButton aleatorio = new JButton("Movimiento Aleatorio");
 		aleatorio.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				//mejor generar aqui el movimiento que en el controlador,
-				//porque asi sabes donde has puesto para actualizar el tablero si te guardas el movimiento
+				
+							
+					c.movAleatorio(turnoActual);
+					
+				
 				
 			}
 
@@ -91,7 +117,9 @@ public class PanelTablero extends JPanel implements Observer {
 		panel.add(aleatorio, BorderLayout.SOUTH);
 
 	}
-
+	
+	
+	
 	@Override
 	public void onReset(TableroInmutable tab, Ficha turno) {
 		this.t = tab;
@@ -104,7 +132,16 @@ public class PanelTablero extends JPanel implements Observer {
 	@Override
 	public void onPartidaTerminada(TableroInmutable tab, Ficha ganador) {
 		// poner tablero y boton bloqueados
-
+		panel.setEnabled(false);
+		panel_Tablero.setEnabled(false);
+		this.turnoActual=ganador;
+		JFrame frame= new JFrame();
+		JOptionPane.showMessageDialog(frame,
+			    "Ganan las: "+ ganador.toString(),
+			    "Ganador",
+			    JOptionPane.INFORMATION_MESSAGE);
+		labelTurno = new JLabel( "Turno de: "+ turnoActual.toString());
+		this.repaint();
 	}
 
 	@Override
@@ -112,8 +149,9 @@ public class PanelTablero extends JPanel implements Observer {
 
 		this.t = tab;
 		construyeTablero();
+		this.turnoActual=turno;
 		labelTurno = new JLabel( "Turno de: "+ turnoActual.toString());
-
+		this.repaint();
 	}
 
 	@Override
@@ -125,19 +163,34 @@ public class PanelTablero extends JPanel implements Observer {
 	@Override
 	public void onUndo(TableroInmutable tab, Ficha turno, boolean hayMas) {
 		// quitar ultima casilla puesta y actualizar turno
-
+		this.t=tab;
+		construyeTablero();
+		this.turnoActual=turno;
+		labelTurno=new JLabel( "Turno de: "+ turnoActual.toString());
+		if(!hayMas){
+			panel.setEnabled(false);
+		}
+		this.repaint();
 	}
 
 	@Override
 	public void onMovimientoEnd(TableroInmutable tab, Ficha jugador, Ficha turno) {
-		// colocar nueva casilla y actualiar turno
+		this.t=tab;
+		construyeTablero();
+		this.turnoActual=turno;
+		labelTurno=new JLabel( "Turno de: "+ turnoActual.toString());
+		this.repaint();
+		
 
 	}
 
 	@Override
 	public void onMovimientoIncorrecto(TableroInmutable movimientoException) {
-		// aviso de movimiento incorrecto
-
+		JFrame frame= new JFrame();
+		JOptionPane.showMessageDialog(frame,
+			    "MovimientoInvalido",
+			    "Error",
+			    JOptionPane.ERROR_MESSAGE);
 	}
 
 }
