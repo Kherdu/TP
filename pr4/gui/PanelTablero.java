@@ -34,9 +34,11 @@ public class PanelTablero extends JPanel implements Observer {
 	private JLabel labelTurno;
 	private Ficha turnoActual;
 
+	
 
 	public PanelTablero(ControladorGUI c, Ficha jugadorInicial) {
 
+		
 		this.c = c;
 		c.addObserver(this);
 		this.t = c.getTab();
@@ -61,11 +63,12 @@ public class PanelTablero extends JPanel implements Observer {
 		// for que añade botones al tablero, con gridLayout de anchura ancho y
 		// filas alto
 
-		panel_Tablero.setLayout(new GridLayout(t.getFilas(), t.getColumnas()));
-		for (int i = 1; i < (t.getFilas()+1); i++) {
-			for (int j = 1; j < (t.getColumnas()+1); j++) {
+		panel_Tablero.setLayout(new GridLayout(t.getColumnas(), t.getFilas()));
+		for (int y = 1; y < (t.getColumnas()+1); y++) {
+			for (int x = 1; x < (t.getFilas()+1); x++) {
+		
 				
-				Casilla cas = new Casilla(i, j, t.getCasilla(j, i));
+				Casilla cas = new Casilla(x, y, t.getCasilla(x, y));
 				if (cas.getColor()!=Ficha.VACIA){
 					cas.setEnabled(false);
 					if (cas.getColor()==Ficha.BLANCA){
@@ -104,11 +107,8 @@ public class PanelTablero extends JPanel implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-							
 					c.movAleatorio(turnoActual);
 					
-				
-				
 			}
 
 		});
@@ -150,7 +150,7 @@ public class PanelTablero extends JPanel implements Observer {
 		this.t = tab;
 		construyeTablero();
 		this.turnoActual=turno;
-		labelTurno = new JLabel( "Turno de: "+ turnoActual.toString());
+		labelTurno.setText("Turno de: "+ turnoActual.toString());
 		this.repaint();
 	}
 

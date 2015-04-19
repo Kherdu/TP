@@ -130,6 +130,7 @@ public class Partida {
 			//observadores partidaTerminada con ganador vacio
 		}
 			
+		this.tin=tablero;
 		for(Observer o: observers){
 			//observadores movimiento correcto
 			o.onMovimientoEnd(tin, mov.getJugador(), turno);
@@ -149,8 +150,12 @@ public class Partida {
 
 			ret = true;
 		}
+		
+		this.tin=tablero;
+		for (Observer o: observers){
+			o.onUndo(tin, turno, ret);
+		}
 		return ret;
-
 	}
 
 	public ReglasJuego getJuego() {

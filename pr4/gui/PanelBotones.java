@@ -137,6 +137,7 @@ public class PanelBotones extends JPanel implements Observer {
 			
 			
 			this.add(panel);
+			this.add(panelundo);
 			this.add(panel_1);
 			this.add(panel_2);
 	}

@@ -7,7 +7,7 @@ public class Tablero implements TableroInmutable {
 	private int ancho;
 
 	public Tablero(int w, int h) {
-		// h = alto w = ancho(del ingles)
+		// h = alto/filas w = ancho/columnas
 		this.alto = h;
 		this.ancho = w;
 

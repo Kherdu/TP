@@ -33,9 +33,9 @@ public class ControladorGUI {
 	private Partida p;
 	private ReglasJuego r;
 	private Juego j;
-	
-
 	private TableroInmutable tab;
+	
+	
 	public ControladorGUI(FactoriaTipoJuego factoria, Partida partida) {
 		
 
@@ -50,7 +50,7 @@ public class ControladorGUI {
 	
 	public void Mover(int columna, int fila, Ficha turno){
 		
-
+		
 		try{
 			if(j==Juego.COMPLICA){
 		
@@ -76,6 +76,37 @@ public class ControladorGUI {
 		}
 	}
 
+	public void movAleatorio(Ficha turno) {
+		
+		
+		try{
+			if(j==Juego.COMPLICA){
+		
+				Jugador jug= new JugadorAleatorioComplica();
+				Movimiento m = jug.getMovimiento(p.getTablero(),turno);
+				p.ejecutaMovimiento(m);
+			}else if (j==Juego.CONECTA4){
+				Jugador jug= new JugadorAleatorioConecta4();
+				Movimiento m = jug.getMovimiento(p.getTablero(),turno);
+				p.ejecutaMovimiento(m);
+			}else {
+				Jugador jug= new JugadorAleatorioGravity();
+				Movimiento m = jug.getMovimiento(p.getTablero(),turno);
+				
+				p.ejecutaMovimiento(m);
+			}
+			
+		
+		}catch (MovimientoInvalido e){
+			JFrame frame= new JFrame();
+			JOptionPane.showMessageDialog(frame,
+				    e.getMessage(),
+				    "Error",
+				    JOptionPane.ERROR_MESSAGE);
+		}
+		
+	}
+	
 	public TableroInmutable getTab() {
 		return tab;
 	}
@@ -123,36 +154,7 @@ public class ControladorGUI {
 		
 	}
 
-	public void movAleatorio(Ficha turno) {
-		
-		
-		try{
-			if(j==Juego.COMPLICA){
-		
-				Jugador jug= new JugadorAleatorioComplica();
-				Movimiento m = jug.getMovimiento(p.getTablero(),turno);
-				p.ejecutaMovimiento(m);
-			}else if (j==Juego.CONECTA4){
-				Jugador jug= new JugadorAleatorioConecta4();
-				Movimiento m = jug.getMovimiento(p.getTablero(),turno);
-				p.ejecutaMovimiento(m);
-			}else {
-				Jugador jug= new JugadorAleatorioGravity();
-				Movimiento m = jug.getMovimiento(p.getTablero(),turno);
-				
-				p.ejecutaMovimiento(m);
-			}
-			
-		
-		}catch (MovimientoInvalido e){
-			JFrame frame= new JFrame();
-			JOptionPane.showMessageDialog(frame,
-				    e.getMessage(),
-				    "Error",
-				    JOptionPane.ERROR_MESSAGE);
-		}
-		
-	}
+	
 
 	public void cambiaJuego(Juego seleccionado, String filas, String columnas) {
 

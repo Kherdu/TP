@@ -48,6 +48,7 @@ public interface Observer {
 	 * Se proporciona además una vista del tablero de sólo lectura, el jugador
      * que ha jugado, y el turno del siguiente jugador.
 	 */
+	
 	abstract void onMovimientoEnd(TableroInmutable tab, Ficha jugador, Ficha turno);
 	
 	/* La partida notifica que se ha producido un movimiento incorrecto proporcionando
