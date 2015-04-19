@@ -1,5 +1,6 @@
 package tp.pr4.control;
 
+import java.GUI.Observer;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -9,6 +10,7 @@ import tp.pr4.logica.InstruccionInvalida;
 import tp.pr4.logica.MovimientoInvalido;
 import tp.pr4.logica.Partida;
 import tp.pr4.logica.ReglasJuego;
+import tp.pr4.logica.Tablero;
 
 public class ControladorConsola {
 
@@ -72,6 +74,12 @@ public class ControladorConsola {
 		in.close();
 	}
 
+	public Tablero getTablero(){
+		
+		return partida.getTablero();
+		
+	}
+	
 	public void parse(String s, Jugador j) throws InstruccionInvalida {
 		// parser-ejecucion, cambiar para que lance excepciones... en
 		// ejecutamovimiento deberia lanzarlas cuando sea fuera del tablero, en
@@ -218,6 +226,8 @@ public class ControladorConsola {
 	}
 
 	private void cambiaJuego(FactoriaTipoJuego f) {
+
+		
 		this.jugador1 = f.creaJugadorHumanoConsola(in);
 		this.jugador2 = f.creaJugadorHumanoConsola(in);
 
@@ -227,5 +237,12 @@ public class ControladorConsola {
 		partida.reset(reglas);
 		System.out.println("Partida reiniciada.");
 
+	}
+	
+	
+
+	public void addObserver(Observer o) {
+		partida.addObserver(o);
+		
 	}
 }
