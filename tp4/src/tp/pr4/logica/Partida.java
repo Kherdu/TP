@@ -130,12 +130,12 @@ public class Partida {
 		}
 			
 		isTablas = juego.tablas(mov.getJugador(), tablero);
-
+		
 		if (isTablas){
 			terminada = true;
 			for(Observer o: observers){
-				//observadores partidaTerminada con tablas
-				o.onPartidaTerminada(tin, Ficha.VACIA);
+				
+				o.onPartidaTerminada(tin, ganador);
 				
 			}
 		}

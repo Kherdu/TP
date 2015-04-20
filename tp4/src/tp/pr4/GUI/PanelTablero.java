@@ -136,11 +136,13 @@ public class PanelTablero extends JPanel implements Observer {
 		panel_Tablero.setEnabled(false);
 		this.turnoActual=ganador;
 		JFrame frame= new JFrame();
+		if (ganador!=Ficha.VACIA){
 		JOptionPane.showMessageDialog(frame,
 			    "Ganan las: "+ ganador.toString(),
 			    "Ganador",
 			    JOptionPane.INFORMATION_MESSAGE);
-		labelTurno = new JLabel( "Turno de: "+ turnoActual.toString());
+		}
+		
 		this.repaint();
 	}
 
