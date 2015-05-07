@@ -32,9 +32,9 @@ public class MovimientoConecta4 extends Movimiento {
 
 		
 
-		if (columna < 1 || columna > tab.getAncho()) { 
+		if (columna < 1 || columna > tab.getColumnas()) { 
 			// si se intenta meter fuera del tablero
-			throw new MovimientoInvalido("Columna incorrecta. Debe estar entre 1 y "+ tab.getAncho() + ".");
+			throw new MovimientoInvalido("Columna incorrecta. Debe estar entre 1 y "+ tab.getColumnas() + ".");
 			
 		} else if (Utiles.fila(columna, tab)==0) {
 			// si columna completa

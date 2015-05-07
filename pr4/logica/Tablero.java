@@ -20,14 +20,6 @@ public class Tablero implements TableroInmutable {
 		iniciaTablero(tablero);
 	}
 
-	public int getAlto() {
-		return this.alto;
-	}
-
-	public int getAncho() {
-		return this.ancho;
-	}
-
 	public Ficha getCasilla(int w, int h) {
 		h--;
 		w--;
@@ -122,12 +114,12 @@ public class Tablero implements TableroInmutable {
 	//por la interfaz
 	@Override
 	public int getFilas() {
-		return this.ancho;
+		return this.alto;
 	}
 
 	@Override
 	public int getColumnas() {
-		return this.alto;
+		return this.ancho;
 	}
 
 }

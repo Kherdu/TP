@@ -8,7 +8,7 @@ import tp.pr4.control.Jugador;
 
 public class Partida {
 
-	private static int n = 10;
+	private static int TAM_PILA = 10;
 	private Tablero tablero;
 	private Ficha turno; // jugador que tiene el turno
 	private boolean terminada;
@@ -29,11 +29,11 @@ public class Partida {
 		this.turno = reglas.jugadorInicial();
 		this.terminada = false;
 		if (reglas.getTipo() == Juego.CONECTA4) {
-			this.moveStack = new MovimientoConecta4[n];
+			this.moveStack = new MovimientoConecta4[TAM_PILA];
 		} else if (reglas.getTipo() == Juego.COMPLICA) {
-			this.moveStack = new MovimientoComplica[n];
+			this.moveStack = new MovimientoComplica[TAM_PILA];
 		} else if (reglas.getTipo() == Juego.GRAVITY) {
-			this.moveStack = new MovimientoGravity[n];
+			this.moveStack = new MovimientoGravity[TAM_PILA];
 		}
 		this.ganador = Ficha.VACIA;
 		this.lastPos = 0;
@@ -77,13 +77,13 @@ public class Partida {
 	public void reset(ReglasJuego reglas) {
 
 		if (reglas.getTipo() == Juego.CONECTA4) {
-			this.moveStack = new MovimientoConecta4[n];
+			this.moveStack = new MovimientoConecta4[TAM_PILA];
 			this.juego = new ReglasConecta4();
 		} else if (reglas.getTipo() == Juego.COMPLICA) {
-			this.moveStack = new MovimientoComplica[n];
+			this.moveStack = new MovimientoComplica[TAM_PILA];
 			this.juego = new ReglasComplica();
 		} else if (reglas.getTipo() == Juego.GRAVITY) {
-			this.moveStack = new MovimientoGravity[n];
+			this.moveStack = new MovimientoGravity[TAM_PILA];
 			this.juego = new ReglasGravity();
 		}
 
@@ -120,22 +120,22 @@ public class Partida {
 		}
 		ganador = juego.hayGanador(mov, tablero);
 
-		if (ganador != Ficha.VACIA)
+		if (ganador != Ficha.VACIA){
 			terminada = true;
 			//observadores partidaTerminada con ganador
-		for(Observer o: observers){
+			for(Observer o: observers){
 			
-			o.onPartidaTerminada(tin, ganador);
-			
+				o.onPartidaTerminada(tin, ganador);
+			}
 		}
 			
 		isTablas = juego.tablas(mov.getJugador(), tablero);
-
+		
 		if (isTablas){
 			terminada = true;
 			for(Observer o: observers){
-				//observadores partidaTerminada con tablas
-				o.onPartidaTerminada(tin, Ficha.VACIA);
+				
+				o.onPartidaTerminada(tin, ganador);
 				
 			}
 		}
@@ -178,7 +178,7 @@ public class Partida {
 		return juego;
 	}
 
-	public void Mover(Jugador j, Scanner sc) throws MovimientoInvalido {
+	public void Mover(Jugador j) throws MovimientoInvalido {
 
 		Movimiento m = j.getMovimiento(tablero, turno);
 		ejecutaMovimiento(m);
@@ -188,13 +188,13 @@ public class Partida {
 
 	private void avanzaTurno() {
 		// advance Pointer
-		if (lastPos == 9) {
+		if (lastPos == TAM_PILA-1) {
 			lastPos = 0;
 		} else
 			lastPos++;
 
 		cambiaTurno();
-		if (numJugadas != 10) {
+		if (numJugadas != TAM_PILA) {
 			numJugadas++;
 		}
 	}

@@ -3,13 +3,13 @@ package tp.pr4.logica;
 public class Utiles {
 
 	
-	public static int fila (int w, Tablero tablero) {
+	public static int fila (int w, TableroInmutable tab) {
 		// devuelve la primera fila vacia de la columna que le pasas, si esta
 		// llena devuelve 0
 
-		int fila = tablero.getAlto();
+		int fila = tab.getFilas();
 
-		while (tablero.getCasilla(w, fila) != Ficha.VACIA && fila >= 1) {
+		while (tab.getCasilla(w, fila) != Ficha.VACIA && fila >= 1) {
 			fila--;
 		}
 

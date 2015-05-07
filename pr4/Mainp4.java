@@ -111,8 +111,8 @@ public class Mainp4 {
 		//creamos los controladores segun tenga interfaz grafica o no
 		if (!UIs) {
 			ControladorConsola c = new ControladorConsola(f, p, in);
-			
 			c.run();
+			
 		}else {
 			
 			ControladorGUI c= new ControladorGUI(f,p); //controlador con metodos observer

@@ -83,7 +83,7 @@ public class ControladorGUI {
 			if(j==Juego.COMPLICA){
 		
 				Jugador jug= new JugadorAleatorioComplica();
-				Movimiento m = jug.getMovimiento(p.getTablero(),turno);
+				Movimiento m = jug.getMovimiento(tab,turno);
 				p.ejecutaMovimiento(m);
 			}else if (j==Juego.CONECTA4){
 				Jugador jug= new JugadorAleatorioConecta4();

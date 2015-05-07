@@ -8,8 +8,8 @@ import tp.pr4.logica.TableroInmutable;
 public class Casilla extends JButton{
 	
 	private Ficha color;
-	private Integer x;
-	private Integer y;
+	private Integer columna;
+	private Integer fila;
 	
 	Casilla(){
 		this.color=Ficha.VACIA;
@@ -17,20 +17,20 @@ public class Casilla extends JButton{
 		
 	}
 	
-	Casilla(Integer x, Integer y, Ficha color){
-		this.x=x;
-		this.y=y;
+	Casilla(Integer columna, Integer fila, Ficha color){
+		this.columna=columna;
+		this.fila=fila;
 		this.color=color;
 	}
 
 	
 	
-	public Integer getcoordX() {
-		return x;
+	public Integer getColumna() {
+		return columna;
 	}
 
-	public Integer getcoordY() {
-		return y;
+	public Integer getFila() {
+		return fila;
 	}
 
 	public Ficha getColor() {

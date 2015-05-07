@@ -5,6 +5,7 @@ import java.util.Scanner;
 import tp.pr4.logica.Ficha;
 import tp.pr4.logica.Movimiento;
 import tp.pr4.logica.Tablero;
+import tp.pr4.logica.TableroInmutable;
 
 public class JugadorHumanoGravity implements Jugador {
 
@@ -18,7 +19,7 @@ private Scanner sc;
 
 
 	@Override
-	public Movimiento getMovimiento(Tablero tab, Ficha color) {
+	public Movimiento getMovimiento(TableroInmutable tab, Ficha color) {
 		
 		FactoriaTipoJuego f= new FactoriaGravity();
 		

@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
@@ -34,27 +35,24 @@ public class PanelTablero extends JPanel implements Observer {
 	private JLabel labelTurno;
 	private Ficha turnoActual;
 
-	
-
 	public PanelTablero(ControladorGUI c, Ficha jugadorInicial) {
 
-		
 		this.c = c;
 		c.addObserver(this);
 		this.t = c.getTab();
-		turnoActual=jugadorInicial;
+		turnoActual = jugadorInicial;
 		setLayout(new GridLayout(2, 1, 30, 30));
-		
+
 		panel_Tablero = new JPanel();
-		panel_Tablero.setMinimumSize(new Dimension(500,500));
-		panel= new JPanel();
-		
+		panel_Tablero.setMinimumSize(new Dimension(500, 500));
+		panel = new JPanel();
+
 		construyeTablero();
 		construyeOtros();
-		
+
 		this.add(panel_Tablero);
 		this.add(panel);
-		
+
 	}
 
 	private void construyeTablero() {
@@ -63,52 +61,68 @@ public class PanelTablero extends JPanel implements Observer {
 		// for que añade botones al tablero, con gridLayout de anchura ancho y
 		// filas alto
 
-		panel_Tablero.setLayout(new GridLayout(t.getColumnas(), t.getFilas()));
-		for (int y = 1; y < (t.getColumnas()+1); y++) {
-			for (int x = 1; x < (t.getFilas()+1); x++) {
-		
-				
+		panel_Tablero.setLayout(new GridLayout(t.getFilas(), t.getColumnas()));
+		for (int y = 1; y < (t.getFilas() + 1); y++) {
+			for (int x = 1; x < (t.getColumnas() + 1); x++) {
+			
+
 				Casilla cas = new Casilla(x, y, t.getCasilla(x, y));
-				if (cas.getColor()!=Ficha.VACIA){
-					cas.setEnabled(false);
-					if (cas.getColor()==Ficha.BLANCA){
+				if (cas.getColor() != Ficha.VACIA) {
+					
+					if (cas.getColor() == Ficha.BLANCA) {
 						cas.setBackground(Color.WHITE);
-					}else
+					} else
 						cas.setBackground(Color.black);
 				}
 				panel_Tablero.add(cas);
 				cas.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						c.Mover(cas.getcoordX(), cas.getcoordY(), turnoActual);
-						
+						c.Mover(cas.getColumna(), cas.getFila(), turnoActual);
+
 					}
-					});
+				});
 			}
 
 		}
-		
+
 		this.repaint();
+
+	}
+
+	private void modificaTablero() {
+		
+		Component[] components = panel_Tablero.getComponents(); 
+		Component cas = null; 
+		for (int i = 0; i < components.length; i++) 
+		{ 
+		cas = components[i]; 
+		if (cas instanceof Casilla) 
+		{ 
+			
+			if (t.getCasilla(( ((Casilla) cas).getColumna()), ((Casilla) cas).getFila()) == Ficha.BLANCA) {
+				cas.setBackground(Color.WHITE);
+			} else if (t.getCasilla(( ((Casilla) cas).getColumna()), ((Casilla) cas).getFila()) == Ficha.NEGRA)
+				cas.setBackground(Color.BLACK);
+		} 
+		} 
 		
 
 	}
 
 	private void construyeOtros() {
 
-		
-		panel.setLayout(new GridLayout(2,1));
-		// creo que asi cuela... siempre empieza blancas y cada vez que se
-		// cambia turno te lo notifican
-		labelTurno = new JLabel( "Turno de: "+ turnoActual.toString());
+		panel.setLayout(new GridLayout(2, 1));
+		labelTurno = new JLabel("Turno de: " + turnoActual.toString());
 		labelTurno.setBorder(BorderFactory.createLineBorder(Color.black));
-		
+
 		JButton aleatorio = new JButton("Movimiento Aleatorio");
 		aleatorio.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
-					c.movAleatorio(turnoActual);
-					
+
+				c.movAleatorio(turnoActual);
+
 			}
 
 		});
@@ -117,30 +131,44 @@ public class PanelTablero extends JPanel implements Observer {
 		panel.add(aleatorio, BorderLayout.SOUTH);
 
 	}
-	
-	
-	
+
 	@Override
 	public void onReset(TableroInmutable tab, Ficha turno) {
 		this.t = tab;
 		construyeTablero();
-		labelTurno = new JLabel( "Turno de: "+ turnoActual.toString());
+		labelTurno = new JLabel("Turno de: " + turnoActual.toString());
+		panel_Tablero.validate();
 		this.repaint();
-		
+
 	}
 
 	@Override
 	public void onPartidaTerminada(TableroInmutable tab, Ficha ganador) {
-		// poner tablero y boton bloqueados
-		panel.setEnabled(false);
-		panel_Tablero.setEnabled(false);
-		this.turnoActual=ganador;
-		JFrame frame= new JFrame();
-		JOptionPane.showMessageDialog(frame,
-			    "Ganan las: "+ ganador.toString(),
-			    "Ganador",
-			    JOptionPane.INFORMATION_MESSAGE);
-		labelTurno = new JLabel( "Turno de: "+ turnoActual.toString());
+		
+		Component[] components = panel.getComponents();
+		
+		//deshabilitamos el boton
+		for (Component c: components){
+			if (c instanceof JButton){
+				c.setEnabled(false);
+			}
+		}
+		
+		components=null;
+		components = panel_Tablero.getComponents();
+		//deshabilitamos el tablero
+		for (Component c: components){
+			c.setEnabled(false);
+		}
+		
+		this.turnoActual = ganador;
+		JFrame frame = new JFrame();
+		if (ganador != Ficha.VACIA) {
+			JOptionPane.showMessageDialog(frame,
+					"Ganan las: " + ganador.toString(), "Ganador",
+					JOptionPane.INFORMATION_MESSAGE);
+		}
+		panel_Tablero.validate();
 		this.repaint();
 	}
 
@@ -149,8 +177,9 @@ public class PanelTablero extends JPanel implements Observer {
 
 		this.t = tab;
 		construyeTablero();
-		this.turnoActual=turno;
-		labelTurno.setText("Turno de: "+ turnoActual.toString());
+		this.turnoActual = turno;
+		labelTurno.setText("Turno de: " + turnoActual.toString());
+		panel_Tablero.validate();
 		this.repaint();
 	}
 
@@ -163,36 +192,34 @@ public class PanelTablero extends JPanel implements Observer {
 	@Override
 	public void onUndo(TableroInmutable tab, Ficha turno, boolean hayMas) {
 		// quitar ultima casilla puesta y actualizar turno
-		this.t=tab;
+		this.t = tab;
 		construyeTablero();
-		this.turnoActual=turno;
-		labelTurno=new JLabel( "Turno de: "+ turnoActual.toString());
-		if(!hayMas){
+		this.turnoActual = turno;
+		labelTurno = new JLabel("Turno de: " + turnoActual.toString());
+		if (!hayMas) {
 			panel.setEnabled(false);
 		}
+		panel_Tablero.validate();
 		this.repaint();
 	}
 
 	@Override
 	public void onMovimientoEnd(TableroInmutable tab, Ficha jugador, Ficha turno) {
-		this.t=tab;
-		construyeTablero();
-		this.turnoActual=turno;
-		labelTurno.setText( "Turno de: "+ turnoActual.toString());
+		this.t = tab;
+		modificaTablero();
+		this.turnoActual = turno;
+		labelTurno.setText("Turno de: " + turnoActual.toString());
 		labelTurno.revalidate();
 		panel_Tablero.validate();
 		this.repaint();
-		
 
 	}
 
 	@Override
 	public void onMovimientoIncorrecto(TableroInmutable movimientoException) {
-		JFrame frame= new JFrame();
-		JOptionPane.showMessageDialog(frame,
-			    "MovimientoInvalido",
-			    "Error",
-			    JOptionPane.ERROR_MESSAGE);
+		JFrame frame = new JFrame();
+		JOptionPane.showMessageDialog(frame, "MovimientoInvalido", "Error",
+				JOptionPane.ERROR_MESSAGE);
 	}
 
 }

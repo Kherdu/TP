@@ -40,14 +40,14 @@ public class MovimientoComplica extends Movimiento {
 		
 		MovimientoComplica mov = new MovimientoComplica(columna, Ficha.VACIA);
 
-		if (columna < 1 || columna > tab.getAncho()) { // si se intenta meter
+		if (columna < 1 || columna > tab.getColumnas()) { // si se intenta meter
 														// fuera del tablero
 			
-			throw new MovimientoInvalido("Columna incorrecta. Debe estar entre 1 y "+ tab.getAncho()+ ".");
+			throw new MovimientoInvalido("Columna incorrecta. Debe estar entre 1 y "+ tab.getColumnas()+ ".");
 		} else {
 			if (Utiles.fila(columna, tab) == 0) { 
 				// si columna llena
-				mov.setFicha(tab.getCasilla(columna, tab.getAlto()));
+				mov.setFicha(tab.getCasilla(columna, tab.getFilas()));
 				borrados[ultimaBorrada] = mov; /* se encarga de las fichas que se pierden 
 				por la parte de abajo del tablero*/
 				advPila();
@@ -74,7 +74,7 @@ public class MovimientoComplica extends Movimiento {
 		else { // columna llena
 			if (borrados[ultimaBorrada - 1].getJugador() != Ficha.VACIA) {
 				subeColumna(tab, columna);
-				tab.setCasilla(columna, tab.getAlto(),
+				tab.setCasilla(columna, tab.getFilas(),
 						borrados[ultimaBorrada - 1].getJugador());
 			} else
 				tab.setCasilla(columna, (Utiles.fila(columna, tab) + 1), Ficha.VACIA);
@@ -88,7 +88,7 @@ public class MovimientoComplica extends Movimiento {
 	public void bajaColumna(Tablero t, int w) {
 
 		Ficha aux;
-		for (int i = (t.getAlto()); i > 0; i--) { // bajamos todas las fichas
+		for (int i = (t.getFilas()); i > 0; i--) { // bajamos todas las fichas
 													// una casilla
 			aux = t.getCasilla(w, i);
 			t.setCasilla(w, i + 1, aux);
@@ -100,7 +100,7 @@ public class MovimientoComplica extends Movimiento {
 	public void subeColumna(Tablero t, int w) {
 		//
 		Ficha aux;
-		for (int i = 2; i <= t.getAlto(); i++) { // subimos todas las fichas una
+		for (int i = 2; i <= t.getFilas(); i++) { // subimos todas las fichas una
 													// casilla, deshechando la
 													// ficha de arriba de todo
 													// (w,0)

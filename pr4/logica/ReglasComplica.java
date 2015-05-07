@@ -29,10 +29,10 @@ public class ReglasComplica implements ReglasJuego {
 		int vecesGanaContrario = 0;
 
 		// vertical
-		for (int j = 1; j <= t.getAncho() && !isGanador(); j++) {
+		for (int j = 1; j <= t.getColumnas() && !isGanador(); j++) {
 			contUltimo = 0;// reiniciamos contador
 			contContrario = 0;
-			for (int i = 1; i <= t.getAlto() && !isGanador(); i++) {
+			for (int i = 1; i <= t.getFilas() && !isGanador(); i++) {
 				if (t.getCasilla(j, i) != ultimoMovimiento.getJugador()
 						&& t.getCasilla(j, i) != Ficha.VACIA) {
 					contUltimo = 0;
@@ -56,10 +56,10 @@ public class ReglasComplica implements ReglasJuego {
 			}
 		}
 		// horizontales
-		for (int i = 1; i <= t.getAlto() && !isGanador(); i++) {
+		for (int i = 1; i <= t.getFilas() && !isGanador(); i++) {
 			contUltimo = 0;// reiniciamos contador
 			contContrario = 0;
-			for (int j = 1; j <= t.getAncho() && !isGanador(); j++) {
+			for (int j = 1; j <= t.getColumnas() && !isGanador(); j++) {
 				if (t.getCasilla(j, i) != ultimoMovimiento.getJugador()
 						&& t.getCasilla(j, i) != Ficha.VACIA) {
 					contUltimo = 0;
@@ -84,13 +84,13 @@ public class ReglasComplica implements ReglasJuego {
 
 		// diagonales hacia la derecha \
 		// diagonales que empiezan con j=1
-		for (int j = 1; j <= (t.getAncho() - 3) && !isGanador(); j++) {
+		for (int j = 1; j <= (t.getColumnas() - 3) && !isGanador(); j++) {
 			int i = 1;// Doble indice para saltar por la diagonal
 			int j2 = j;
 			contUltimo = 0;
 			contContrario = 0;
 
-			while (i <= t.getAlto() && j2 <= t.getAncho() && !isGanador()) {
+			while (i <= t.getFilas() && j2 <= t.getColumnas() && !isGanador()) {
 
 				if (t.getCasilla(j2, i) != ultimoMovimiento.getJugador()
 						&& t.getCasilla(j2, i) != Ficha.VACIA) {
@@ -119,13 +119,13 @@ public class ReglasComplica implements ReglasJuego {
 
 		// diagonales hacia la derecha \
 		// diagonales con i=1
-		for (int i = 1; i <= (t.getAlto() - 3) && !isGanador(); i++) {
+		for (int i = 1; i <= (t.getFilas() - 3) && !isGanador(); i++) {
 			int i2 = i;// Doble indice para saltar por la diagonal
 			int j = 1;
 			contUltimo = 0;
 			contContrario = 0;
 
-			while (i2 <= t.getAlto() && j <= t.getAncho() && !isGanador()) {
+			while (i2 <= t.getFilas() && j <= t.getColumnas() && !isGanador()) {
 
 				if (t.getCasilla(j, i2) != ultimoMovimiento.getJugador()
 						&& t.getCasilla(j, i2) != Ficha.VACIA) {
@@ -154,13 +154,13 @@ public class ReglasComplica implements ReglasJuego {
 
 		// diagonales hacia la izquierda /
 		// diagonales con j=1
-		for (int j = t.getAncho(); j >= (1 + 3) && !isGanador(); j--) {
+		for (int j = t.getColumnas(); j >= (1 + 3) && !isGanador(); j--) {
 			int i = 1;// Doble indice para saltar por la diagonal
 			int j2 = j;
 			contUltimo = 0;
 			contContrario = 0;
 
-			while (i <= t.getAlto() && j2 >= 1 && !isGanador()) {
+			while (i <= t.getFilas() && j2 >= 1 && !isGanador()) {
 				if (t.getCasilla(j2, i) != ultimoMovimiento.getJugador()
 						&& t.getCasilla(j2, i) != Ficha.VACIA) {
 					contUltimo = 0;
@@ -185,12 +185,12 @@ public class ReglasComplica implements ReglasJuego {
 		}
 		// diagonales hacia la izquierda /
 		// diagonales con j=7
-		for (int i = 1; i <= (t.getAlto() - 3) && !isGanador(); i++) {
+		for (int i = 1; i <= (t.getFilas() - 3) && !isGanador(); i++) {
 			int i2 = i;// Doble indice para saltar por la diagonal
-			int j = t.getAncho();
+			int j = t.getColumnas();
 			contUltimo = 0;
 			contContrario = 0;
-			while (i2 <= t.getAlto() && j >= 1 && !isGanador()) {
+			while (i2 <= t.getFilas() && j >= 1 && !isGanador()) {
 
 				if (t.getCasilla(j, i2) != ultimoMovimiento.getJugador()
 						&& t.getCasilla(j, i2) != Ficha.VACIA) {

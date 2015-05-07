@@ -28,7 +28,7 @@ public class MovimientoGravity extends Movimiento{
 		
 		
 		boolean aux = false;
-			if (columna < 1 || columna > tab.getAncho() || fila < 1 || fila > tab.getAlto()){
+			if (columna < 1 || columna > tab.getColumnas() || fila < 1 || fila > tab.getFilas()){
 				//Si se poner fuera del tablero
 				throw new MovimientoInvalido("Posición incorrecta.");
 			}else if (tab.getCasilla(columna, fila) != Ficha.VACIA){
@@ -59,9 +59,9 @@ public class MovimientoGravity extends Movimiento{
 				
 			}else if (parseoDireccion(tab).equalsIgnoreCase("R")){
 				//Derecha
-				for (int i = columna; i <= tab.getAncho() && aux == false; i++){
+				for (int i = columna; i <= tab.getColumnas() && aux == false; i++){
 					
-					if (tab.getCasilla((i+1), fila) != Ficha.VACIA || (i == tab.getAncho())){						
+					if (tab.getCasilla((i+1), fila) != Ficha.VACIA || (i == tab.getColumnas())){						
 						
 						tab.setCasilla(i, fila, color);
 						aux = true;
@@ -88,9 +88,9 @@ public class MovimientoGravity extends Movimiento{
 				
 			}else if (parseoDireccion(tab).equalsIgnoreCase("D")){
 				//Abajo
-				for (int i = fila; i <= tab.getAlto() && aux == false; i++){
+				for (int i = fila; i <= tab.getFilas() && aux == false; i++){
 					
-					if (tab.getCasilla(columna, (i+1)) != Ficha.VACIA || (i == tab.getAlto())){						
+					if (tab.getCasilla(columna, (i+1)) != Ficha.VACIA || (i == tab.getFilas())){						
 						
 						tab.setCasilla(columna, i, color);
 						aux = true;
@@ -125,9 +125,9 @@ public class MovimientoGravity extends Movimiento{
 				//Diagonal hacia abajo a la izquierda
 				int c = columna;
 				int f = fila;
-				while (c >= 1 && f <= tab.getAlto() && aux == false){
+				while (c >= 1 && f <= tab.getFilas() && aux == false){
 					
-					if (tab.getCasilla(c-1, f+1) != Ficha.VACIA || c == 1 || f == tab.getAlto()){
+					if (tab.getCasilla(c-1, f+1) != Ficha.VACIA || c == 1 || f == tab.getFilas()){
 						
 						tab.setCasilla(c, f, color);
 						aux = true;
@@ -145,9 +145,9 @@ public class MovimientoGravity extends Movimiento{
 				//Diagonal hacia arriba a la derecha
 				int c = columna;
 				int f = fila;
-				while (c <= tab.getAncho() && f >= 1 && aux == false){
+				while (c <= tab.getColumnas() && f >= 1 && aux == false){
 					
-					if (tab.getCasilla(c+1, f-1) != Ficha.VACIA || c == tab.getAncho() || f == 1){
+					if (tab.getCasilla(c+1, f-1) != Ficha.VACIA || c == tab.getColumnas() || f == 1){
 						
 						tab.setCasilla(c, f, color);
 						aux = true;
@@ -165,9 +165,9 @@ public class MovimientoGravity extends Movimiento{
 				//Diagonal hacia abajo a la derecha
 				int c = columna;
 				int f = fila;
-				while (c <= tab.getAncho() && f <= tab.getAlto() && aux == false){
+				while (c <= tab.getColumnas() && f <= tab.getFilas() && aux == false){
 					
-					if (tab.getCasilla(c+1, f+1) != Ficha.VACIA || c == tab.getAncho() || f == tab.getAlto()){
+					if (tab.getCasilla(c+1, f+1) != Ficha.VACIA || c == tab.getColumnas() || f == tab.getFilas()){
 						
 						tab.setCasilla(c, f, color);
 						aux = true;
@@ -214,9 +214,9 @@ public class MovimientoGravity extends Movimiento{
 						
 					}else if (parseoDireccion(tab).equalsIgnoreCase("R")){
 						
-						for (int i = columna; i <= tab.getAncho() && aux == false; i++){
+						for (int i = columna; i <= tab.getColumnas() && aux == false; i++){
 							
-							if (tab.getCasilla((i), fila) != Ficha.VACIA || (i == tab.getAncho())){						
+							if (tab.getCasilla((i), fila) != Ficha.VACIA || (i == tab.getColumnas())){						
 								
 								tab.setCasilla(i, fila, Ficha.VACIA);
 								aux = true;
@@ -243,9 +243,9 @@ public class MovimientoGravity extends Movimiento{
 						
 					}else if (parseoDireccion(tab).equalsIgnoreCase("D")){
 						
-						for (int i = fila; i <= tab.getAlto() && aux == false; i++){
+						for (int i = fila; i <= tab.getFilas() && aux == false; i++){
 							
-							if (tab.getCasilla(columna, (i)) != Ficha.VACIA || (i == tab.getAlto())){						
+							if (tab.getCasilla(columna, (i)) != Ficha.VACIA || (i == tab.getFilas())){						
 								
 								tab.setCasilla(columna, i, Ficha.VACIA);
 								aux = true;
@@ -279,9 +279,9 @@ public class MovimientoGravity extends Movimiento{
 						
 						int c = columna;
 						int f = fila;
-						while (c >= 1 && f <= tab.getAlto() && aux == false){
+						while (c >= 1 && f <= tab.getFilas() && aux == false){
 							
-							if (tab.getCasilla(c, f) != Ficha.VACIA || c == 1 || f == tab.getAlto()){
+							if (tab.getCasilla(c, f) != Ficha.VACIA || c == 1 || f == tab.getFilas()){
 								
 								tab.setCasilla(c, f, Ficha.VACIA);
 								aux = true;
@@ -299,9 +299,9 @@ public class MovimientoGravity extends Movimiento{
 						
 						int c = columna;
 						int f = fila;
-						while (c <= tab.getAncho() && f >= 1 && aux == false){
+						while (c <= tab.getColumnas() && f >= 1 && aux == false){
 							
-							if (tab.getCasilla(c, f) != Ficha.VACIA || c == tab.getAncho() || f == 1){
+							if (tab.getCasilla(c, f) != Ficha.VACIA || c == tab.getColumnas() || f == 1){
 								
 								tab.setCasilla(c, f, Ficha.VACIA);
 								aux = true;
@@ -319,9 +319,9 @@ public class MovimientoGravity extends Movimiento{
 						
 						int c = columna;
 						int f = fila;
-						while (c <= tab.getAncho() && f <= tab.getAlto() && aux == false){
+						while (c <= tab.getColumnas() && f <= tab.getFilas() && aux == false){
 							
-							if (tab.getCasilla(c, f) != Ficha.VACIA || c == tab.getAncho() || f == tab.getAlto()){
+							if (tab.getCasilla(c, f) != Ficha.VACIA || c == tab.getColumnas() || f == tab.getFilas()){
 								
 								tab.setCasilla(c, f, Ficha.VACIA);
 								aux = true;
@@ -355,33 +355,33 @@ public class MovimientoGravity extends Movimiento{
 		 *insertada en el tablero teniendo en cuanta la cercania a los laterales.*/
 		cercania = "";
 		
-			if (tab.getAncho() - columna == columna - 1){
+			if (tab.getColumnas() - columna == columna - 1){
 				
 				cercania += "LR";
 				
-				if (tab.getAlto() - fila == fila - 1){
+				if (tab.getFilas() - fila == fila - 1){
 						
 					cercania = "LRTD";
 				
-				}else if (tab.getAlto() - fila > fila - 1){
+				}else if (tab.getFilas() - fila > fila - 1){
 					// lo de abajo es lo maximo.
 					cercania = "T";
 					
-				}else if (tab.getAlto() - fila < fila - 1){
+				}else if (tab.getFilas() - fila < fila - 1){
 					
 					cercania = "D";
 					
 				}
 				
-			}else if (tab.getAncho() - columna > columna - 1){
+			}else if (tab.getColumnas() - columna > columna - 1){
 				
 				cercania += "L";
 				
-				if (tab.getAlto() - fila == fila - 1){
+				if (tab.getFilas() - fila == fila - 1){
 					
 					cercania += "";
 				
-				}else if (tab.getAlto() - fila > fila - 1){
+				}else if (tab.getFilas() - fila > fila - 1){
 					// lo de abajo es lo maximo.
 					if (columna - 1 == fila - 1){
 						
@@ -393,13 +393,13 @@ public class MovimientoGravity extends Movimiento{
 						
 					}
 					
-				}else if (tab.getAlto() - fila < fila - 1){
+				}else if (tab.getFilas() - fila < fila - 1){
 					
-					if (columna - 1 == tab.getAlto() - fila){
+					if (columna - 1 == tab.getFilas() - fila){
 						
 						cercania += "D";
 						
-					}else if (columna - 1 > tab.getAlto() - fila){
+					}else if (columna - 1 > tab.getFilas() - fila){
 						
 						cercania = "D";
 						
@@ -407,33 +407,33 @@ public class MovimientoGravity extends Movimiento{
 					
 				}
 				
-			}else if (tab.getAncho() - columna < columna - 1){
+			}else if (tab.getColumnas() - columna < columna - 1){
 				
 				cercania += "R";
 				
-				if (tab.getAlto() - fila == fila - 1){
+				if (tab.getFilas() - fila == fila - 1){
 					
 					cercania += "";
 				
-				}else if (tab.getAlto() - fila > fila - 1){
+				}else if (tab.getFilas() - fila > fila - 1){
 					// lo de abajo es lo maximo.
-					if (tab.getAncho() - columna == fila - 1){
+					if (tab.getColumnas() - columna == fila - 1){
 						
 						cercania += "T";
 						
-					}else if (tab.getAncho() - columna > fila - 1){
+					}else if (tab.getColumnas() - columna > fila - 1){
 						
 						cercania = "T";
 						
 					}
 					
-				}else if (tab.getAlto() - fila < fila - 1){
+				}else if (tab.getFilas() - fila < fila - 1){
 					
-					if (tab.getAncho() - columna == tab.getAlto() - fila){
+					if (tab.getColumnas() - columna == tab.getFilas() - fila){
 						
 						cercania += "D";
 						
-					}else if (tab.getAncho() - columna > tab.getAlto() - fila){
+					}else if (tab.getColumnas() - columna > tab.getFilas() - fila){
 						
 						cercania = "D";
 						

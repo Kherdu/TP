@@ -1,9 +1,10 @@
 package tp.pr4.control;
 
-import java.GUI.Observer;
+
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+import tp.pr4.GUI.Observer;
 import tp.pr4.constants.Constants;
 import tp.pr4.logica.Ficha;
 import tp.pr4.logica.InstruccionInvalida;
@@ -96,7 +97,7 @@ public class ControladorConsola {
 				if ((aux.compareToIgnoreCase("poner")) == 0) {
 
 					try {
-						partida.Mover(j, in);
+						partida.Mover(j);
 					} catch (MovimientoInvalido e) {
 						System.err.print(e.getMessage() + "\n");
 					}

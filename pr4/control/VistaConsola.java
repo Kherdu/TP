@@ -91,10 +91,11 @@ public class VistaConsola implements Observer{
 	@Override
 	public void onMovimientoIncorrecto(TableroInmutable movimientoException) {
 		// TODO Auto-generated method stub
+		System.err.println("Movimiento Incorrecto");
 		
 	}
 
-		System.err.println("Movimiento invalido");
+		
 	
 }
 	
