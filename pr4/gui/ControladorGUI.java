@@ -43,7 +43,7 @@ public class ControladorGUI {
 		p=partida;
 		r=f.creaReglas();
 		j=r.getTipo();
-		
+		//solo para inicializar
 		tab=p.getTablero();
 		
 	}
@@ -87,11 +87,11 @@ public class ControladorGUI {
 				p.ejecutaMovimiento(m);
 			}else if (j==Juego.CONECTA4){
 				Jugador jug= new JugadorAleatorioConecta4();
-				Movimiento m = jug.getMovimiento(p.getTablero(),turno);
+				Movimiento m = jug.getMovimiento(tab,turno);
 				p.ejecutaMovimiento(m);
 			}else {
 				Jugador jug= new JugadorAleatorioGravity();
-				Movimiento m = jug.getMovimiento(p.getTablero(),turno);
+				Movimiento m = jug.getMovimiento(tab,turno);
 				
 				p.ejecutaMovimiento(m);
 			}

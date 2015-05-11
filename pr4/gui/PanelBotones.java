@@ -20,7 +20,9 @@ import javax.swing.JComboBox;
 import javax.swing.border.Border;
 
 import tp.pr4.logica.Ficha;
+import tp.pr4.logica.InstruccionInvalida;
 import tp.pr4.logica.Juego;
+import tp.pr4.logica.MovimientoInvalido;
 import tp.pr4.logica.TableroInmutable;
 
 import javax.swing.JTextField;
@@ -197,6 +199,19 @@ public class PanelBotones extends JPanel implements Observer {
 	public void onMovimientoIncorrecto(TableroInmutable movimientoException) {
 		// nada, lo hace el otro panel
 
+	}
+
+	//estos dos no pueden ocurrir en GUI
+	@Override
+	public void onMovimientoInvalido(MovimientoInvalido e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onInstruccionInvalida(InstruccionInvalida e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

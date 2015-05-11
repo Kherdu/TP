@@ -2,7 +2,9 @@ package tp.pr4.logica;
 
 public interface ReglasJuego {
 
-	Ficha hayGanador(Movimiento ultimoMovimiento, Tablero t);
+	
+
+	Ficha hayGanador(Movimiento ultimoMovimiento, TableroInmutable t);
 
 	/*
 	 * Permite averiguar si en la partida ya tenemos un ganador o no. Devuelve
@@ -17,14 +19,18 @@ public interface ReglasJuego {
 
 	Ficha jugadorInicial();
 
-	Ficha siguienteTurno(Ficha ultimoEnPoner, Tablero t);
+	Ficha siguienteTurno(Ficha ultimoEnPoner, TableroInmutable t);
 
-	boolean tablas(Ficha ultimoEnPoner, Tablero t);
+	boolean tablas(Ficha ultimoEnPoner, TableroInmutable t);
 
 	int getAlto();
 
 	int getAncho();
 
 	Juego getTipo();
+	
+	int getNumJugadores();
+	
+	
 
 }

@@ -4,6 +4,7 @@ import tp.pr4.constants.Constants;
 
 public class ReglasConecta4 implements ReglasJuego {
 
+	private final int jugadores=2;
 	private Tablero tablero;
 	private final int alto;
 	private final int ancho;
@@ -20,7 +21,7 @@ public class ReglasConecta4 implements ReglasJuego {
 
 	@Override
 	
-	public Ficha hayGanador(Movimiento ultimoMovimiento, Tablero t) {
+	public Ficha hayGanador(Movimiento ultimoMovimiento, TableroInmutable t) {
 		// sacar ganador, comprobar vertical, horizontal y DIAGONAL.
 		ganador = Ficha.VACIA;
 		int cont = 0;
@@ -164,7 +165,7 @@ public class ReglasConecta4 implements ReglasJuego {
 	}
 
 	@Override
-	public Ficha siguienteTurno(Ficha ultimoEnPoner, Tablero t) {
+	public Ficha siguienteTurno(Ficha ultimoEnPoner, TableroInmutable t) {
 		Ficha ret = Ficha.VACIA;
 		if (ultimoEnPoner == Ficha.BLANCA) {
 
@@ -180,7 +181,7 @@ public class ReglasConecta4 implements ReglasJuego {
 	}
 
 	@Override
-	public boolean tablas(Ficha ultimoEnPoner, Tablero t) {
+	public boolean tablas(Ficha ultimoEnPoner, TableroInmutable t) {
 
 		// comprueba la fila superior de todo el tablero
 		boolean ret = false;
@@ -218,6 +219,12 @@ public class ReglasConecta4 implements ReglasJuego {
 	@Override
 	public Juego getTipo() {
 		return tipo;
+	}
+
+	@Override
+	public int getNumJugadores() {
+		// TODO Auto-generated method stub
+		return jugadores;
 	}
 
 	

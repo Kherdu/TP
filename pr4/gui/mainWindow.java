@@ -17,8 +17,6 @@ public class MainWindow extends JFrame {
 	private ControladorGUI c;
 	
 	
-	
-
 	public MainWindow(ControladorGUI c, Ficha jugadorInicial) {
 		this.c=c;
 	

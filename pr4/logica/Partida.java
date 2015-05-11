@@ -110,7 +110,9 @@ public class Partida {
 			// toca o es una casilla de fuera
 			// del tablero
 			// este throw no es NUNCA posible en el modo GUI
-			throw new MovimientoInvalido("Error");
+			for (Observer o: observers){
+				o.onMovimientoInvalido(new MovimientoInvalido ("error gordo y peludo"));
+			}
 			
 			
 		} else {
@@ -178,45 +180,48 @@ public class Partida {
 		return juego;
 	}
 
-	public void Mover(Jugador j) throws MovimientoInvalido {
+	public void Mover(Jugador j) {
 
 		Movimiento m = j.getMovimiento(tablero, turno);
-		ejecutaMovimiento(m);
+		try{
+			ejecutaMovimiento(m);
+		}
+		catch (MovimientoInvalido e){
+			for (Observer o: observers){
+				o.onMovimientoInvalido(e);
+			}
+		}
 	}
 
 	// -----------------------------------------------------------------------
 
 	private void avanzaTurno() {
-		// advance Pointer
+		// avanzamos puntero
 		if (lastPos == TAM_PILA-1) {
 			lastPos = 0;
 		} else
 			lastPos++;
-
-		cambiaTurno();
+		//cambiamos turno
+		turno=juego.siguienteTurno(moveStack[lastPos-1].getJugador(), tin);
+		//sumamos jugada
 		if (numJugadas != TAM_PILA) {
 			numJugadas++;
 		}
 	}
 
 	private void retrocedeTurno() {
-		// forward Pointer
+		// retrocedemos puntero
 		if (lastPos == 0) {
-			lastPos = 9;
+			lastPos = TAM_PILA-1;
 		} else
 			lastPos--;
-		cambiaTurno();
-
+		//cambiamos turno al anterior
+		turno= moveStack[lastPos].getJugador();
+		//reducimos numero de jugadas (ya sabemos arriba si se puede deshacer o no)
 		numJugadas--;
 	}
 
-	private void cambiaTurno() {
-		if (turno == Ficha.BLANCA)
-			turno = Ficha.NEGRA;
-		else if (turno == Ficha.NEGRA)
-			turno = Ficha.BLANCA;
-
-	}
+	
 
 	public boolean isTablas() {
 		return isTablas;
@@ -232,6 +237,14 @@ public class Partida {
 
 	public void addObserver(Observer o) {
 		observers.add(o);
+		
+	}
+
+	public void instruccionInvalida(String s) {
+		for (Observer o: observers){
+			
+			o.onInstruccionInvalida(new InstruccionInvalida("no he entendido "+s));
+		}
 		
 	}
 	

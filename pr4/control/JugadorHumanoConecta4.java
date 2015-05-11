@@ -15,8 +15,8 @@ public class JugadorHumanoConecta4 implements Jugador {
 	JugadorHumanoConecta4(Scanner in){
 		this.sc=in;
 		
-		
 	}
+	
 	@Override
 	public Movimiento getMovimiento(TableroInmutable tab, Ficha color) {
 		

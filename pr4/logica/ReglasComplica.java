@@ -3,6 +3,7 @@ import tp.pr4.constants.Constants;
 
 public class ReglasComplica implements ReglasJuego {
 
+	private final int jugadores=2;
 	private Tablero tablero;
 	private final int alto;
 	private final int ancho;
@@ -18,7 +19,7 @@ public class ReglasComplica implements ReglasJuego {
 	}
 
 	@Override
-	public Ficha hayGanador(Movimiento ultimoMovimiento, Tablero t) {
+	public Ficha hayGanador(Movimiento ultimoMovimiento, TableroInmutable t) {
 		// tiene que contar el numero de 4 en rayas, hay que comprobar esto
 		// antes que el ganador... absurdo en este modo el tablero
 		// sacar ganador, comprobar vertical, horizontal y DIAGONAL.
@@ -244,7 +245,7 @@ public class ReglasComplica implements ReglasJuego {
 	}
 
 	@Override
-	public Ficha siguienteTurno(Ficha ultimoEnPoner, Tablero t) {
+	public Ficha siguienteTurno(Ficha ultimoEnPoner, TableroInmutable t) {
 		Ficha ret = Ficha.VACIA;
 		if (ultimoEnPoner == Ficha.BLANCA) {
 
@@ -268,7 +269,7 @@ public class ReglasComplica implements ReglasJuego {
 	}
 
 	@Override
-	public boolean tablas(Ficha ultimoEnPoner, Tablero t) {
+	public boolean tablas(Ficha ultimoEnPoner, TableroInmutable t) {
 		//No existen tablas en el complica.
 		return false;
 	}
@@ -286,5 +287,11 @@ public class ReglasComplica implements ReglasJuego {
 	@Override
 	public Juego getTipo() {
 		return tipo;
+	}
+
+	@Override
+	public int getNumJugadores() {
+		
+		return jugadores;
 	}
 }

@@ -22,8 +22,10 @@ import tp.pr4.control.JugadorAleatorioComplica;
 import tp.pr4.control.JugadorAleatorioConecta4;
 import tp.pr4.control.JugadorAleatorioGravity;
 import tp.pr4.logica.Ficha;
+import tp.pr4.logica.InstruccionInvalida;
 import tp.pr4.logica.Juego;
 import tp.pr4.logica.Movimiento;
+import tp.pr4.logica.MovimientoInvalido;
 import tp.pr4.logica.TableroInmutable;
 
 public class PanelTablero extends JPanel implements Observer {
@@ -209,7 +211,7 @@ public class PanelTablero extends JPanel implements Observer {
 		modificaTablero();
 		this.turnoActual = turno;
 		labelTurno.setText("Turno de: " + turnoActual.toString());
-		labelTurno.revalidate();
+		labelTurno.validate();
 		panel_Tablero.validate();
 		this.repaint();
 
@@ -220,6 +222,19 @@ public class PanelTablero extends JPanel implements Observer {
 		JFrame frame = new JFrame();
 		JOptionPane.showMessageDialog(frame, "MovimientoInvalido", "Error",
 				JOptionPane.ERROR_MESSAGE);
+	}
+
+	//no pueden ocurrir en GUI
+	@Override
+	public void onMovimientoInvalido(MovimientoInvalido e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onInstruccionInvalida(InstruccionInvalida e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

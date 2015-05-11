@@ -1,6 +1,8 @@
 package tp.pr4.GUI;
 
 import tp.pr4.logica.Ficha;
+import tp.pr4.logica.InstruccionInvalida;
+import tp.pr4.logica.MovimientoInvalido;
 import tp.pr4.logica.TableroInmutable;
 
 public interface Observer {
@@ -56,5 +58,11 @@ public interface Observer {
 	 * ha producido.
 	 */
 	abstract void onMovimientoIncorrecto(TableroInmutable movimientoException);
+
+
+	abstract void onMovimientoInvalido(MovimientoInvalido e);
+
+
+	abstract void onInstruccionInvalida(InstruccionInvalida e);
 
 }
