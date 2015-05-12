@@ -1,1 +1,2 @@
 Conecta cuatro no marca tablas.
+al cambiar juego por consola no deja poner fichas
