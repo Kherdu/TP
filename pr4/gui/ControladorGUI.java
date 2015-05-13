@@ -163,6 +163,7 @@ public class ControladorGUI {
 			int w;
 			if (filas.isEmpty() && columnas.isEmpty()){
 				f=new FactoriaGravity();
+				reset();
 			}
 				else{
 					try{
@@ -188,9 +189,11 @@ public class ControladorGUI {
 			
 			} else if(seleccionado==Juego.CONECTA4){
 			f=new FactoriaConecta4();
+			reset();
 			
 			} else if (seleccionado==Juego.COMPLICA){
 			f=new FactoriaComplica();
+			reset();
 		}
 		
 		reset(f);

@@ -55,9 +55,9 @@ public class MovimientoComplica extends Movimiento {
 
 			}
 
-			tab.setCasilla(columna, Utiles.fila(columna, tab), ficha); 
+			
 			// si no esta llena movimiento normal y guardar vacio en el array
-
+			mov.setFicha(tab.getCasilla(columna, tab.getFilas()));
 			borrados[ultimaBorrada] = mov;
 			advPila();   
 		}

@@ -66,7 +66,6 @@ public class PanelTablero extends JPanel implements Observer {
 		panel_Tablero.setLayout(new GridLayout(t.getFilas(), t.getColumnas()));
 		for (int y = 1; y < (t.getFilas() + 1); y++) {
 			for (int x = 1; x < (t.getColumnas() + 1); x++) {
-			
 
 				Casilla cas = new Casilla(x, y, t.getCasilla(x, y));
 				if (cas.getColor() != Ficha.VACIA) {
@@ -74,8 +73,9 @@ public class PanelTablero extends JPanel implements Observer {
 					if (cas.getColor() == Ficha.BLANCA) {
 						cas.setBackground(Color.WHITE);
 					} else
-						cas.setBackground(Color.black);
-				}
+						cas.setBackground(Color.BLACK);
+				}else cas.setBackground(Color.BLUE);
+				
 				panel_Tablero.add(cas);
 				cas.addActionListener(new ActionListener() {
 					@Override
@@ -93,28 +93,27 @@ public class PanelTablero extends JPanel implements Observer {
 	}
 
 	private void modificaTablero() {
-		
-		Component[] components = panel_Tablero.getComponents(); 
-		Component cas = null; 
-		for (int i = 0; i < components.length; i++) 
-		{ 
-		cas = components[i]; 
-		if (cas instanceof Casilla) 
-		{ 
-			
-			if (t.getCasilla(( ((Casilla) cas).getColumna()), ((Casilla) cas).getFila()) == Ficha.BLANCA) {
-				cas.setBackground(Color.WHITE);
-			} else if (t.getCasilla(( ((Casilla) cas).getColumna()), ((Casilla) cas).getFila()) == Ficha.NEGRA)
-				cas.setBackground(Color.BLACK);
-		} 
-		} 
-		
+
+		Component[] components = panel_Tablero.getComponents();
+		Component cas = null;
+		for (int i = 0; i < components.length; i++) {
+			cas = components[i];
+			if (cas instanceof Casilla) {
+
+				if (t.getCasilla((((Casilla) cas).getColumna()),
+						((Casilla) cas).getFila()) == Ficha.BLANCA) {
+					cas.setBackground(Color.WHITE);
+				} else if (t.getCasilla((((Casilla) cas).getColumna()),
+						((Casilla) cas).getFila()) == Ficha.NEGRA)
+					cas.setBackground(Color.BLACK);
+			}
+		}
 
 	}
 
 	private void construyeOtros() {
 
-		panel.setLayout(new GridLayout(2, 1));
+		panel.setLayout(new FlowLayout());
 		labelTurno = new JLabel("Turno de: " + turnoActual.toString());
 		labelTurno.setBorder(BorderFactory.createLineBorder(Color.black));
 
@@ -146,28 +145,32 @@ public class PanelTablero extends JPanel implements Observer {
 
 	@Override
 	public void onPartidaTerminada(TableroInmutable tab, Ficha ganador) {
-		
+
 		Component[] components = panel.getComponents();
-		
-		//deshabilitamos el boton
-		for (Component c: components){
-			if (c instanceof JButton){
+
+		// deshabilitamos el boton
+		for (Component c : components) {
+			if (c instanceof JButton) {
 				c.setEnabled(false);
 			}
 		}
-		
-		components=null;
+
+		components = null;
 		components = panel_Tablero.getComponents();
-		//deshabilitamos el tablero
-		for (Component c: components){
+		// deshabilitamos el tablero
+		for (Component c : components) {
 			c.setEnabled(false);
 		}
-		
+
 		this.turnoActual = ganador;
 		JFrame frame = new JFrame();
 		if (ganador != Ficha.VACIA) {
 			JOptionPane.showMessageDialog(frame,
 					"Ganan las: " + ganador.toString(), "Ganador",
+					JOptionPane.INFORMATION_MESSAGE);
+		}else {
+			JOptionPane.showMessageDialog(frame,
+					"TABLAS","Terminada",
 					JOptionPane.INFORMATION_MESSAGE);
 		}
 		panel_Tablero.validate();
@@ -224,17 +227,17 @@ public class PanelTablero extends JPanel implements Observer {
 				JOptionPane.ERROR_MESSAGE);
 	}
 
-	//no pueden ocurrir en GUI
+	// no pueden ocurrir en GUI
 	@Override
 	public void onMovimientoInvalido(MovimientoInvalido e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onInstruccionInvalida(InstruccionInvalida e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

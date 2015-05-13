@@ -26,7 +26,7 @@ public class VistaConsola implements Observer {
 		terminada=false;
 		tablas=false;
 		turno=jugadorInicial;
-
+		
 	}
 
 	public void run() {
@@ -40,7 +40,7 @@ public class VistaConsola implements Observer {
 
 	@Override
 	public void onReset(TableroInmutable tab, Ficha turno) {
-		System.out.println(tab.toString());
+		tablero=tab;
 		this.turno=turno;
 		System.out.println("Partida reiniciada");
 		System.out.println("Juegan " + turno);
@@ -48,6 +48,7 @@ public class VistaConsola implements Observer {
 
 	@Override
 	public void onPartidaTerminada(TableroInmutable tab, Ficha ganador) {
+		tablero=tab;
 		terminada=true;
 		System.out.println(tab.toString());
 		System.out.println("Partida terminada");
@@ -58,10 +59,9 @@ public class VistaConsola implements Observer {
 
 	@Override
 	public void onCambioJuego(TableroInmutable tab, Ficha turno) {
-		System.out.println(tab.toString());
-		this.turno=turno;
-		System.out.println("Partida reiniciada.");
-		System.out.println("juegan " + turno);
+		tablero=tab;
+		System.out.println("Juego cambiado ");
+		
 
 	}
 
@@ -76,17 +76,18 @@ public class VistaConsola implements Observer {
 
 	@Override
 	public void onUndo(TableroInmutable tab, Ficha turno, boolean hayMas) {
+		tablero=tab;
 		this.turno=turno;
 		System.out.println(tab.toString());
-		System.out.println("Juegan" + turno);
+		System.out.println("Juegan " + turno);
 
 	}
 
 	@Override
 	public void onMovimientoEnd(TableroInmutable tab, Ficha jugador, Ficha turno) {
+		tablero=tab;
 		this.turno=turno;
-		//System.out.println(tab.toString());
-		//System.out.println("Juegan" + turno);
+		
 
 	}
 

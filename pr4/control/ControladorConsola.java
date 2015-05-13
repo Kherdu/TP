@@ -99,13 +99,15 @@ public class ControladorConsola {
 
 					if (ju.compareToIgnoreCase("c4") == 0) {
 						f = new FactoriaConecta4();
-
+						cambiaJuego(f);
 					} else if (ju.compareToIgnoreCase("co") == 0) {
 						f = new FactoriaComplica();
-
-					} else
-						partida.instruccionInvalida(s);
-					cambiaJuego(f);
+						cambiaJuego(f);
+					} else if (ju.compareToIgnoreCase("gr") == 0) {
+						f = new FactoriaGravity();
+						cambiaJuego(f);
+					}
+					
 				} else
 					partida.instruccionInvalida(s);
 
@@ -210,7 +212,7 @@ public class ControladorConsola {
 	}
 
 	private void cambiaJuego(FactoriaTipoJuego f) {
-
+		reglas=f.creaReglas();
 		partida.reset(reglas);
 		blanco=jugadorPorJuego(iablanca);
 		negro=jugadorPorJuego(ianegra);

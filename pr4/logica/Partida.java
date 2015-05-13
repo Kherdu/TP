@@ -117,6 +117,7 @@ public class Partida {
 			
 		} else {
 			mov.ejecutaMovimiento(tablero);
+			tin=tablero;
 			moveStack[lastPos] = mov;
 			avanzaTurno();
 		}
@@ -196,13 +197,17 @@ public class Partida {
 	// -----------------------------------------------------------------------
 
 	private void avanzaTurno() {
+		
+		
+		//cambiamos turno
+		turno=juego.siguienteTurno(moveStack[lastPos].getJugador(), tin);
+		
 		// avanzamos puntero
 		if (lastPos == TAM_PILA-1) {
 			lastPos = 0;
 		} else
 			lastPos++;
-		//cambiamos turno
-		turno=juego.siguienteTurno(moveStack[lastPos-1].getJugador(), tin);
+		
 		//sumamos jugada
 		if (numJugadas != TAM_PILA) {
 			numJugadas++;

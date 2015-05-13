@@ -38,7 +38,6 @@ public class PanelBotones extends JPanel implements Observer {
 	private JTextField fieldColumnas;
 	private JComboBox juego;
 	private JPanel panel;
-	private JPanel panelundo;
 
 	public PanelBotones(ControladorGUI c, Ficha jugadorInicial) {
 
@@ -48,15 +47,14 @@ public class PanelBotones extends JPanel implements Observer {
 
 		Border borde = BorderFactory.createLineBorder(Color.black);
 
-		panelundo = new JPanel();
-		panelundo.setLayout(new FlowLayout());
-		panelundo.setBorder(borde);
+		
 
 		panel = new JPanel();
 		panel.setLayout(new FlowLayout());
 		panel.setBorder(borde);
 
 		JButton deshacer = new JButton("Deshacer");
+		deshacer.setEnabled(false);
 		deshacer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -74,7 +72,7 @@ public class PanelBotones extends JPanel implements Observer {
 
 		});
 
-		panelundo.add(deshacer);
+		panel.add(deshacer);
 		panel.add(reiniciar);
 
 		JPanel panel_1 = new JPanel();
@@ -146,7 +144,7 @@ public class PanelBotones extends JPanel implements Observer {
 		panel_2.add(salir);
 
 		this.add(panel);
-		this.add(panelundo);
+		
 		this.add(panel_1);
 		this.add(panel_2);
 	}
@@ -156,12 +154,12 @@ public class PanelBotones extends JPanel implements Observer {
 		JFrame frame = new JFrame();
 		JOptionPane.showMessageDialog(frame, "Partida reiniciada", "Info",
 				JOptionPane.INFORMATION_MESSAGE);
-
+		enableDeshacer(false);
 	}
 
 	@Override
 	public void onPartidaTerminada(TableroInmutable tab, Ficha ganador) {
-		panelundo.setEnabled(false);
+		
 		this.repaint();
 	}
 
@@ -179,19 +177,23 @@ public class PanelBotones extends JPanel implements Observer {
 		JFrame frame = new JFrame();
 		JOptionPane.showMessageDialog(frame, "No se puede deshacer", "Error",
 				JOptionPane.ERROR_MESSAGE);
-		panelundo.setEnabled(false);
+		enableDeshacer(false);
+		
 
 	}
 
 	@Override
 	public void onUndo(TableroInmutable tab, Ficha turno, boolean hayMas) {
-		// nada, lo hace el otro panel
+		if (!hayMas) enableDeshacer(false);
+		
 
 	}
 
 	@Override
 	public void onMovimientoEnd(TableroInmutable tab, Ficha jugador, Ficha turno) {
 		// nada, lo hace el otro panel
+		enableDeshacer(true);
+		
 
 	}
 
@@ -214,4 +216,14 @@ public class PanelBotones extends JPanel implements Observer {
 		
 	}
 
+	private void enableDeshacer(Boolean b){
+		Component[] cmps=panel.getComponents();
+		for (Component c: cmps){
+			if (c instanceof JButton){
+				if(c.getName()=="deshacer"){
+					c.setEnabled(b);
+				}
+			}
+		}
+	}
 }
