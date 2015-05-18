@@ -230,9 +230,7 @@ public class Partida {
 		return isTablas;
 	}
 
-	public Tablero getTablero() {
-		return tablero;
-	}
+	
 
 	public String pintaTablero() {
 		return tablero.toString();

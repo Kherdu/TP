@@ -51,11 +51,7 @@ public class ControladorConsola {
 	
 	//este metodo NO hay que usarlo
 
-	public Tablero getTablero() {
-
-		return partida.getTablero();
-
-	}
+	
 
 	public void parse() {
 		// parser-ejecucion, cambiar para que lance excepciones... en
