@@ -19,10 +19,10 @@ public class VistaConsola implements Observer {
 
 	public VistaConsola(ControladorConsola c, Ficha jugadorInicial) {
 		// para inicializar necesitamos el tablero inmutable
-
 		this.cntr = c;
-		tablero = cntr.getTablero();
 		cntr.addObserver(this);
+		cntr.inicio();
+		
 		terminada=false;
 		tablas=false;
 		turno=jugadorInicial;
@@ -31,6 +31,7 @@ public class VistaConsola implements Observer {
 
 	public void run() {
 		while (!tablas && !terminada){
+			
 			System.out.println(tablero.toString());
 			System.out.println("Juegan "+turno.toString());
 			System.out.print("Qué quieres hacer? ");
@@ -43,7 +44,7 @@ public class VistaConsola implements Observer {
 		tablero=tab;
 		this.turno=turno;
 		System.out.println("Partida reiniciada");
-		System.out.println("Juegan " + turno);
+		
 	}
 
 	@Override
@@ -60,7 +61,8 @@ public class VistaConsola implements Observer {
 	@Override
 	public void onCambioJuego(TableroInmutable tab, Ficha turno) {
 		tablero=tab;
-		System.out.println("Juego cambiado ");
+		
+		System.out.println("Juego cambiado");
 		
 
 	}
@@ -107,6 +109,13 @@ public class VistaConsola implements Observer {
 	@Override
 	public void onInstruccionInvalida(InstruccionInvalida e) {
 		System.err.println(e);
+		
+	}
+
+	@Override
+	public void onInicio(TableroInmutable tin, Ficha turno) {
+		tablero=tin;
+		this.turno=turno;
 		
 	}
 

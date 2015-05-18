@@ -15,8 +15,8 @@ public class JugadorAleatorioComplica implements Jugador{
 	public Movimiento getMovimiento(TableroInmutable tab, Ficha color) {
 		int random = (int) ((Math.random()*Constants.AnchoCo)+1);
 		FactoriaTipoJuego f= new FactoriaComplica();
-		
-		return f.creaMovimiento(random,Utiles.fila(random, tab),color);
+		Tablero tab2= new Tablero(Constants.AnchoCo, Constants.AltoCo);
+		return f.creaMovimiento(random,Utiles.fila(random, tab2),color);
 	}
 
 }

@@ -65,4 +65,7 @@ public interface Observer {
 
 	abstract void onInstruccionInvalida(InstruccionInvalida e);
 
+
+	abstract void onInicio(TableroInmutable tin, Ficha turno);
+
 }

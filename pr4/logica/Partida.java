@@ -22,10 +22,9 @@ public class Partida {
 	private TableroInmutable tin;
 
 	public Partida(ReglasJuego reglas) {
-		
-		
+
 		this.tablero = reglas.iniciaTablero();
-		this.tin= reglas.iniciaTablero();
+		this.tin = reglas.iniciaTablero();
 		this.turno = reglas.jugadorInicial();
 		this.terminada = false;
 		if (reglas.getTipo() == Juego.CONECTA4) {
@@ -41,7 +40,7 @@ public class Partida {
 
 		this.juego = reglas;
 		this.isTablas = false;
-		observers= new ArrayList<Observer>();
+		observers = new ArrayList<Observer>();
 	}
 
 	public Ficha getGanador() {
@@ -70,7 +69,6 @@ public class Partida {
 		// probar si la partida ha terminado, usar tras cada movimiento
 
 		return terminada;
-		
 
 	}
 
@@ -94,9 +92,9 @@ public class Partida {
 		this.numJugadas = 0;
 
 		this.tablero = reglas.iniciaTablero();
-		this.tin=reglas.iniciaTablero();
+		this.tin = reglas.iniciaTablero();
 
-		for(Observer o: observers){
+		for (Observer o : observers) {
 			o.onReset(tin, turno);
 			o.onCambioJuego(tin, turno);
 		}
@@ -110,69 +108,72 @@ public class Partida {
 			// toca o es una casilla de fuera
 			// del tablero
 			// este throw no es NUNCA posible en el modo GUI
-			for (Observer o: observers){
-				o.onMovimientoInvalido(new MovimientoInvalido ("error gordo y peludo"));
+			for (Observer o : observers) {
+				o.onMovimientoInvalido(new MovimientoInvalido(
+						"error gordo y peludo"));
 			}
-			
-			
+
 		} else {
 			mov.ejecutaMovimiento(tablero);
-			tin=tablero;
+			tin = tablero;
 			moveStack[lastPos] = mov;
 			avanzaTurno();
 		}
 		ganador = juego.hayGanador(mov, tablero);
 
-		if (ganador != Ficha.VACIA){
+		if (ganador != Ficha.VACIA) {
 			terminada = true;
-			//observadores partidaTerminada con ganador
-			for(Observer o: observers){
-			
+			// observadores partidaTerminada con ganador
+			for (Observer o : observers) {
+
 				o.onPartidaTerminada(tin, ganador);
 			}
 		}
-			
+
 		isTablas = juego.tablas(mov.getJugador(), tablero);
-		
-		if (isTablas){
+
+		if (isTablas) {
 			terminada = true;
-			for(Observer o: observers){
-				
+			for (Observer o : observers) {
+
 				o.onPartidaTerminada(tin, ganador);
-				
+
 			}
 		}
-			
-		this.tin=tablero;
-		for(Observer o: observers){
-			//observadores movimiento correcto
+
+		this.tin = tablero;
+		for (Observer o : observers) {
+			// observadores movimiento correcto
 			o.onMovimientoEnd(tin, mov.getJugador(), turno);
-			
+
 		}
 	}
 
 	public boolean undo() {
 		// deshacer movimiento
 		boolean ret = false;
+		boolean mas = false;
 		if (numJugadas > 0 && lastPos >= 0) {
 			Movimiento deshaz;
 
 			retrocedeTurno();
 			deshaz = moveStack[lastPos];
 			deshaz.undo(tablero);
-
+			mas = true;
 			ret = true;
-		}else {
-			for(Observer o: observers){
-				
+		} else {
+			for (Observer o : observers) {
+
 				o.onUndoNotPossible(tin, ganador);
-				
+
 			}
 		}
-		
-		this.tin=tablero;
-		for (Observer o: observers){
-			o.onUndo(tin, turno, ret);
+
+		this.tin = tablero;
+		if (numJugadas == 0)
+			mas = false;
+		for (Observer o : observers) {
+			o.onUndo(tin, turno, mas);
 		}
 		return ret;
 	}
@@ -183,12 +184,11 @@ public class Partida {
 
 	public void Mover(Jugador j) {
 
-		Movimiento m = j.getMovimiento(tablero, turno);
-		try{
+		Movimiento m = j.getMovimiento(tin, turno);
+		try {
 			ejecutaMovimiento(m);
-		}
-		catch (MovimientoInvalido e){
-			for (Observer o: observers){
+		} catch (MovimientoInvalido e) {
+			for (Observer o : observers) {
 				o.onMovimientoInvalido(e);
 			}
 		}
@@ -197,18 +197,17 @@ public class Partida {
 	// -----------------------------------------------------------------------
 
 	private void avanzaTurno() {
-		
-		
-		//cambiamos turno
-		turno=juego.siguienteTurno(moveStack[lastPos].getJugador(), tin);
-		
+
+		// cambiamos turno
+		turno = juego.siguienteTurno(moveStack[lastPos].getJugador(), tin);
+
 		// avanzamos puntero
-		if (lastPos == TAM_PILA-1) {
+		if (lastPos == TAM_PILA - 1) {
 			lastPos = 0;
 		} else
 			lastPos++;
-		
-		//sumamos jugada
+
+		// sumamos jugada
 		if (numJugadas != TAM_PILA) {
 			numJugadas++;
 		}
@@ -217,16 +216,15 @@ public class Partida {
 	private void retrocedeTurno() {
 		// retrocedemos puntero
 		if (lastPos == 0) {
-			lastPos = TAM_PILA-1;
+			lastPos = TAM_PILA - 1;
 		} else
 			lastPos--;
-		//cambiamos turno al anterior
-		turno= moveStack[lastPos].getJugador();
-		//reducimos numero de jugadas (ya sabemos arriba si se puede deshacer o no)
+		// cambiamos turno al anterior
+		turno = moveStack[lastPos].getJugador();
+		// reducimos numero de jugadas (ya sabemos arriba si se puede deshacer o
+		// no)
 		numJugadas--;
 	}
-
-	
 
 	public boolean isTablas() {
 		return isTablas;
@@ -242,17 +240,22 @@ public class Partida {
 
 	public void addObserver(Observer o) {
 		observers.add(o);
-		
+
 	}
 
 	public void instruccionInvalida(String s) {
-		for (Observer o: observers){
-			
-			o.onInstruccionInvalida(new InstruccionInvalida("no he entendido "+s));
+		for (Observer o : observers) {
+
+			o.onInstruccionInvalida(new InstruccionInvalida("no he entendido "
+					+ s));
 		}
-		
+
 	}
-	
-	
+
+	public void inicio() {
+		for (Observer o : observers) {
+			o.onInicio(tin, turno);
+		}
+	}
 
 }

@@ -48,6 +48,8 @@ public class ControladorConsola {
 		vista = new VistaConsola(this,reglas.jugadorInicial());
 		vista.run();
 	}
+	
+	//este metodo NO hay que usarlo
 
 	public Tablero getTablero() {
 
@@ -116,7 +118,7 @@ public class ControladorConsola {
 				if (aux.compareToIgnoreCase("jugador") == 0) {
 					String color = st.nextToken();
 					if (color.compareToIgnoreCase("blancas") == 0) {
-						// jugador blanco = jugador 1, jugador negro= jugador 2
+						
 						String ju = st.nextToken();
 						if (ju.compareToIgnoreCase("humano") == 0) {
 							iablanca=false;
@@ -191,16 +193,7 @@ public class ControladorConsola {
 		
 	}
 
-	/*
-	 * cargarnos arraylist y volver a meter el jugador nuevo
-	 */
-	/*
-	 *
-	 * private void cambiaJugadores(Jugador j, int pos) {
-	 
-		jugadores[pos] = j;
-
-	}
+	
 
 	/*
 	 * reinicio de juego
@@ -255,5 +248,10 @@ public class ControladorConsola {
 	public void addObserver(Observer o) {
 		partida.addObserver(o);
 
+	}
+
+	public void inicio() {
+		partida.inicio();
+		
 	}
 }

@@ -38,7 +38,7 @@ public class MovimientoComplica extends Movimiento {
 	public void ejecutaMovimiento(Tablero tab) throws MovimientoInvalido {
 		//Funcion que se encarga de hacer el movimiento
 		
-		MovimientoComplica mov = new MovimientoComplica(columna, Ficha.VACIA);
+		MovimientoComplica mov = new MovimientoComplica(columna, ficha);
 
 		if (columna < 1 || columna > tab.getColumnas()) { // si se intenta meter
 														// fuera del tablero
@@ -48,18 +48,22 @@ public class MovimientoComplica extends Movimiento {
 			if (Utiles.fila(columna, tab) == 0) { 
 				// si columna llena
 				mov.setFicha(tab.getCasilla(columna, tab.getFilas()));
+				
 				borrados[ultimaBorrada] = mov; /* se encarga de las fichas que se pierden 
 				por la parte de abajo del tablero*/
 				advPila();
 				bajaColumna(tab, columna);
 
-			}
+			}else{
 
 			
 			// si no esta llena movimiento normal y guardar vacio en el array
 			mov.setFicha(tab.getCasilla(columna, tab.getFilas()));
+			
 			borrados[ultimaBorrada] = mov;
 			advPila();   
+			}
+			tab.setCasilla(columna,Utiles.fila(columna, tab) , ficha);
 		}
 		
 	}
