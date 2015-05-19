@@ -11,6 +11,7 @@ import tp.pr5.control.ControladorConsola;
 import tp.pr5.control.FactoriaComplica;
 import tp.pr5.control.FactoriaConecta4;
 import tp.pr5.control.FactoriaGravity;
+import tp.pr5.control.FactoriaReversi;
 import tp.pr5.control.FactoriaTipoJuego;
 import tp.pr5.logica.Partida;
 import tp.pr5.logica.ReglasJuego;
@@ -65,6 +66,9 @@ public class Mainp5 {
 					f = new FactoriaConecta4();
 				} else if (game.equalsIgnoreCase("co")) {
 					f = new FactoriaComplica();
+
+				} else if (game.equalsIgnoreCase("rv")) {
+					f = new FactoriaReversi();
 
 				} else if (game.equalsIgnoreCase("gr")) {
 
@@ -133,13 +137,14 @@ public class Mainp5 {
 
 		options.addOption("h", "help", false, "Muestra esta ayuda.");
 		options.addOption("g", "game", true,
-				"Tipo de juego (c4, co, gr). Por defecto, c4.");
+				"Tipo de juego (c4, co, gr, rv). Por defecto, c4.");
 		options.addOption("x", "tamX", true,
 				"Número de columnas del tablero (sólo para Gravity). Por defecto, 10.");
 		options.addOption("y", "tamY", true,
 				"Número de filas del tablero (sólo para Gravity). Por defecto, 10.");
 		options.addOption("u", "ui", true,
 				" Tipo de interfaz (console, window). Por defecto, console.");
+		
 		options.getOption("g").setArgName("game");
 		options.getOption("x").setArgName("columnNumber");
 		options.getOption("y").setArgName("rowNumber");

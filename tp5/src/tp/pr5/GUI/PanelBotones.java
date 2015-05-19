@@ -45,16 +45,18 @@ public class PanelBotones extends JPanel implements Observer {
 		c.addObserver(this);
 		setLayout(new GridLayout(4, 1));
 
-		Border borde = BorderFactory.createLineBorder(Color.black);
-
+		Border borde = BorderFactory.createTitledBorder("Partida");
+		
 		
 
 		panel = new JPanel();
 		panel.setLayout(new FlowLayout());
+		
 		panel.setBorder(borde);
-
+		
 		JButton deshacer = new JButton("Deshacer");
 		deshacer.setEnabled(false);
+		deshacer.setName("Deshacer");
 		deshacer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -89,12 +91,12 @@ public class PanelBotones extends JPanel implements Observer {
 		JLabel filasLabel = new JLabel("Filas");
 		fieldColumnas = new JTextField();
 		fieldColumnas.setEnabled(false); //por defecto deshabilitados porque iniciamos con c4
-
+		fieldColumnas.setVisible(false);
 		JLabel columnasLabel = new JLabel("Columnas");
 
 		fieldFilas = new JTextField();
 		fieldFilas.setEnabled(false);
-		
+		fieldFilas.setVisible(false);
 		panel_1.add(filasLabel);
 		panel_1.add(fieldFilas);
 		panel_1.add(columnasLabel);
@@ -130,11 +132,14 @@ public class PanelBotones extends JPanel implements Observer {
 				Juego j=(Juego) juego.getSelectedItem();
 				if (j.redimensionable(j)){
 					fieldFilas.setEnabled(true);
+					fieldFilas.setVisible(true);
 					fieldColumnas.setEnabled(true);
-					
+					fieldColumnas.setVisible(true);
 				}else{
 					fieldFilas.setEnabled(false);
+					fieldFilas.setVisible(false);
 					fieldColumnas.setEnabled(false);
+					fieldColumnas.setVisible(false);
 				}
 			}
 			
@@ -184,6 +189,7 @@ public class PanelBotones extends JPanel implements Observer {
 
 	@Override
 	public void onUndo(TableroInmutable tab, Ficha turno, boolean hayMas) {
+		//deshabilitamos boton de deshacer, no quedan movimientos que hacer
 		if (!hayMas) enableDeshacer(false);
 		
 
@@ -216,14 +222,23 @@ public class PanelBotones extends JPanel implements Observer {
 		
 	}
 
+	
+	@Override
+	public void onInicio(TableroInmutable tin, Ficha turno) {
+		
+		
+	}
+	
 	private void enableDeshacer(Boolean b){
 		Component[] cmps=panel.getComponents();
 		for (Component c: cmps){
 			if (c instanceof JButton){
-				if(c.getName()=="deshacer"){
+				if(c.getName()=="Deshacer"){
 					c.setEnabled(b);
 				}
 			}
 		}
+		panel.validate();
+		this.repaint();
 	}
 }

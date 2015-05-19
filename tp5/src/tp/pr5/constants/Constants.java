@@ -10,10 +10,10 @@ public class Constants {
 			+ "\nPONER: utilízalo para poner la siguiente ficha."
 			+ "\nDESHACER: deshace el último movimiento hecho en la partida."
 			+ "\nREINICIAR: reinicia la partida."
-			+ "\nJUGAR [c4|co|gr] [tamX tamY]: cambia el tipo de juego."
+			+ "\nJUGAR [c4|co|gr|rv] [tamX tamY]: cambia el tipo de juego."
 			+ "\nJUGADOR [blancas|negras] [humano|aleatorio]: cambia el tipo de jugador."
 			+ "\nSALIR: termina la aplicación.\nAYUDA: muestra esta ayuda."+'\n';
-	public static final String MensajeAyudaConsola= "tp.pr3.Main [-g <game>] [-h] [-x <columnNumber>] [-y <rowNumber>]";
+	public static final String MensajeAyudaConsola= "tp.pr5.Main [-g <game>] [-h] [-x <columnNumber>] [-y <rowNumber>]";
 	public static int AnchoC4=7;
 	public static int AltoC4=6;
 	public static int AnchoCo=4;

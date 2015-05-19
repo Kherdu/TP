@@ -36,7 +36,7 @@ public class ControladorGUI {
 	private Partida p;
 	private ReglasJuego r;
 	private Juego j;
-	private TableroInmutable tab;
+	
 	
 	
 	public ControladorGUI(FactoriaTipoJuego factoria, Partida partida) {
@@ -46,8 +46,7 @@ public class ControladorGUI {
 		p=partida;
 		r=f.creaReglas();
 		j=r.getTipo();
-		//solo para inicializar
-		tab=p.getTablero();
+		
 		
 	}
 	
@@ -86,42 +85,20 @@ public class ControladorGUI {
 	public void movAleatorio(Ficha turno) {
 		
 		
-		try{
-			if(j==Juego.COMPLICA){
-		
-				Jugador jug= new JugadorAleatorioComplica();
-				Movimiento m = jug.getMovimiento(tab,turno);
-				p.ejecutaMovimiento(m);
-			}else if (j==Juego.CONECTA4){
-				Jugador jug= new JugadorAleatorioConecta4();
-				Movimiento m = jug.getMovimiento(tab,turno);
-				p.ejecutaMovimiento(m);
-			}else if (j==Juego.GRAVITY) {
-				Jugador jug= new JugadorAleatorioGravity();
-				Movimiento m = jug.getMovimiento(tab,turno);
-				
-				p.ejecutaMovimiento(m);
-			}else {
-				Jugador jug= new JugadorAleatorioReversi();
-				Movimiento m = jug.getMovimiento(tab,turno);
-				
-				p.ejecutaMovimiento(m);
-			}
+		if(j==Juego.COMPLICA){
 			
-		
-		}catch (MovimientoInvalido e){
-			JFrame frame= new JFrame();
-			JOptionPane.showMessageDialog(frame,
-				    e.getMessage(),
-				    "Error",
-				    JOptionPane.ERROR_MESSAGE);
+			Jugador jug= new JugadorAleatorioComplica();
+			p.Mover(jug);
+		}else if (j==Juego.CONECTA4){
+			Jugador jug= new JugadorAleatorioConecta4();
+			p.Mover(jug);
+		}else {
+			Jugador jug= new JugadorAleatorioGravity();
+			p.Mover(jug);
 		}
-		
 	}
 	
-	public TableroInmutable getTab() {
-		return tab;
-	}
+	
 	public Juego getJ() {
 		return j;
 	}
@@ -175,7 +152,7 @@ public class ControladorGUI {
 			int w;
 			if (filas.isEmpty() && columnas.isEmpty()){
 				f=new FactoriaGravity();
-				reset();
+				
 			}
 				else{
 					try{
@@ -201,23 +178,26 @@ public class ControladorGUI {
 			
 			} else if(seleccionado==Juego.CONECTA4){
 			f=new FactoriaConecta4();
-			reset();
+			
 			
 			} else if (seleccionado==Juego.COMPLICA){
 			f=new FactoriaComplica();
-			reset();
+			
 			}
 			else if(seleccionado==Juego.REVERSI){
 				f=new FactoriaReversi();
-				reset();
+				
 				
 			}
 		
 		
-		reset(f);
+		reset();
 		
 		
 	}
 	
-	
+	public void inicio() {
+		p.inicio();
+		
+	}
 }
