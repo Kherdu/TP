@@ -24,6 +24,7 @@ import tp.pr5.logica.InstruccionInvalida;
 import tp.pr5.logica.Juego;
 import tp.pr5.logica.MovimientoInvalido;
 import tp.pr5.logica.TableroInmutable;
+import tp.pr5.logica.TipoJugador;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -38,19 +39,22 @@ public class PanelBotones extends JPanel implements Observer {
 	private JTextField fieldColumnas;
 	private JComboBox juego;
 	private JPanel panel;
+	private JComboBox jug1;
+	private JComboBox jug2;
+	private Ficha turno;
 
 	public PanelBotones(ControladorGUI c, Ficha jugadorInicial) {
 
 		this.c = c;
 		c.addObserver(this);
 		setLayout(new GridLayout(4, 1));
-
+		this.turno=jugadorInicial;
 		Border borde = BorderFactory.createTitledBorder("Partida");
 		
 		
 
 		panel = new JPanel();
-		panel.setLayout(new FlowLayout());
+		panel.setLayout(new GridLayout(3,2));
 		
 		panel.setBorder(borde);
 		
@@ -60,7 +64,7 @@ public class PanelBotones extends JPanel implements Observer {
 		deshacer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				c.undo();
+				c.undo(turno);
 			}
 
 		});
@@ -73,9 +77,40 @@ public class PanelBotones extends JPanel implements Observer {
 			}
 
 		});
-
+		
+		JLabel j1= new JLabel("BLANCAS");
+		jug1 = new JComboBox(TipoJugador.values());
+		jug1.setSelectedItem(TipoJugador.MANUAL);
+		
+		JLabel j2= new JLabel("NEGRAS");
+		jug2 = new JComboBox(TipoJugador.values());
+		jug2.setSelectedItem(TipoJugador.MANUAL);
+		
+		
 		panel.add(deshacer);
 		panel.add(reiniciar);
+		panel.add(j1);
+		panel.add(jug1);
+		panel.add(j2);
+		panel.add(jug2);
+		
+		jug1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+
+				c.tipoJugador((TipoJugador)jug1.getSelectedItem(),Ficha.BLANCA);
+			}
+
+		});
+		
+		jug2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+
+				c.tipoJugador((TipoJugador)jug2.getSelectedItem(),Ficha.NEGRA);
+			}
+
+		});
 
 		JPanel panel_1 = new JPanel();
 
@@ -156,10 +191,15 @@ public class PanelBotones extends JPanel implements Observer {
 
 	@Override
 	public void onReset(TableroInmutable tab, Ficha turno) {
+		
+		c.matahilos();
 		JFrame frame = new JFrame();
 		JOptionPane.showMessageDialog(frame, "Partida reiniciada", "Info",
 				JOptionPane.INFORMATION_MESSAGE);
 		enableDeshacer(false);
+		this.turno=turno;
+		
+		
 	}
 
 	@Override
@@ -174,7 +214,9 @@ public class PanelBotones extends JPanel implements Observer {
 		JOptionPane.showMessageDialog(frame, "Jugando a: "
 				+ juego.getSelectedItem().toString(), "Info",
 				JOptionPane.INFORMATION_MESSAGE);
-
+		this.turno=turno;
+		c.reiniciaHilo(turno);
+		
 	}
 
 	@Override
@@ -183,6 +225,7 @@ public class PanelBotones extends JPanel implements Observer {
 		JOptionPane.showMessageDialog(frame, "No se puede deshacer", "Error",
 				JOptionPane.ERROR_MESSAGE);
 		enableDeshacer(false);
+		this.turno=turno;
 		
 
 	}
@@ -191,6 +234,14 @@ public class PanelBotones extends JPanel implements Observer {
 	public void onUndo(TableroInmutable tab, Ficha turno, boolean hayMas) {
 		//deshabilitamos boton de deshacer, no quedan movimientos que hacer
 		if (!hayMas) enableDeshacer(false);
+		this.turno=turno;
+		if (turno==Ficha.BLANCA && jug1.getSelectedItem()==TipoJugador.AUTOMATICO){
+			c.deshacermas(turno);
+		}
+		if (turno==Ficha.NEGRA && jug2.getSelectedItem()==TipoJugador.AUTOMATICO){
+			c.deshacermas(turno);
+		}
+		
 		
 
 	}
@@ -199,7 +250,7 @@ public class PanelBotones extends JPanel implements Observer {
 	public void onMovimientoEnd(TableroInmutable tab, Ficha jugador, Ficha turno) {
 		// nada, lo hace el otro panel
 		enableDeshacer(true);
-		
+		this.turno=turno;
 
 	}
 
@@ -225,18 +276,18 @@ public class PanelBotones extends JPanel implements Observer {
 	
 	@Override
 	public void onInicio(TableroInmutable tin, Ficha turno) {
-		
+		this.turno=turno;
 		
 	}
 	
 	private void enableDeshacer(Boolean b){
 		Component[] cmps=panel.getComponents();
 		for (Component c: cmps){
-			if (c instanceof JButton){
+			
 				if(c.getName()=="Deshacer"){
 					c.setEnabled(b);
 				}
-			}
+			
 		}
 		panel.validate();
 		this.repaint();

@@ -109,7 +109,7 @@ public class Partida {
 			// no pertenece al jugador al que le
 			// toca o es una casilla de fuera
 			// del tablero
-			// este throw no es NUNCA posible en el modo GUI
+			// este throw NUNCA es posible en el modo GUI
 			for (Observer o : observers) {
 				o.onMovimientoInvalido(new MovimientoInvalido(
 						"error gordo y peludo"));
@@ -121,7 +121,16 @@ public class Partida {
 			moveStack[lastPos] = mov;
 			avanzaTurno();
 		}
+		
+		this.tin = tablero;
+		for (Observer o : observers) {
+			// observadores movimiento correcto
+			o.onMovimientoEnd(tin, mov.getJugador(), turno);
+
+		}
 		ganador = juego.hayGanador(mov, tablero);
+		
+		
 
 		if (ganador != Ficha.VACIA) {
 			terminada = true;
@@ -143,12 +152,7 @@ public class Partida {
 			}
 		}
 
-		this.tin = tablero;
-		for (Observer o : observers) {
-			// observadores movimiento correcto
-			o.onMovimientoEnd(tin, mov.getJugador(), turno);
-
-		}
+		
 	}
 
 	public boolean undo() {

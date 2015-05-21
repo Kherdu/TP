@@ -83,8 +83,9 @@ public class PanelTablero extends JPanel implements Observer {
 				cas.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
+						
 						c.Mover(cas.getColumna(), cas.getFila(), turnoActual);
-
+						
 					}
 				});
 			}
@@ -117,6 +118,7 @@ public class PanelTablero extends JPanel implements Observer {
 		labelTurno.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		JButton aleatorio = new JButton("Movimiento Aleatorio");
+		aleatorio.setName("Aleatorio");
 		aleatorio.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -132,6 +134,23 @@ public class PanelTablero extends JPanel implements Observer {
 
 	}
 
+	private void bloqueaaleatorio(Boolean b){
+		Component[] cmps=panel.getComponents();
+		for (Component c: cmps){
+			if (c.getName()=="Aleatorio")
+				c.setEnabled(b);
+			
+		}
+	}
+	private void bloqueatablero(Boolean b){
+		Component[] cmps=panel_Tablero.getComponents();
+		for (Component c: cmps){
+			
+				c.setEnabled(b);
+			
+		}
+	}
+	
 	@Override
 	public void onReset(TableroInmutable tab, Ficha turno) {
 		this.t = tab;
@@ -146,21 +165,8 @@ public class PanelTablero extends JPanel implements Observer {
 	@Override
 	public void onPartidaTerminada(TableroInmutable tab, Ficha ganador) {
 
-		Component[] components = panel.getComponents();
-
-		// deshabilitamos el boton
-		for (Component c : components) {
-			if (c instanceof JButton) {
-				c.setEnabled(false);
-			}
-		}
-
-		components = null;
-		components = panel_Tablero.getComponents();
-		// deshabilitamos el tablero
-		for (Component c : components) {
-			c.setEnabled(false);
-		}
+		bloqueaaleatorio(true);
+		bloqueatablero(true);
 
 		this.turnoActual = ganador;
 		JFrame frame = new JFrame();
@@ -175,6 +181,7 @@ public class PanelTablero extends JPanel implements Observer {
 		}
 		panel_Tablero.validate();
 		this.repaint();
+		c.matahilos();
 	}
 
 	@Override
@@ -206,6 +213,7 @@ public class PanelTablero extends JPanel implements Observer {
 		}
 		panel_Tablero.validate();
 		this.repaint();
+		c.reiniciaHilo(turno);
 	}
 
 	@Override
@@ -217,6 +225,7 @@ public class PanelTablero extends JPanel implements Observer {
 		labelTurno.validate();
 		panel_Tablero.validate();
 		this.repaint();
+		c.reiniciaHilo(turno);
 
 	}
 
@@ -247,5 +256,7 @@ public class PanelTablero extends JPanel implements Observer {
 		turnoActual=turno;
 		
 	}
+	
+	
 
 }
