@@ -64,7 +64,6 @@ public class PanelTablero extends JPanel implements Observer {
 		panel_Tablero.removeAll();
 		// for que añade botones al tablero, con gridLayout de anchura ancho y
 		// filas alto
-
 		panel_Tablero.setLayout(new GridLayout(t.getFilas(), t.getColumnas()));
 		matriz= new Casilla[t.getColumnas()][t.getFilas()];
 		for (int y = 1; y < (t.getFilas() + 1); y++) {
@@ -204,6 +203,7 @@ public class PanelTablero extends JPanel implements Observer {
 	@Override
 	public void onUndo(TableroInmutable tab, Ficha turno, boolean hayMas) {
 		// quitar ultima casilla puesta y actualizar turno
+		c.matahilos();
 		this.t = tab;
 		construyeTablero();
 		this.turnoActual = turno;
@@ -257,6 +257,4 @@ public class PanelTablero extends JPanel implements Observer {
 		
 	}
 	
-	
-
 }

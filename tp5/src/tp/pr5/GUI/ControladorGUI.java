@@ -151,8 +151,10 @@ public class ControladorGUI {
 	}
 
 	public void deshacermas(Ficha turno){
-		if (turno==Ficha.BLANCA){ modoBlancas.deshacer();
-		}else if (turno==Ficha.NEGRA) modoNegras.deshacer();
+		if (turno==Ficha.BLANCA){
+			modoBlancas.deshacer();
+		}else if (turno==Ficha.NEGRA) 
+			modoNegras.deshacer();
 	}
 	public void undoMaquina() {
 		p.undo();
