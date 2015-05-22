@@ -238,7 +238,7 @@ public class PanelBotones extends JPanel implements Observer {
 		if (turno==Ficha.BLANCA && jug1.getSelectedItem()==TipoJugador.AUTOMATICO && hayMas){
 			c.deshacermas(turno);
 		}
-		if (turno==Ficha.NEGRA && jug2.getSelectedItem()==TipoJugador.AUTOMATICO && hayMass){
+		if (turno==Ficha.NEGRA && jug2.getSelectedItem()==TipoJugador.AUTOMATICO && hayMas){
 			c.deshacermas(turno);
 		}
 		

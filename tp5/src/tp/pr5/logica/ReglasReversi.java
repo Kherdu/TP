@@ -58,7 +58,7 @@ public class ReglasReversi implements ReglasJuego {
 
 	@Override
 	public boolean tablas(Ficha ultimoEnPoner, TableroInmutable t) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
