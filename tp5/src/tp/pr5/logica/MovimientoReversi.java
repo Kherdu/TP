@@ -353,7 +353,7 @@ public class MovimientoReversi extends Movimiento{
 		boolean sePuede = false;
 		//IZQUIERDA
 		if (sePuede == false && tablero.getCasilla(x-1, y) != ficha && tablero.getCasilla(x-1, y) != Ficha.VACIA
-				&& (x-1) > 0){
+				&& x > 0){
 			x--;
 			while(!salir && x > 0){
 				
@@ -378,7 +378,7 @@ public class MovimientoReversi extends Movimiento{
 		y = fila;
 		salir = false;
 		if (sePuede == false && tablero.getCasilla(x+1, y) != ficha && tablero.getCasilla(x+1, y) != Ficha.VACIA
-				&& (x+1) <= tablero.getColumnas()){
+				&& x <= tablero.getColumnas()){
 			x++;
 			while(!salir && x <= tablero.getColumnas()){
 				
@@ -403,7 +403,7 @@ public class MovimientoReversi extends Movimiento{
 		salir = false;
 		
 		if (sePuede == false && tablero.getCasilla(x, y-1) != ficha && tablero.getCasilla(x, y-1) != Ficha.VACIA
-				&& (y-1) > 0){
+				&& y > 0){
 			y--;
 			while(!salir && y > 0){
 				
@@ -426,7 +426,7 @@ public class MovimientoReversi extends Movimiento{
 		y = fil;
 		salir = false;
 		if (sePuede == false && tablero.getCasilla(x, y+1) != ficha && tablero.getCasilla(x, y+1) != Ficha.VACIA
-				&& y+1 <= tablero.getFilas()){
+				&& y <= tablero.getFilas()){
 			y++;
 			while(!salir && y <= tablero.getFilas()){
 				
@@ -449,7 +449,7 @@ public class MovimientoReversi extends Movimiento{
 		y = fil;
 		salir = false;
 		if (sePuede == false && tablero.getCasilla(x-1, y-1) != ficha && tablero.getCasilla(x-1, y-1) != Ficha.VACIA 
-				&& x-1 > 0 && y-1 > 0){
+				&& x > 0 && y > 0){
 			x--;
 			y--;
 			while(!salir && x > 0 && y > 0){
@@ -476,7 +476,7 @@ public class MovimientoReversi extends Movimiento{
 		y = fil;
 		salir = false;
 		if (sePuede == false && tablero.getCasilla(x+1, y-1) != ficha && tablero.getCasilla(x+1, y-1) != Ficha.VACIA 
-				&& x+1 <= tablero.getColumnas() && y-1 > 0){
+				&& x <= tablero.getColumnas() && y > 0){
 			x++;
 			y--;
 			while(!salir && x <= tablero.getColumnas() && y > 0){
@@ -503,7 +503,7 @@ public class MovimientoReversi extends Movimiento{
 		y = fil;
 		salir = false;
 		if (sePuede == false && tablero.getCasilla(x-1, y+1) != ficha && tablero.getCasilla(x-1, y+1) != Ficha.VACIA 
-				&& x-1 > 0 && y+1 <= tablero.getFilas()){
+				&& x > 0 && y <= tablero.getFilas()){
 			x--;
 			y++;
 			while(!salir && x > 0 && y <= tablero.getFilas()){
@@ -531,7 +531,7 @@ public class MovimientoReversi extends Movimiento{
 		y = fil;
 		salir = false;
 		if (sePuede == false && tablero.getCasilla(x+1, y+1) != ficha && tablero.getCasilla(x+1, y+1) != Ficha.VACIA 
-				&& x+1 <= tablero.getColumnas() && y+1 <= tablero.getFilas()){
+				&& x <= tablero.getColumnas() && y <= tablero.getFilas()){
 			x++;
 			y++;
 			while(!salir && x <= tablero.getColumnas() && y <= tablero.getFilas()){
@@ -550,7 +550,9 @@ public class MovimientoReversi extends Movimiento{
 				}
 				
 			}
-		}else if(tablero.getCasilla(col, fil) != Ficha.VACIA){
+		}
+		
+		if(tablero.getCasilla(col, fil) != Ficha.VACIA){
 			
 			salir = true;
 			sePuede = false;
