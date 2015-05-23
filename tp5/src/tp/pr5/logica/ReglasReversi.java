@@ -20,8 +20,7 @@ public class ReglasReversi implements ReglasJuego {
 
 	@Override
 	public Ficha hayGanador(Movimiento ultimoMovimiento, TableroInmutable t) {
-		int x = 0;
-		int y = 0;
+		
 		Ficha ret=Ficha.VACIA;
 
 		int contNegras = 0;
@@ -30,19 +29,17 @@ public class ReglasReversi implements ReglasJuego {
 		if (movimientoImposible(t) || tableroLleno(t)) {
 
 			if (!comprobacion(t, Ficha.NEGRA) && !comprobacion(t, Ficha.BLANCA)) {
-				while (y < tablero.getFilas()) {
-					x = 0;
-					while (x < tablero.getColumnas()) {
-						if (t.getCasilla(x, y) == Ficha.NEGRA) {
+				for(int i = 1; i <= t.getFilas(); i++) {
+					
+					for(int j = 1; j <= t.getColumnas(); j++) {
+						if (t.getCasilla(j, i) == Ficha.NEGRA) {
 							contNegras++;
 
-						} else if (t.getCasilla(x, y) == Ficha.BLANCA) {
+						} else if (t.getCasilla(j, i) == Ficha.BLANCA) {
 							contBlancas++;
 
-						}
-						x++;
-					}
-					y++;
+						}			
+					}			
 				}
 
 			}
@@ -130,27 +127,26 @@ public class ReglasReversi implements ReglasJuego {
 	@Override
 	public boolean tablas(Ficha ultimoEnPoner, TableroInmutable t) {
 
-		int x = 0;
-		int y = 0;
+	
 		boolean ret = false;
 
 		int contNegras = 0;
 		int contBlancas = 0;
 		if (comprobacion(t, Ficha.NEGRA) == false
 				&& comprobacion(t, Ficha.BLANCA) == false) {
-			while (y < tablero.getFilas()) {
-				x = 0;
-				while (x < tablero.getColumnas()) {
-					if (t.getCasilla(x, y) == Ficha.NEGRA) {
+			for(int i = 1; i < t.getFilas();i++) {
+				
+				for (int j = 1; j< t.getColumnas(); j++) {
+					if (t.getCasilla(j, i) == Ficha.NEGRA) {
 						contNegras++;
 
-					} else if (t.getCasilla(x, y) == Ficha.BLANCA) {
+					} else if (t.getCasilla(j, i) == Ficha.BLANCA) {
 						contBlancas++;
 
 					}
-					x++;
+				
 				}
-				y++;
+				
 			}
 
 		}
@@ -194,7 +190,7 @@ public class ReglasReversi implements ReglasJuego {
 		int y = 1;
 
 		while (y < tablero.getFilas() && !salir) {
-			x = 0;
+			x = 1;
 			while (x < tablero.getColumnas() && !salir) {
 				if (tablero.getCasilla(x, y) == Ficha.VACIA) {
 					if (sePuede(tablero, x, y, color)) {
