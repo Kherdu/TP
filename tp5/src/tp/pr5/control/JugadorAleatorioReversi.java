@@ -22,6 +22,7 @@ public class JugadorAleatorioReversi implements Jugador {
 	}
 
 	public boolean sePuede(TableroInmutable tablero, int col, int fil, Ficha ficha){
+		
 		int x = col;
 		int y = fil;
 		boolean salir = false;
@@ -53,9 +54,9 @@ public class JugadorAleatorioReversi implements Jugador {
 		y = fil;
 		salir = false;
 		if (sePuede == false && tablero.getCasilla(x+1, y) != ficha && tablero.getCasilla(x+1, y) != Ficha.VACIA
-				&& (x+1) < tablero.getColumnas()){
+				&& (x+1) <= tablero.getColumnas()){
 			x++;
-			while(!salir && x < tablero.getColumnas()){
+			while(!salir && x <= tablero.getColumnas()){
 				
 				if (tablero.getCasilla(x, y) == Ficha.VACIA){
 					
@@ -77,7 +78,7 @@ public class JugadorAleatorioReversi implements Jugador {
 		y = fil;
 		salir = false;
 		if (sePuede == false && tablero.getCasilla(x, y-1) != ficha && tablero.getCasilla(x, y-1) != Ficha.VACIA
-				&& tablero.getFilas() > 0){
+				&& y-1 > 0){
 			y--;
 			while(!salir && y > 0){
 				
@@ -99,9 +100,9 @@ public class JugadorAleatorioReversi implements Jugador {
 		y = fil;
 		salir = false;
 		if (sePuede == false && tablero.getCasilla(x, y+1) != ficha && tablero.getCasilla(x, y+1) != Ficha.VACIA
-				&& y < tablero.getFilas()){
+				&& y+1 <= tablero.getFilas()){
 			y++;
-			while(!salir && y < tablero.getFilas()){
+			while(!salir && y <= tablero.getFilas()){
 				
 				if (tablero.getCasilla(x, y) == Ficha.VACIA){
 					
@@ -121,7 +122,7 @@ public class JugadorAleatorioReversi implements Jugador {
 		y = fil;
 		salir = false;
 		if (sePuede == false && tablero.getCasilla(x-1, y-1) != ficha && tablero.getCasilla(x-1, y-1) != Ficha.VACIA 
-				&& x > 0 && y > 0){
+				&& x-1 > 0 && y-1 > 0){
 			x--;
 			y--;
 			while(!salir && x > 0 && y > 0){
@@ -146,11 +147,11 @@ public class JugadorAleatorioReversi implements Jugador {
 		x = col;
 		y = fil;
 		salir = false;
-		if (sePuede == false && tablero.getCasilla(x-1, y-1) != ficha && tablero.getCasilla(x+1, y-1) != Ficha.VACIA 
-				&& x < tablero.getColumnas() && y > 0){
+		if (sePuede == false && tablero.getCasilla(x+1, y-1) != ficha && tablero.getCasilla(x+1, y-1) != Ficha.VACIA 
+				&& x+1 <= tablero.getColumnas() && y-1 > 0){
 			x++;
 			y--;
-			while(!salir && x < tablero.getColumnas() && y < 0){
+			while(!salir && x <= tablero.getColumnas() && y > 0){
 				
 				if (tablero.getCasilla(x, y) == Ficha.VACIA){
 					
@@ -173,10 +174,10 @@ public class JugadorAleatorioReversi implements Jugador {
 		y = fil;
 		salir = false;
 		if (sePuede == false && tablero.getCasilla(x-1, y+1) != ficha && tablero.getCasilla(x-1, y+1) != Ficha.VACIA 
-				&& x > 0 && y < tablero.getFilas()){
+				&& x-1 > 0 && y+1 <= tablero.getFilas()){
 			x--;
 			y++;
-			while(!salir && x > 0 && y < tablero.getFilas()){
+			while(!salir && x > 0 && y <= tablero.getFilas()){
 				
 				if (tablero.getCasilla(x, y) == Ficha.VACIA){
 					
@@ -200,10 +201,10 @@ public class JugadorAleatorioReversi implements Jugador {
 		y = fil;
 		salir = false;
 		if (sePuede == false && tablero.getCasilla(x+1, y+1) != ficha && tablero.getCasilla(x+1, y+1) != Ficha.VACIA 
-				&& x < tablero.getColumnas() && y < tablero.getFilas()){
+				&& x+1 <= tablero.getColumnas() && y+1 <= tablero.getFilas()){
 			x++;
 			y++;
-			while(!salir && x < tablero.getColumnas() && y < tablero.getFilas()){
+			while(!salir && x <= tablero.getColumnas() && y <= tablero.getFilas()){
 				
 				if (tablero.getCasilla(x, y) == Ficha.VACIA){
 					
@@ -219,6 +220,11 @@ public class JugadorAleatorioReversi implements Jugador {
 				}
 				
 			}
+		}else if(tablero.getCasilla(col, fil) != Ficha.VACIA){
+			
+			salir = true;
+			sePuede = false;
+			
 		}
 		
 		

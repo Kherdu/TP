@@ -20,8 +20,43 @@ public class ReglasReversi implements ReglasJuego {
 
 	@Override
 	public Ficha hayGanador(Movimiento ultimoMovimiento, TableroInmutable t) {
+		int x = 0;
+		int y = 0;
+		Ficha ret;
 		
-		return Ficha.VACIA;
+		int contNegras = 0;
+		int contBlancas = 0;
+		if (!comprobacion(t, Ficha.NEGRA) && !comprobacion(t, Ficha.BLANCA)){
+			while (y < tablero.getFilas()){
+				x=0;
+				while (x < tablero.getColumnas()){
+					if (t.getCasilla(x, y) == Ficha.NEGRA){
+						contNegras++;
+						
+					}else if (t.getCasilla(x, y) == Ficha.BLANCA){
+						contBlancas++;
+						
+					}
+				x++;		
+				}
+			y++;
+			}
+				
+		}
+		
+		if (contBlancas > contNegras){
+			
+			ret = Ficha.BLANCA;
+			
+		}else if (contBlancas < contNegras){
+			
+			ret = Ficha.NEGRA;
+			
+		}else ret = Ficha.VACIA;
+					
+		
+		
+		return ret;
 	}
 
 	@Override
@@ -59,7 +94,37 @@ public class ReglasReversi implements ReglasJuego {
 	@Override
 	public boolean tablas(Ficha ultimoEnPoner, TableroInmutable t) {
 		
-		return false;
+		int x = 0;
+		int y = 0;
+		boolean ret = false;
+		
+		int contNegras = 0;
+		int contBlancas = 0;
+		if (comprobacion(t, Ficha.NEGRA) == false && comprobacion(t, Ficha.BLANCA) == false){
+			while (y < tablero.getFilas()){
+				x=0;
+				while (x < tablero.getColumnas()){
+					if (t.getCasilla(x, y) == Ficha.NEGRA){
+						contNegras++;
+						
+					}else if (t.getCasilla(x, y) == Ficha.BLANCA){
+						contBlancas++;
+						
+					}
+				x++;		
+				}
+			y++;
+			}
+				
+		}
+		
+		if (contNegras == contBlancas && !comprobacion(t, Ficha.NEGRA) && !comprobacion(t, Ficha.BLANCA)){
+			
+			ret = true;
+			
+		}
+		
+		return ret;
 	}
 
 	@Override
@@ -78,21 +143,17 @@ public class ReglasReversi implements ReglasJuego {
 		return this.tipo;
 	}
 
-
-
 	@Override
 	public int getNumJugadores() {
-		// TODO Auto-generated method stub
+	
 		return 0;
 	}
 
-	
-	
 	public boolean comprobacion(TableroInmutable tablero, Ficha color){
 		
 		boolean salir = false;
-		int x = 0;
-		int y = 0;
+		int x = 1;
+		int y = 1;
 		
 		while (y < tablero.getFilas() && !salir){
 			x=0;
@@ -145,9 +206,9 @@ public class ReglasReversi implements ReglasJuego {
 		y = fil;
 		salir = false;
 		if (sePuede == false && tablero.getCasilla(x+1, y) != ficha && tablero.getCasilla(x+1, y) != Ficha.VACIA
-				&& (x+1) < tablero.getColumnas()){
+				&& (x+1) <= tablero.getColumnas()){
 			x++;
-			while(!salir && x < tablero.getColumnas()){
+			while(!salir && x <= tablero.getColumnas()){
 				
 				if (tablero.getCasilla(x, y) == Ficha.VACIA){
 					
@@ -169,7 +230,7 @@ public class ReglasReversi implements ReglasJuego {
 		y = fil;
 		salir = false;
 		if (sePuede == false && tablero.getCasilla(x, y-1) != ficha && tablero.getCasilla(x, y-1) != Ficha.VACIA
-				&& tablero.getFilas() > 0){
+				&& y-1 > 0){
 			y--;
 			while(!salir && y > 0){
 				
@@ -191,9 +252,9 @@ public class ReglasReversi implements ReglasJuego {
 		y = fil;
 		salir = false;
 		if (sePuede == false && tablero.getCasilla(x, y+1) != ficha && tablero.getCasilla(x, y+1) != Ficha.VACIA
-				&& y < tablero.getFilas()){
+				&& (y+1) <= tablero.getFilas()){
 			y++;
-			while(!salir && y < tablero.getFilas()){
+			while(!salir && y <= tablero.getFilas()){
 				
 				if (tablero.getCasilla(x, y) == Ficha.VACIA){
 					
@@ -213,7 +274,7 @@ public class ReglasReversi implements ReglasJuego {
 		y = fil;
 		salir = false;
 		if (sePuede == false && tablero.getCasilla(x-1, y-1) != ficha && tablero.getCasilla(x-1, y-1) != Ficha.VACIA 
-				&& x > 0 && y > 0){
+				&& (x-1) > 0 && (y-1) > 0){
 			x--;
 			y--;
 			while(!salir && x > 0 && y > 0){
@@ -238,11 +299,11 @@ public class ReglasReversi implements ReglasJuego {
 		x = col;
 		y = fil;
 		salir = false;
-		if (sePuede == false && tablero.getCasilla(x-1, y-1) != ficha && tablero.getCasilla(x+1, y-1) != Ficha.VACIA 
-				&& x < tablero.getColumnas() && y > 0){
+		if (sePuede == false && tablero.getCasilla(x+1, y-1) != ficha && tablero.getCasilla(x+1, y-1) != Ficha.VACIA 
+				&& x+1 <= tablero.getColumnas() && y-1 > 0){
 			x++;
 			y--;
-			while(!salir && x < tablero.getColumnas() && y < 0){
+			while(!salir && x <= tablero.getColumnas() && y > 0){
 				
 				if (tablero.getCasilla(x, y) == Ficha.VACIA){
 					
@@ -265,10 +326,10 @@ public class ReglasReversi implements ReglasJuego {
 		y = fil;
 		salir = false;
 		if (sePuede == false && tablero.getCasilla(x-1, y+1) != ficha && tablero.getCasilla(x-1, y+1) != Ficha.VACIA 
-				&& x > 0 && y < tablero.getFilas()){
+				&& x-1 > 0 && y+1 <= tablero.getFilas()){
 			x--;
 			y++;
-			while(!salir && x > 0 && y < tablero.getFilas()){
+			while(!salir && x > 0 && y <= tablero.getFilas()){
 				
 				if (tablero.getCasilla(x, y) == Ficha.VACIA){
 					
@@ -292,10 +353,10 @@ public class ReglasReversi implements ReglasJuego {
 		y = fil;
 		salir = false;
 		if (sePuede == false && tablero.getCasilla(x+1, y+1) != ficha && tablero.getCasilla(x+1, y+1) != Ficha.VACIA 
-				&& x < tablero.getColumnas() && y < tablero.getFilas()){
+				&& x+1 <= tablero.getColumnas() && y+1 <= tablero.getFilas()){
 			x++;
 			y++;
-			while(!salir && x < tablero.getColumnas() && y < tablero.getFilas()){
+			while(!salir && x <= tablero.getColumnas() && y <= tablero.getFilas()){
 				
 				if (tablero.getCasilla(x, y) == Ficha.VACIA){
 					
@@ -311,6 +372,10 @@ public class ReglasReversi implements ReglasJuego {
 				}
 				
 			}
+		}else if(tablero.getCasilla(col, fil) != Ficha.VACIA){
+			
+			salir = true;
+			sePuede = false;
 		}
 		
 		
