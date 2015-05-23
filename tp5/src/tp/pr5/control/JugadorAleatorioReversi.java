@@ -21,7 +21,7 @@ public class JugadorAleatorioReversi implements Jugador {
 		
 	}
 
-	public boolean sePuede(TableroInmutable tablero, int col, int fil, Ficha ficha){
+public boolean sePuede(TableroInmutable tablero, int col, int fil, Ficha ficha){
 		
 		int x = col;
 		int y = fil;

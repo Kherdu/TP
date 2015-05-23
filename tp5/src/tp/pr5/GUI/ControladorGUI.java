@@ -40,6 +40,7 @@ public class ControladorGUI {
 	private Juego j;
 	private ModoJuego modoBlancas;
 	private ModoJuego modoNegras;
+	
 
 	public ControladorGUI(FactoriaTipoJuego factoria, Partida partida) {
 
@@ -49,11 +50,12 @@ public class ControladorGUI {
 		j = r.getTipo();
 		modoBlancas = new ModoMan();
 		modoNegras = new ModoMan();
+	
 
 	}
 
 	public void Mover(int columna, int fila, Ficha turno) {
-
+		
 		if ((modoBlancas.getJ() == TipoJugador.MANUAL && turno == Ficha.BLANCA)
 				|| (modoNegras.getJ() == TipoJugador.MANUAL && turno == Ficha.NEGRA)) {
 
@@ -75,7 +77,7 @@ public class ControladorGUI {
 					Movimiento m = new MovimientoReversi(columna, fila, turno);
 					p.ejecutaMovimiento(m);
 				}
-
+				
 			} catch (MovimientoInvalido e) {
 				JFrame frame = new JFrame();
 				JOptionPane.showMessageDialog(frame, e.getMessage(), "Error",
@@ -93,11 +95,11 @@ public class ControladorGUI {
 		if ((turno == Ficha.BLANCA && modoBlancas.getJ() == TipoJugador.MANUAL)
 				|| (turno == Ficha.NEGRA && modoNegras.getJ() == TipoJugador.MANUAL)) {
 
-			movMaquina();
+			movMaquina(turno);
 		}
 	}
 
-	public void movMaquina() {
+	public void movMaquina(Ficha llamador) {
 
 		if (llamador ==p.getTurno()) {
 			if (j == Juego.COMPLICA) {
@@ -145,22 +147,23 @@ public class ControladorGUI {
 
 	public void undo(Ficha turno) {
 		if ((turno == Ficha.BLANCA && modoBlancas.getJ() == TipoJugador.MANUAL)
-				|| (turno == Ficha.NEGRA && modoNegras.getJ() == TipoJugador.MANUAL)){
+				|| (turno == Ficha.NEGRA && modoNegras.getJ() == TipoJugador.MANUAL)) {
 
-				p.undo();
+			p.undo();
 		}
-		
+
 	}
 
-	public void deshacermas(Ficha turno){
-		if (turno==Ficha.BLANCA){
+	public void deshacermas(Ficha turno) {
+		if (turno == Ficha.BLANCA) {
 			modoBlancas.deshacer();
-		}else if (turno==Ficha.NEGRA) 
+		} else if (turno == Ficha.NEGRA)
 			modoNegras.deshacer();
 	}
+
 	public void undoMaquina() {
 		p.undo();
-		
+
 	}
 
 	public void reset() {
@@ -221,10 +224,12 @@ public class ControladorGUI {
 		if (tipo == TipoJugador.MANUAL) {
 
 			if (f == Ficha.BLANCA) {
+				
 				modoBlancas.terminar();
 				modoBlancas = new ModoMan();
 				modoBlancas.comenzar();
 			} else if (f == Ficha.NEGRA) {
+				
 				modoNegras.terminar();
 				modoNegras = new ModoMan();
 				modoNegras.comenzar();
@@ -233,12 +238,14 @@ public class ControladorGUI {
 		} else if (tipo == TipoJugador.AUTOMATICO) {
 
 			if (f == Ficha.BLANCA) {
+				
 				modoBlancas.terminar();
-				modoBlancas = new ModoAuto(this);
+				modoBlancas = new ModoAuto(this, f);
 				modoBlancas.comenzar();
 			} else if (f == Ficha.NEGRA) {
+				
 				modoNegras.terminar();
-				modoNegras = new ModoAuto(this);
+				modoNegras = new ModoAuto(this, f);
 				modoNegras.comenzar();
 			}
 		}

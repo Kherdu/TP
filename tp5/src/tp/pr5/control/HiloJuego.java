@@ -6,16 +6,18 @@ import tp.pr5.logica.Ficha;
 public class HiloJuego extends Thread{
 
 	private ControladorGUI c;
-	public HiloJuego(ControladorGUI c){
+	private Ficha color;
+	public HiloJuego(ControladorGUI c, Ficha color){
 		this.c=c;
-		
+		this.color=color;
 		
 	}
 	
 	public void run(){
+		
 		try {
 			sleep(1000);
-			c.movMaquina();
+			c.movMaquina(color);
 		} catch (InterruptedException e) {
 
 		}
@@ -26,5 +28,7 @@ public class HiloJuego extends Thread{
 		c.undoMaquina();
 		
 	}
+
+	
 	
 }
