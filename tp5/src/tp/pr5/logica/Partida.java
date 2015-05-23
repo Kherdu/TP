@@ -85,6 +85,9 @@ public class Partida {
 		} else if (reglas.getTipo() == Juego.GRAVITY) {
 			this.moveStack = new MovimientoGravity[TAM_PILA];
 			this.juego = new ReglasGravity();
+		}else if(reglas.getTipo() == Juego.REVERSI) {
+			this.moveStack = new MovimientoReversi[TAM_PILA];
+			this.juego = new ReglasReversi();			
 		}
 
 		this.turno = Ficha.BLANCA;

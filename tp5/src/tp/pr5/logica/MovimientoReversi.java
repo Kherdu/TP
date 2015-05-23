@@ -7,14 +7,13 @@ public class MovimientoReversi extends Movimiento{
 	private int columna;
 	private int fila;
 	private Ficha ficha;
-	private ArrayList<Casilla> memoria = new ArrayList<Casilla>(); 
-	private Casilla casilla;
+	private ArrayList<MemCasilla> memoria = new ArrayList<MemCasilla>(); 
+	private MemCasilla casilla;
 	
 	public MovimientoReversi(int col, int fila, Ficha color) {
 		this.columna = col;
 		this.fila = fila;
 		this.ficha = color;
-		this.casilla = new Casilla();
 	}
 
 	@Override
@@ -35,10 +34,10 @@ public class MovimientoReversi extends Movimiento{
 			
 			throw new MovimientoInvalido("Casilla Ocupada");
 			
-		}else if (!sePuede(tablero)) {
+		}else if (!sePuede(tablero, columna, fila)) {
 		
-			throw new MovimientoInvalido("Psicion Incorrecta");
-		}else{
+			throw new MovimientoInvalido("Posicion Incorrecta");
+		}else if (sePuede(tablero,columna,fila)){
 			
 			tablero.setCasilla(columna, fila, ficha);
 			compruebaCambios(tablero);
@@ -50,7 +49,7 @@ public class MovimientoReversi extends Movimiento{
 	
 	private void compruebaCambios(Tablero tablero){
 		
-		
+		int cont = 0;
 		int x = columna-1;
 		int y = fila;
 		boolean salir = false;
@@ -62,17 +61,22 @@ public class MovimientoReversi extends Movimiento{
 				if (tablero.getCasilla(x,y) != ficha && tablero.getCasilla(x,y) != Ficha.VACIA){
 					
 					x--;
+					cont++;
 					
-				}else if(tablero.getCasilla(x,y) == ficha){
+				}else if(tablero.getCasilla(x,y) == ficha && cont > 0){
+					x++;
 					while(x < columna){
 						tablero.setCasilla(x, y, ficha);
-						casilla.setX(x);
-						casilla.setY(y);
+						casilla = new MemCasilla(x, y);
 						memoria.add(casilla);
 						x++;						
 					}
 					
 					salir = true;					
+					
+				}else if(tablero.getCasilla(x,y) == ficha && cont == 0){
+					
+					salir = true;
 					
 				}else if (tablero.getCasilla(x, y) == Ficha.VACIA){					
 					
@@ -81,7 +85,7 @@ public class MovimientoReversi extends Movimiento{
 				}
 			}else salir = true;
 		}
-		
+		cont = 0;
 		salir = false;
 		x = columna+1;
 		y = fila;
@@ -93,17 +97,22 @@ public class MovimientoReversi extends Movimiento{
 				if (tablero.getCasilla(x,y) != ficha && tablero.getCasilla(x,y) != Ficha.VACIA){
 					
 					x++;
+					cont++;
 					
-				}else if(tablero.getCasilla(x,y) == ficha){
+				}else if(tablero.getCasilla(x,y) == ficha && cont > 0){
+					x--;
 					while(x > columna){
 						tablero.setCasilla(x, y, ficha);
-						casilla.setX(x);
-						casilla.setY(y);
+						casilla = new MemCasilla(x, y);
 						memoria.add(casilla);
 						x--;						
 					}
 					
 					salir = true;					
+					
+				}else if(tablero.getCasilla(x,y) == ficha && cont == 0){
+					
+					salir = true;
 					
 				}else if (tablero.getCasilla(x, y) == Ficha.VACIA){					
 					
@@ -112,7 +121,7 @@ public class MovimientoReversi extends Movimiento{
 				}
 			}else salir = true;
 		}
-
+		cont = 0;
 		salir = false;
 		x = columna;
 		y = fila-1;
@@ -124,17 +133,21 @@ public class MovimientoReversi extends Movimiento{
 				if (tablero.getCasilla(x,y) != ficha && tablero.getCasilla(x,y) != Ficha.VACIA){
 					
 					y--;
-					
-				}else if(tablero.getCasilla(x,y) == ficha){
+					cont++;
+				}else if(tablero.getCasilla(x,y) == ficha && cont>0){
+					y++;
 					while(y < fila){
 						tablero.setCasilla(x, y, ficha);
-						casilla.setX(x);
-						casilla.setY(y);
+						casilla = new MemCasilla(x, y);
 						memoria.add(casilla);
 						y++;						
 					}
 					
 					salir = true;					
+					
+				}else if(tablero.getCasilla(x,y) == ficha && cont == 0){
+					
+					salir = true;
 					
 				}else if (tablero.getCasilla(x, y) == Ficha.VACIA){					
 					
@@ -143,7 +156,7 @@ public class MovimientoReversi extends Movimiento{
 				}
 			}else salir = true;
 		}
-
+		cont = 0;
 		salir = false;
 		x = columna;
 		y = fila+1;
@@ -156,17 +169,21 @@ public class MovimientoReversi extends Movimiento{
 				if (tablero.getCasilla(x,y) != ficha && tablero.getCasilla(x,y) != Ficha.VACIA){
 					
 					y++;
-					
-				}else if(tablero.getCasilla(x,y) == ficha){
+					cont++;
+				}else if(tablero.getCasilla(x,y) == ficha && cont > 0){
+					y--;
 					while(y > fila){
 						tablero.setCasilla(x, y, ficha);
-						casilla.setX(x);
-						casilla.setY(y);
+						casilla = new MemCasilla(x, y);
 						memoria.add(casilla);
 						y--;						
 					}
 					
 					salir = true;					
+					
+				}else if(tablero.getCasilla(x,y) == ficha && cont == 0){
+					
+					salir = true;
 					
 				}else if (tablero.getCasilla(x, y) == Ficha.VACIA){					
 					
@@ -175,7 +192,7 @@ public class MovimientoReversi extends Movimiento{
 				}
 			}else salir = true;
 		}
-		
+		cont = 0;
 		salir = false;
 		x = columna-1;
 		y = fila-1;
@@ -188,18 +205,23 @@ public class MovimientoReversi extends Movimiento{
 					
 					x--;
 					y--;
-					
-				}else if(tablero.getCasilla(x,y) == ficha){
+					cont++;
+				}else if(tablero.getCasilla(x,y) == ficha && cont > 0){
+					x++;
+					y++;
 					while(x < columna && y < fila){
 						tablero.setCasilla(x, y, ficha);
-						casilla.setX(x);
-						casilla.setY(y);
+						casilla = new MemCasilla(x, y);
 						memoria.add(casilla);
 						x++;
 						y++;
 					}
 					
 					salir = true;					
+					
+				}else if(tablero.getCasilla(x,y) == ficha && cont == 0){
+					
+					salir = true;
 					
 				}else if (tablero.getCasilla(x, y) == Ficha.VACIA){					
 					
@@ -208,7 +230,7 @@ public class MovimientoReversi extends Movimiento{
 				}
 			}else salir = true;
 		}
-
+		cont = 0;
 		salir = false;
 		x = columna+1;
 		y = fila-1;
@@ -221,18 +243,24 @@ public class MovimientoReversi extends Movimiento{
 					
 					x++;
 					y--;
+					cont++;
 					
-				}else if(tablero.getCasilla(x,y) == ficha){
+				}else if(tablero.getCasilla(x,y) == ficha && cont > 0){
+					x--;
+					y++;
 					while(x > columna && y < fila){
 						tablero.setCasilla(x, y, ficha);
-						casilla.setX(x);
-						casilla.setY(y);
+						casilla = new MemCasilla(x, y);
 						memoria.add(casilla);
 						x--;
 						y++;
 					}
 					
 					salir = true;					
+					
+				}else if(tablero.getCasilla(x,y) == ficha && cont == 0){
+					
+					salir = true;
 					
 				}else if (tablero.getCasilla(x, y) == Ficha.VACIA){					
 					
@@ -241,7 +269,7 @@ public class MovimientoReversi extends Movimiento{
 				}
 			}else salir = true;
 		}
-		
+		cont = 0;
 		salir = false;
 		x = columna-1;
 		y = fila+1;
@@ -253,18 +281,23 @@ public class MovimientoReversi extends Movimiento{
 					
 					x--;
 					y++;
-					
-				}else if(tablero.getCasilla(x,y) == ficha){
+					cont++;
+				}else if(tablero.getCasilla(x,y) == ficha && cont >0){
+					x++;
+					y--;
 					while(x < columna && y > fila){
 						tablero.setCasilla(x, y, ficha);
-						casilla.setX(x);
-						casilla.setY(y);
+						casilla = new MemCasilla(x, y);
 						memoria.add(casilla);
 						x++;
 						y--;
 					}
 					
 					salir = true;					
+					
+				}else if(tablero.getCasilla(x,y) == ficha && cont == 0){
+					
+					salir = true;
 					
 				}else if (tablero.getCasilla(x, y) == Ficha.VACIA){					
 					
@@ -273,7 +306,7 @@ public class MovimientoReversi extends Movimiento{
 				}
 			}else salir = true;
 		}
-		
+		cont = 0;
 		salir = false;
 		x = columna+1;
 		y = fila+1;
@@ -285,18 +318,23 @@ public class MovimientoReversi extends Movimiento{
 					
 					x++;
 					y++;
-					
-				}else if(tablero.getCasilla(x,y) == ficha){
+					cont++;
+				}else if(tablero.getCasilla(x,y) == ficha && cont > 0){
+					x--;
+					y--;
 					while(x > columna && y > fila){
 						tablero.setCasilla(x, y, ficha);
-						casilla.setX(x);
-						casilla.setY(y);
+						casilla = new MemCasilla(x, y);
 						memoria.add(casilla);
 						x--;
 						y--;
 					}
 					
 					salir = true;					
+					
+				}else if(tablero.getCasilla(x,y) == ficha && cont == 0){
+					
+					salir = true;
 					
 				}else if (tablero.getCasilla(x, y) == Ficha.VACIA){					
 					
@@ -308,9 +346,9 @@ public class MovimientoReversi extends Movimiento{
 		
 	}
 		
-	public boolean sePuede(Tablero tablero){
-		int x = columna;
-		int y = fila;
+	public boolean sePuede(Tablero tablero, int col, int fil){
+		int x = col;
+		int y = fil;
 		boolean salir = false;
 		boolean sePuede = false;
 		//IZQUIERDA
@@ -360,6 +398,9 @@ public class MovimientoReversi extends Movimiento{
 		}
 		
 		//ARRIBA
+		x = col;
+		y = fil;
+		salir = false;
 		
 		if (sePuede == false && tablero.getCasilla(x, y-1) != ficha && tablero.getCasilla(x, y-1) != Ficha.VACIA
 				&& tablero.getFilas() > 0){
@@ -381,6 +422,9 @@ public class MovimientoReversi extends Movimiento{
 		
 		//ABAJO
 		
+		x = col;
+		y = fil;
+		salir = false;
 		if (sePuede == false && tablero.getCasilla(x, y+1) != ficha && tablero.getCasilla(x, y+1) != Ficha.VACIA
 				&& y < tablero.getFilas()){
 			y++;
@@ -401,6 +445,9 @@ public class MovimientoReversi extends Movimiento{
 		
 		// ARIBA IZQDA
 		
+		x = col;
+		y = fil;
+		salir = false;
 		if (sePuede == false && tablero.getCasilla(x-1, y-1) != ficha && tablero.getCasilla(x-1, y-1) != Ficha.VACIA 
 				&& x > 0 && y > 0){
 			x--;
@@ -425,6 +472,9 @@ public class MovimientoReversi extends Movimiento{
 		
 		//ARRIBA DRCHA
 		
+		x = col;
+		y = fil;
+		salir = false;
 		if (sePuede == false && tablero.getCasilla(x-1, y-1) != ficha && tablero.getCasilla(x+1, y-1) != Ficha.VACIA 
 				&& x < tablero.getColumnas() && y > 0){
 			x++;
@@ -449,6 +499,9 @@ public class MovimientoReversi extends Movimiento{
 		
 		//ABAJO IZQDA
 		
+		x = col;
+		y = fil;
+		salir = false;
 		if (sePuede == false && tablero.getCasilla(x-1, y+1) != ficha && tablero.getCasilla(x-1, y+1) != Ficha.VACIA 
 				&& x > 0 && y < tablero.getFilas()){
 			x--;
@@ -474,6 +527,9 @@ public class MovimientoReversi extends Movimiento{
 		
 		//ABAJO DRCHA
 		
+		x = col;
+		y = fil;
+		salir = false;
 		if (sePuede == false && tablero.getCasilla(x+1, y+1) != ficha && tablero.getCasilla(x+1, y+1) != Ficha.VACIA 
 				&& x < tablero.getColumnas() && y < tablero.getFilas()){
 			x++;
@@ -502,7 +558,7 @@ public class MovimientoReversi extends Movimiento{
 	
 	@Override
 	public void undo(Tablero tablero) {
-		
+			tablero.setCasilla(columna, fila, Ficha.VACIA);
 		while (!memoria.isEmpty()){
 			
 			cambiaColor(tablero);

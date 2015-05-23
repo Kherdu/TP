@@ -12,7 +12,7 @@ public class JugadorHumanoReversi implements Jugador {
 	private Scanner sc;
 	
 
-	public JugadorHumanoReversi(Scanner in) {
+	JugadorHumanoReversi(Scanner in) {
 		this.sc=in;
 	}
 

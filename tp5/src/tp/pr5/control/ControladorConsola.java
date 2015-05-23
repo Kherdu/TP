@@ -236,6 +236,13 @@ public class ControladorConsola {
 							else j= new JugadorAleatorioGravity();
 							break;
 							}
+			case REVERSI: 	{
+							if (!ia){
+							j=new JugadorHumanoReversi(in);
+							}
+							else j= new JugadorAleatorioReversi();
+							break;
+							}
 		}
 		
 		return j;
