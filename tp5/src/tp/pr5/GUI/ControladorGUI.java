@@ -99,18 +99,20 @@ public class ControladorGUI {
 
 	public void movMaquina() {
 
-		if (j == Juego.COMPLICA) {
-			Jugador jug = new JugadorAleatorioComplica();
-			p.Mover(jug);
-		} else if (j == Juego.CONECTA4) {
-			Jugador jug = new JugadorAleatorioConecta4();
-			p.Mover(jug);
-		} else if (j == Juego.GRAVITY) {
-			Jugador jug = new JugadorAleatorioGravity();
-			p.Mover(jug);
-		} else if (j == Juego.REVERSI) {
-			Jugador jug = new JugadorAleatorioReversi();
-			p.Mover(jug);
+		if (llamador ==p.getTurno()) {
+			if (j == Juego.COMPLICA) {
+				Jugador jug = new JugadorAleatorioComplica();
+				p.Mover(jug);
+			} else if (j == Juego.CONECTA4) {
+				Jugador jug = new JugadorAleatorioConecta4();
+				p.Mover(jug);
+			} else if (j == Juego.GRAVITY) {
+				Jugador jug = new JugadorAleatorioGravity();
+				p.Mover(jug);
+			} else if (j == Juego.REVERSI) {
+				Jugador jug = new JugadorAleatorioReversi();
+				p.Mover(jug);
+			}
 		}
 	}
 
