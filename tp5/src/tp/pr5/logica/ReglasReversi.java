@@ -20,42 +20,41 @@ public class ReglasReversi implements ReglasJuego {
 
 	@Override
 	public Ficha hayGanador(Movimiento ultimoMovimiento, TableroInmutable t) {
-		
-		Ficha ret=Ficha.VACIA;
+
+		Ficha ret = Ficha.VACIA;
 
 		int contNegras = 0;
 		int contBlancas = 0;
-
-		if (movimientoImposible(t) || tableroLleno(t)) {
+		//solo hay ganador si no se puede mover o el tablero esta lleno
+		if (movimientoImposible(t) || tableroLleno(t) || siguienteTurno(ultimoMovimiento.getJugador(),t)==Ficha.VACIA) {
 
 			if (!comprobacion(t, Ficha.NEGRA) && !comprobacion(t, Ficha.BLANCA)) {
-				for(int i = 1; i <= t.getFilas(); i++) {
-					
-					for(int j = 1; j <= t.getColumnas(); j++) {
+				for (int i = 1; i <= t.getFilas(); i++) {
+
+					for (int j = 1; j <= t.getColumnas(); j++) {
 						if (t.getCasilla(j, i) == Ficha.NEGRA) {
 							contNegras++;
 
 						} else if (t.getCasilla(j, i) == Ficha.BLANCA) {
 							contBlancas++;
 
-						}			
-					}			
+						}
+					}
 				}
 
+				if (contBlancas > contNegras) {
+					ganador = Ficha.BLANCA;
+					ret = Ficha.BLANCA;
+
+				} else if (contBlancas < contNegras) {
+					ganador = Ficha.NEGRA;
+					ret = Ficha.NEGRA;
+
+				} else if (contBlancas == contNegras) {
+					ganador = Ficha.VACIA;
+					ret = Ficha.VACIA;
+				}
 			}
-
-			if (contBlancas > contNegras) {
-				ganador=Ficha.BLANCA;
-				ret = Ficha.BLANCA;
-
-			} else if (contBlancas < contNegras) {
-				ganador=Ficha.NEGRA;
-				ret = Ficha.NEGRA;
-
-			} else
-				ganador=Ficha.VACIA;
-				ret = Ficha.VACIA;
-
 		}
 
 		return ret;
@@ -63,8 +62,8 @@ public class ReglasReversi implements ReglasJuego {
 
 	private boolean tableroLleno(TableroInmutable t) {
 		boolean ret = true;
-		for (int x = 1; x < Constants.anchoRv; x++) {
-			for (int y = 1; y < Constants.altoRv; y++) {
+		for (int x = 1; x <= Constants.anchoRv; x++) {
+			for (int y = 1; y <= Constants.altoRv; y++) {
 				if (t.getCasilla(y, x) == Ficha.VACIA) {
 					ret = false;
 				}
@@ -74,15 +73,15 @@ public class ReglasReversi implements ReglasJuego {
 	}
 
 	private boolean movimientoImposible(TableroInmutable t) {
-		// no se puede mover a ninguna casilla
-		boolean ret = false;
-		for (int x = 1; x < Constants.anchoRv; x++) {
-			for (int y = 1; y < Constants.altoRv; y++) {
-				if (!sePuede(t, x, y, Ficha.BLANCA)) {
-					ret = true;
+		// si no se puede mover a ninguna casilla return true
+		boolean ret = true;
+		for (int x = 1; x <= Constants.anchoRv; x++) {
+			for (int y = 1; y <= Constants.altoRv; y++) {
+				if (sePuede(t, x, y, Ficha.BLANCA)) {
+					ret = false;
 				}
-				if (!sePuede(t, x, y, Ficha.NEGRA)) {
-					ret = true;
+				if (sePuede(t, x, y, Ficha.NEGRA)) {
+					ret = false;
 				}
 			}
 		}
@@ -127,16 +126,15 @@ public class ReglasReversi implements ReglasJuego {
 	@Override
 	public boolean tablas(Ficha ultimoEnPoner, TableroInmutable t) {
 
-	
 		boolean ret = false;
 
 		int contNegras = 0;
 		int contBlancas = 0;
 		if (comprobacion(t, Ficha.NEGRA) == false
 				&& comprobacion(t, Ficha.BLANCA) == false) {
-			for(int i = 1; i < t.getFilas();i++) {
-				
-				for (int j = 1; j< t.getColumnas(); j++) {
+			for (int i = 1; i <= t.getFilas(); i++) {
+
+				for (int j = 1; j <= t.getColumnas(); j++) {
 					if (t.getCasilla(j, i) == Ficha.NEGRA) {
 						contNegras++;
 
@@ -144,9 +142,9 @@ public class ReglasReversi implements ReglasJuego {
 						contBlancas++;
 
 					}
-				
+
 				}
-				
+
 			}
 
 		}
@@ -188,7 +186,7 @@ public class ReglasReversi implements ReglasJuego {
 		boolean salir = false;
 		int x = 1;
 		int y = 1;
-
+		//cambiar por for
 		while (y < tablero.getFilas() && !salir) {
 			x = 1;
 			while (x < tablero.getColumnas() && !salir) {
@@ -214,213 +212,229 @@ public class ReglasReversi implements ReglasJuego {
 			ret = true;
 		return ret;
 	}
-	public boolean sePuede(TableroInmutable tablero, int col, int fil, Ficha ficha){
+
+	public boolean sePuede(TableroInmutable tablero, int col, int fil,
+			Ficha ficha) {
+
 		int x = col;
 		int y = fil;
 		boolean salir = false;
 		boolean sePuede = false;
-		//IZQUIERDA
-		if (sePuede == false && tablero.getCasilla(x-1, y) != ficha && tablero.getCasilla(x-1, y) != Ficha.VACIA
-				&& x > 0){
+		// IZQUIERDA
+		if (sePuede == false && tablero.getCasilla(x - 1, y) != ficha
+				&& tablero.getCasilla(x - 1, y) != Ficha.VACIA && x > 0) {
 			x--;
-			while(!salir && x > 0){
-				
-				if (tablero.getCasilla(x, y) == Ficha.VACIA){
-					
+			while (!salir && x > 0) {
+
+				if (tablero.getCasilla(x, y) == Ficha.VACIA) {
+
 					salir = true;
-					
-				}else if (tablero.getCasilla(x, y) == ficha){
-					
+
+				} else if (tablero.getCasilla(x, y) == ficha) {
+
 					salir = true;
 					sePuede = true;
-					
-				}else x--;
-				
+
+				} else
+					x--;
+
 			}
-			
+
 		}
-		
-		//DERECHA
-		
+
+		// DERECHA
+
 		x = col;
 		y = fil;
 		salir = false;
-		if (sePuede == false && tablero.getCasilla(x+1, y) != ficha && tablero.getCasilla(x+1, y) != Ficha.VACIA
-				&& x <= tablero.getColumnas()){
+		if (sePuede == false && tablero.getCasilla(x + 1, y) != ficha
+				&& tablero.getCasilla(x + 1, y) != Ficha.VACIA
+				&& x <= tablero.getColumnas()) {
 			x++;
-			while(!salir && x <= tablero.getColumnas()){
-				
-				if (tablero.getCasilla(x, y) == Ficha.VACIA){
-					
+			while (!salir && x <= tablero.getColumnas()) {
+
+				if (tablero.getCasilla(x, y) == Ficha.VACIA) {
+
 					salir = true;
-					
-				}else if (tablero.getCasilla(x, y) == ficha){
-					
+
+				} else if (tablero.getCasilla(x, y) == ficha) {
+
 					salir = true;
 					sePuede = true;
-					
-				}else x++;
-				
+
+				} else
+					x++;
+
 			}
-			
+
 		}
-		
-		//ARRIBA
+
+		// ARRIBA
 		x = col;
 		y = fil;
 		salir = false;
-		if (sePuede == false && tablero.getCasilla(x, y-1) != ficha && tablero.getCasilla(x, y-1) != Ficha.VACIA
-				&& y > 0){
+		if (sePuede == false && tablero.getCasilla(x, y - 1) != ficha
+				&& tablero.getCasilla(x, y - 1) != Ficha.VACIA && y > 0) {
 			y--;
-			while(!salir && y > 0){
-				
-				if (tablero.getCasilla(x, y) == Ficha.VACIA){
-					
+			while (!salir && y > 0) {
+
+				if (tablero.getCasilla(x, y) == Ficha.VACIA) {
+
 					salir = true;
-					
-				}else if (tablero.getCasilla(x, y) == ficha){
-					
+
+				} else if (tablero.getCasilla(x, y) == ficha) {
+
 					salir = true;
 					sePuede = true;
-					
-				}else y--;	
+
+				} else
+					y--;
 			}
 		}
-		
-		//ABAJO
+
+		// ABAJO
 		x = col;
 		y = fil;
 		salir = false;
-		if (sePuede == false && tablero.getCasilla(x, y+1) != ficha && tablero.getCasilla(x, y+1) != Ficha.VACIA
-				&& y <= tablero.getFilas()){
+		if (sePuede == false && tablero.getCasilla(x, y + 1) != ficha
+				&& tablero.getCasilla(x, y + 1) != Ficha.VACIA
+				&& y <= tablero.getFilas()) {
 			y++;
-			while(!salir && y <= tablero.getFilas()){
-				
-				if (tablero.getCasilla(x, y) == Ficha.VACIA){
-					
+			while (!salir && y <= tablero.getFilas()) {
+
+				if (tablero.getCasilla(x, y) == Ficha.VACIA) {
+
 					salir = true;
-					
-				}else if (tablero.getCasilla(x, y) == ficha){
-					
+
+				} else if (tablero.getCasilla(x, y) == ficha) {
+
 					salir = true;
 					sePuede = true;
-					
-				}else y++;	
+
+				} else
+					y++;
 			}
 		}
-		
+
 		// ARIBA IZQDA
 		x = col;
 		y = fil;
 		salir = false;
-		if (sePuede == false && tablero.getCasilla(x-1, y-1) != ficha && tablero.getCasilla(x-1, y-1) != Ficha.VACIA 
-				&& x > 0 && y > 0){
+		if (sePuede == false && tablero.getCasilla(x - 1, y - 1) != ficha
+				&& tablero.getCasilla(x - 1, y - 1) != Ficha.VACIA && x > 0
+				&& y > 0) {
 			x--;
 			y--;
-			while(!salir && x > 0 && y > 0){
-				
-				if (tablero.getCasilla(x, y) == Ficha.VACIA){
-					
+			while (!salir && x > 0 && y > 0) {
+
+				if (tablero.getCasilla(x, y) == Ficha.VACIA) {
+
 					salir = true;
-					
-				}else if (tablero.getCasilla(x, y) == ficha){
-					
+
+				} else if (tablero.getCasilla(x, y) == ficha) {
+
 					salir = true;
 					sePuede = true;
-					
-				}else{	
-					x--; y--;
+
+				} else {
+					x--;
+					y--;
 				}
-				
+
 			}
 		}
-		
-		//ARRIBA DRCHA
+
+		// ARRIBA DRCHA
 		x = col;
 		y = fil;
 		salir = false;
-		if (sePuede == false && tablero.getCasilla(x+1, y-1) != ficha && tablero.getCasilla(x+1, y-1) != Ficha.VACIA 
-				&& x <= tablero.getColumnas() && y > 0){
+		if (sePuede == false && tablero.getCasilla(x + 1, y - 1) != ficha
+				&& tablero.getCasilla(x + 1, y - 1) != Ficha.VACIA
+				&& x <= tablero.getColumnas() && y > 0) {
 			x++;
 			y--;
-			while(!salir && x <= tablero.getColumnas() && y > 0){
-				
-				if (tablero.getCasilla(x, y) == Ficha.VACIA){
-					
+			while (!salir && x <= tablero.getColumnas() && y > 0) {
+
+				if (tablero.getCasilla(x, y) == Ficha.VACIA) {
+
 					salir = true;
-					
-				}else if (tablero.getCasilla(x, y) == ficha){
-					
+
+				} else if (tablero.getCasilla(x, y) == ficha) {
+
 					salir = true;
 					sePuede = true;
-					
-				}else{	
-					x++; y--;
+
+				} else {
+					x++;
+					y--;
 				}
-				
+
 			}
 		}
-		
-		//ABAJO IZQDA
+
+		// ABAJO IZQDA
 		x = col;
 		y = fil;
 		salir = false;
-		if (sePuede == false && tablero.getCasilla(x-1, y+1) != ficha && tablero.getCasilla(x-1, y+1) != Ficha.VACIA 
-				&& x > 0 && y <= tablero.getFilas()){
+		if (sePuede == false && tablero.getCasilla(x - 1, y + 1) != ficha
+				&& tablero.getCasilla(x - 1, y + 1) != Ficha.VACIA && x > 0
+				&& y <= tablero.getFilas()) {
 			x--;
 			y++;
-			while(!salir && x > 0 && y <= tablero.getFilas()){
-				
-				if (tablero.getCasilla(x, y) == Ficha.VACIA){
-					
+			while (!salir && x > 0 && y <= tablero.getFilas()) {
+
+				if (tablero.getCasilla(x, y) == Ficha.VACIA) {
+
 					salir = true;
-					
-				}else if (tablero.getCasilla(x, y) == ficha){
-					
+
+				} else if (tablero.getCasilla(x, y) == ficha) {
+
 					salir = true;
 					sePuede = true;
-					
-				}else{	
-					x--; y++;
+
+				} else {
+					x--;
+					y++;
 				}
-				
+
 			}
 		}
-		
-		
-		//ABAJO DRCHA
+
+		// ABAJO DRCHA
 		x = col;
 		y = fil;
 		salir = false;
-		if (sePuede == false && tablero.getCasilla(x+1, y+1) != ficha && tablero.getCasilla(x+1, y+1) != Ficha.VACIA 
-				&& x <= tablero.getColumnas() && y <= tablero.getFilas()){
+		if (sePuede == false && tablero.getCasilla(x + 1, y + 1) != ficha
+				&& tablero.getCasilla(x + 1, y + 1) != Ficha.VACIA
+				&& x <= tablero.getColumnas() && y <= tablero.getFilas()) {
 			x++;
 			y++;
-			while(!salir && x <= tablero.getColumnas() && y <= tablero.getFilas()){
-				
-				if (tablero.getCasilla(x, y) == Ficha.VACIA){
-					
+			while (!salir && x <= tablero.getColumnas()
+					&& y <= tablero.getFilas()) {
+
+				if (tablero.getCasilla(x, y) == Ficha.VACIA) {
+
 					salir = true;
-					
-				}else if (tablero.getCasilla(x, y) == ficha){
-					
+
+				} else if (tablero.getCasilla(x, y) == ficha) {
+
 					salir = true;
 					sePuede = true;
-					
-				}else{	
-					x++; y++;
+
+				} else {
+					x++;
+					y++;
 				}
-				
+
 			}
 		}
-		
-		if(tablero.getCasilla(col, fil) != Ficha.VACIA){
-			
+
+		if (tablero.getCasilla(col, fil) != Ficha.VACIA) {
+
 			salir = true;
 			sePuede = false;
 		}
-		
-		
+
 		return sePuede;
 	}
 
