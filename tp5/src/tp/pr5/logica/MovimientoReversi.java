@@ -45,8 +45,6 @@ public class MovimientoReversi extends Movimiento{
 		}
 	}
 	
-
-	
 	private void ejecutaCambios(Tablero tablero){
 		
 		int cont = 0;

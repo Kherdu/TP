@@ -111,16 +111,15 @@ public class ReglasReversi implements ReglasJuego {
 		if (ultimoEnPoner == Ficha.BLANCA) {
 			if (comprobacion(t, Ficha.NEGRA)) {
 				ret = Ficha.NEGRA;
-			} else if (comprobacion(t,Ficha.BLANCA)){
+			} else if(comprobacion(t, Ficha.BLANCA)){ 
 				ret = Ficha.BLANCA;
-			} else ret =Ficha.VACIA;
-			
+			}else ret = Ficha.VACIA;
 		} else if (ultimoEnPoner == Ficha.NEGRA) {
 			if (comprobacion(t, Ficha.BLANCA)) {
 				ret = Ficha.BLANCA;
-			} else if (comprobacion(t,Ficha.BLANCA)){
+			} else if(comprobacion(t, Ficha.NEGRA)){
 				ret = Ficha.NEGRA;
-			} else ret=Ficha.VACIA;
+			}else ret = Ficha.VACIA;
 		}
 
 		return ret;
@@ -187,22 +186,18 @@ public class ReglasReversi implements ReglasJuego {
 	public boolean comprobacion(TableroInmutable tablero, Ficha color) {
 
 		boolean salir = false;
-		int x = 1;
-		int y = 1;
+		
+		
 		//cambiar por for
-		while (y < tablero.getFilas() && !salir) {
-			x = 1;
-			while (x < tablero.getColumnas() && !salir) {
+		for (int y= 1; y <= tablero.getFilas() && !salir; y++) {
+			
+			for (int x = 1; x <= tablero.getColumnas() && !salir; x++) {
 				if (tablero.getCasilla(x, y) == Ficha.VACIA) {
 					if (sePuede(tablero, x, y, color)) {
 						salir = true;
-
 					}
 				}
-				x++;
 			}
-
-			y++;
 		}
 
 		return salir;
