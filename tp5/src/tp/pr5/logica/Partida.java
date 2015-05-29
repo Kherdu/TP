@@ -132,7 +132,9 @@ public class Partida {
 
 		}
 		ganador = juego.hayGanador(mov, tablero);
-		
+		if (ganador==Ficha.VACIA && turno==Ficha.VACIA){
+			terminada=true;
+		}
 		
 
 		if (ganador != Ficha.VACIA) {

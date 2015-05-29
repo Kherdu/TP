@@ -111,13 +111,16 @@ public class ReglasReversi implements ReglasJuego {
 		if (ultimoEnPoner == Ficha.BLANCA) {
 			if (comprobacion(t, Ficha.NEGRA)) {
 				ret = Ficha.NEGRA;
-			} else
+			} else if (comprobacion(t,Ficha.BLANCA)){
 				ret = Ficha.BLANCA;
+			} else ret =Ficha.VACIA;
+			
 		} else if (ultimoEnPoner == Ficha.NEGRA) {
 			if (comprobacion(t, Ficha.BLANCA)) {
 				ret = Ficha.BLANCA;
-			} else
+			} else if (comprobacion(t,Ficha.BLANCA)){
 				ret = Ficha.NEGRA;
+			} else ret=Ficha.VACIA;
 		}
 
 		return ret;
