@@ -249,8 +249,15 @@ public class PanelBotones extends JPanel implements Observer {
 	@Override
 	public void onMovimientoEnd(TableroInmutable tab, Ficha jugador, Ficha turno) {
 		
-		
-		enableDeshacer(true);
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				enableDeshacer(true);
+				
+
+			}
+		});
 		this.turno=turno;
 
 	}

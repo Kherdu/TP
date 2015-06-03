@@ -164,24 +164,32 @@ public class PanelTablero extends JPanel implements Observer {
 
 	@Override
 	public void onPartidaTerminada(TableroInmutable tab, Ficha ganador) {
-
-		bloqueaaleatorio(true);
-		bloqueatablero(true);
-
 		this.turnoActual = ganador;
-		JFrame frame = new JFrame();
-		if (ganador != Ficha.VACIA) {
-			JOptionPane.showMessageDialog(frame,
-					"Ganan las: " + ganador.toString(), "Ganador",
-					JOptionPane.INFORMATION_MESSAGE);
-		}else {
-			JOptionPane.showMessageDialog(frame,
-					"TABLAS","Terminada",
-					JOptionPane.INFORMATION_MESSAGE);
-		}
-		panel_Tablero.validate();
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				bloqueaaleatorio(true);
+				bloqueatablero(true);
+
+				
+				JFrame frame = new JFrame();
+				if (ganador != Ficha.VACIA) {
+					JOptionPane.showMessageDialog(frame,
+							"Ganan las: " + ganador.toString(), "Ganador",
+							JOptionPane.INFORMATION_MESSAGE);
+				}else {
+					JOptionPane.showMessageDialog(frame,
+							"TABLAS","Terminada",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				panel_Tablero.validate();
+				
+				c.matahilos();
+
+			}
+		});
 		this.repaint();
-		c.matahilos();
 	}
 
 	@Override
@@ -219,16 +227,23 @@ public class PanelTablero extends JPanel implements Observer {
 
 	@Override
 	public void onMovimientoEnd(TableroInmutable tab, Ficha jugador, Ficha turno) {
+		SwingUtilities.invokeLater(new Runnable() {
 
-		this.t = tab;
-		modificaTablero();
+			@Override
+			public void run() {
+				
+				
+				modificaTablero();
+				labelTurno.setText("Turno de: " + turnoActual.toString());
+				labelTurno.validate();
+				panel_Tablero.validate();
+				c.reiniciaHilo(turno);
+
+			}
+		});
 		this.turnoActual = turno;
-		labelTurno.setText("Turno de: " + turnoActual.toString());
-		labelTurno.validate();
-		panel_Tablero.validate();
 		this.repaint();
-		c.reiniciaHilo(turno);
-
+		this.t = tab;
 	}
 
 	@Override

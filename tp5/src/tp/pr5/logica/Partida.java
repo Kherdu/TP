@@ -130,14 +130,10 @@ public class Partida {
 		this.tin = tablero;
 		for (Observer o : observers) {
 			// observadores movimiento correcto
-			SwingUtilities.invokeLater(new Runnable() {
-
-				@Override
-				public void run() {
+			
 					o.onMovimientoEnd(tin, mov.getJugador(), turno);
 
-				}
-			});
+			
 
 		}
 		ganador = juego.hayGanador(mov, tablero);
@@ -149,15 +145,10 @@ public class Partida {
 			terminada = true;
 			// observadores partidaTerminada con ganador
 			for (Observer o : observers) {
-				SwingUtilities.invokeLater(new Runnable() {
-
-					@Override
-					public void run() {
+				
 						o.onPartidaTerminada(tin, ganador);
 					}
-				});
-
-			}
+				
 		}
 
 		isTablas = juego.tablas(mov.getJugador(), tablero);
@@ -165,14 +156,10 @@ public class Partida {
 		if (isTablas) {
 			terminada = true;
 			for (Observer o : observers) {
-				SwingUtilities.invokeLater(new Runnable() {
-
-					@Override
-					public void run() {
+				
 
 						o.onPartidaTerminada(tin, ganador);
-					}
-				});
+					
 			}
 		}
 
