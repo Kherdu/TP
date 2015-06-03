@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.BoxLayout;
+import javax.swing.SwingUtilities;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -242,13 +243,13 @@ public class PanelBotones extends JPanel implements Observer {
 			c.deshacermas(turno);
 		}
 		
-		
 
 	}
 
 	@Override
 	public void onMovimientoEnd(TableroInmutable tab, Ficha jugador, Ficha turno) {
-		// nada, lo hace el otro panel
+		
+		
 		enableDeshacer(true);
 		this.turno=turno;
 

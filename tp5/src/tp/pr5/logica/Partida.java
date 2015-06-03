@@ -3,6 +3,8 @@ package tp.pr5.logica;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.SwingUtilities;
+
 import tp.pr5.GUI.Observer;
 import tp.pr5.control.Jugador;
 
@@ -85,9 +87,9 @@ public class Partida {
 		} else if (reglas.getTipo() == Juego.GRAVITY) {
 			this.moveStack = new MovimientoGravity[TAM_PILA];
 			this.juego = new ReglasGravity();
-		}else if(reglas.getTipo() == Juego.REVERSI) {
+		} else if (reglas.getTipo() == Juego.REVERSI) {
 			this.moveStack = new MovimientoReversi[TAM_PILA];
-			this.juego = new ReglasReversi();			
+			this.juego = new ReglasReversi();
 		}
 
 		this.turno = Ficha.BLANCA;
@@ -124,25 +126,37 @@ public class Partida {
 			moveStack[lastPos] = mov;
 			avanzaTurno();
 		}
-		
+
 		this.tin = tablero;
 		for (Observer o : observers) {
 			// observadores movimiento correcto
-			o.onMovimientoEnd(tin, mov.getJugador(), turno);
+			SwingUtilities.invokeLater(new Runnable() {
+
+				@Override
+				public void run() {
+					o.onMovimientoEnd(tin, mov.getJugador(), turno);
+
+				}
+			});
 
 		}
 		ganador = juego.hayGanador(mov, tablero);
-		if (ganador==Ficha.VACIA && turno==Ficha.VACIA){
-			terminada=true;
+		if (ganador == Ficha.VACIA && turno == Ficha.VACIA) {
+			terminada = true;
 		}
-		
 
 		if (ganador != Ficha.VACIA) {
 			terminada = true;
 			// observadores partidaTerminada con ganador
 			for (Observer o : observers) {
+				SwingUtilities.invokeLater(new Runnable() {
 
-				o.onPartidaTerminada(tin, ganador);
+					@Override
+					public void run() {
+						o.onPartidaTerminada(tin, ganador);
+					}
+				});
+
 			}
 		}
 
@@ -151,13 +165,17 @@ public class Partida {
 		if (isTablas) {
 			terminada = true;
 			for (Observer o : observers) {
+				SwingUtilities.invokeLater(new Runnable() {
 
-				o.onPartidaTerminada(tin, ganador);
+					@Override
+					public void run() {
 
+						o.onPartidaTerminada(tin, ganador);
+					}
+				});
 			}
 		}
 
-		
 	}
 
 	public boolean undo() {
@@ -264,7 +282,7 @@ public class Partida {
 		}
 
 	}
-	
+
 	public void inicio() {
 		for (Observer o : observers) {
 			o.onInicio(tin, turno);

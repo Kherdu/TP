@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -218,6 +219,7 @@ public class PanelTablero extends JPanel implements Observer {
 
 	@Override
 	public void onMovimientoEnd(TableroInmutable tab, Ficha jugador, Ficha turno) {
+
 		this.t = tab;
 		modificaTablero();
 		this.turnoActual = turno;

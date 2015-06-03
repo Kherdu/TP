@@ -27,7 +27,7 @@ public class MovimientoReversi extends Movimiento{
 		
 		if (columna < 1 || columna > tablero.getColumnas() || fila < 1 || fila > tablero.getFilas()){
 			
-			throw new MovimientoInvalido("Posición Incorrecta");
+			throw new MovimientoInvalido("PosiciÃ³n Incorrecta");
 			
 			
 		}else if(tablero.getCasilla(columna, fila) != Ficha.VACIA){
